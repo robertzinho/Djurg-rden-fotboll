@@ -1,0 +1,22 @@
+{
+  "team": "Djurgårdens IF",
+  "season": "2026",
+  "players": [
+    {"id":1,"name":"Jacob Rinne","position":"Goalkeeper","nationality":"Sweden","flag":"🇸🇪","number":1,"img":""},
+    {"id":2,"name":"Oscar Jonsson","position":"Goalkeeper","nationality":"Sweden","flag":"🇸🇪","number":33,"img":""},
+    {"id":3,"name":"Jacob Une Larsson","position":"Defender","nationality":"Sweden","flag":"🇸🇪","number":2,"img":""},
+    {"id":4,"name":"Kristian Lien","position":"Defender","nationality":"Norway","flag":"🇳🇴","number":3,"img":""},
+    {"id":5,"name":"Marcus Danielsson","position":"Defender","nationality":"Sweden","flag":"🇸🇪","number":5,"img":""},
+    {"id":6,"name":"Jonathan Augustinsson","position":"Defender","nationality":"Sweden","flag":"🇸🇪","number":23,"img":""},
+    {"id":7,"name":"Matias Siltanen","position":"Midfielder","nationality":"Finland","flag":"🇫🇮","number":6,"img":""},
+    {"id":8,"name":"Mikael Anderson","position":"Midfielder","nationality":"Sweden","flag":"🇸🇪","number":8,"img":""},
+    {"id":9,"name":"Ahmed Saeed","position":"Midfielder","nationality":"Sweden","flag":"🇸🇪","number":14,"img":""},
+    {"id":10,"name":"Bo Hegland","position":"Midfielder","nationality":"Norway","flag":"🇳🇴","number":18,"img":""},
+    {"id":11,"name":"Keita Kosugi","position":"Midfielder","nationality":"Japan","flag":"🇯🇵","number":22,"img":""},
+    {"id":12,"name":"Jeppe Okkels","position":"Forward","nationality":"Denmark","flag":"🇩🇰","number":7,"img":""},
+    {"id":13,"name":"Nino Žugelj","position":"Forward","nationality":"Slovenia","flag":"🇸🇮","number":9,"img":""},
+    {"id":14,"name":"Adam Ståhl","position":"Forward","nationality":"Sweden","flag":"🇸🇪","number":11,"img":""},
+    {"id":15,"name":"Zakaria Sawo","position":"Forward","nationality":"Sweden","flag":"🇸🇪","number":17,"img":""},
+    {"id":16,"name":"Oskar Fallenius","position":"Forward","nationality":"Sweden","flag":"🇸🇪","number":21,"img":""}
+  ]
+}
