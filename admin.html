@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin – Djurgårdens IF</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --blue:#005B9A;--dark:#002B50;--accent:#E8A020;--red:#C8102E;--green:#1a8040;
+  --bg:#0f1923;--surface:#1a2535;--surface2:#212f42;--surface3:#263448;
+  --border:rgba(255,255,255,0.08);--text:#eef2f7;--text2:#8a9bb0;--text3:#5a6e85;
+  --radius:12px;--radius-sm:8px;
+}
+body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+
+/* SETUP SCREEN */
+.setup-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem}
+.setup-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:2rem;max-width:480px;width:100%}
+.setup-box h1{font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:700;color:white;margin-bottom:0.5rem}
+.setup-box p{font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:1.5rem}
+.setup-box ol{font-size:13px;color:var(--text2);line-height:2;padding-left:1.5rem;margin-bottom:1.5rem}
+.setup-box ol a{color:var(--accent)}
+.field-group{margin-bottom:1rem}
+.field-group label{display:block;font-size:12px;font-weight:600;color:var(--text2);margin-bottom:5px;letter-spacing:0.3px;text-transform:uppercase}
+.field-group input{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 12px;color:white;font-size:14px;font-family:'Barlow',sans-serif;outline:none;transition:border-color .15s}
+.field-group input:focus{border-color:var(--blue)}
+.field-group .hint{font-size:11px;color:var(--text3);margin-top:4px}
+
+/* MAIN ADMIN */
+.admin-header{background:var(--dark);border-bottom:2px solid var(--accent);padding:0 1.5rem;display:flex;align-items:center;gap:1rem;height:52px}
+.admin-header h1{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:700;color:white;flex:1}
+.admin-header .save-status{font-size:12px;color:var(--text2)}
+
+.admin-nav{background:var(--surface);border-bottom:1px solid var(--border);padding:0 1.5rem;display:flex;gap:0}
+.admin-tab{padding:12px 20px;color:var(--text2);font-size:13px;font-weight:600;cursor:pointer;border:none;background:none;border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .15s;font-family:'Barlow',sans-serif;letter-spacing:0.3px}
+.admin-tab:hover{color:var(--text)}
+.admin-tab.active{color:white;border-bottom-color:var(--accent)}
+
+.admin-content{max-width:1100px;margin:0 auto;padding:1.5rem}
+.admin-page{display:none}
+.admin-page.active{display:block}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border-radius:var(--radius-sm);font-size:13px;font-weight:600;cursor:pointer;border:none;font-family:'Barlow',sans-serif;transition:opacity .15s,transform .1s;letter-spacing:0.3px}
+.btn:hover{opacity:.85}
+.btn:active{transform:scale(.98)}
+.btn-primary{background:var(--blue);color:white}
+.btn-success{background:var(--green);color:white}
+.btn-danger{background:var(--red);color:white;padding:6px 14px;font-size:12px}
+.btn-ghost{background:transparent;color:var(--text2);border:1px solid var(--border)}
+.btn-accent{background:var(--accent);color:#3a2000}
+.btn-sm{padding:5px 12px;font-size:12px}
+
+/* SECTION */
+.sec-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem}
+.sec-head h2{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:700;color:white;display:flex;align-items:center;gap:8px}
+.sec-head h2::before{content:'';display:block;width:4px;height:20px;background:var(--accent);border-radius:2px}
+
+/* CARDS */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:1rem}
+.card-head{padding:12px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.card-head h3{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;color:white}
+
+/* PLAYER TABLE */
+.player-table{width:100%;border-collapse:collapse}
+.player-table th{padding:9px 14px;font-size:10px;font-weight:700;color:var(--text3);border-bottom:1px solid var(--border);text-align:left;letter-spacing:0.8px;text-transform:uppercase}
+.player-table td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text2);font-size:13px;vertical-align:middle}
+.player-table tr:last-child td{border-bottom:none}
+.player-table tr:hover td{background:var(--surface2)}
+.player-table td strong{color:white;font-weight:600}
+.pcat-badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;letter-spacing:0.3px}
+.pcat-Målvakt{background:rgba(29,158,117,.2);color:#4ecfa0}
+.pcat-Back{background:rgba(0,91,154,.25);color:#70b0e0}
+.pcat-Mittfält{background:rgba(83,74,183,.2);color:#a090f0}
+.pcat-Forward{background:rgba(200,16,46,.15);color:#f06070}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:1000;display:flex;align-items:center;justify-content:center;padding:1rem}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);width:100%;max-width:500px;max-height:90vh;overflow-y:auto}
+.modal-head{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.modal-head h3{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;color:white}
+.modal-close{background:none;border:none;color:var(--text2);font-size:22px;cursor:pointer;line-height:1;padding:0 4px}
+.modal-close:hover{color:white}
+.modal-body{padding:20px}
+.modal-footer{padding:16px 20px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:10px}
+
+/* FORM */
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.form-row.full{grid-template-columns:1fr}
+.form-group label{display:block;font-size:11px;font-weight:700;color:var(--text2);margin-bottom:5px;letter-spacing:0.5px;text-transform:uppercase}
+.form-group input,.form-group select,.form-group textarea{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:9px 12px;color:white;font-size:13px;font-family:'Barlow',sans-serif;outline:none;transition:border-color .15s}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--blue)}
+.form-group textarea{resize:vertical;min-height:80px}
+.form-group select option{background:var(--surface2)}
+
+/* NEWS FORM */
+.url-row{display:flex;gap:8px}
+.url-row input{flex:1}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;right:24px;background:var(--green);color:white;padding:12px 20px;border-radius:var(--radius-sm);font-size:13px;font-weight:600;z-index:9999;transform:translateY(100px);transition:transform .3s;box-shadow:0 4px 20px rgba(0,0,0,0.4)}
+.toast.show{transform:translateY(0)}
+.toast.error{background:var(--red)}
+
+/* SAVE BAR */
+.save-bar{position:fixed;bottom:0;left:0;right:0;background:var(--dark);border-top:2px solid var(--accent);padding:12px 1.5rem;display:flex;align-items:center;justify-content:space-between;z-index:500;transform:translateY(100%);transition:transform .3s}
+.save-bar.show{transform:translateY(0)}
+.save-bar p{font-size:13px;color:var(--text2)}
+.save-bar p strong{color:var(--accent)}
+</style>
+</head>
+<body>
+
+<!-- SETUP SCREEN -->
+<div class="setup-screen" id="setup-screen">
+  <div class="setup-box">
+    <h1>⚙️ Admin – Djurgårdens IF</h1>
+    <p>För att kunna spara ändringar direkt till GitHub behöver du ange dina uppgifter. De sparas bara i din webbläsare.</p>
+    <ol>
+      <li>Gå till <a href="https://github.com/settings/tokens/new" target="_blank">github.com/settings/tokens/new</a></li>
+      <li>Ge token ett namn, t.ex. <em>DIF Admin</em></li>
+      <li>Välj <strong>repo</strong> under scopes</li>
+      <li>Klicka <strong>Generate token</strong> och kopiera den</li>
+    </ol>
+    <div class="field-group">
+      <label>GitHub Användarnamn</label>
+      <input type="text" id="setup-user" placeholder="robertzinho" value="">
+      <div class="hint">Ditt GitHub-användarnamn</div>
+    </div>
+    <div class="field-group">
+      <label>Repository namn</label>
+      <input type="text" id="setup-repo" placeholder="Djurg-rden-fotboll" value="">
+      <div class="hint">Exakt som det heter på GitHub (Djurg-rden-fotboll)</div>
+    </div>
+    <div class="field-group">
+      <label>Personal Access Token</label>
+      <input type="password" id="setup-token" placeholder="ghp_xxxxxxxxxxxx">
+      <div class="hint">Skapas på GitHub – sparas endast i din webbläsare</div>
+    </div>
+    <button class="btn btn-accent" style="width:100%;justify-content:center" onclick="setupConnect()">Anslut till GitHub →</button>
+  </div>
+</div>
+
+<!-- MAIN ADMIN (hidden until setup) -->
+<div id="admin-main" style="display:none">
+  <div class="admin-header">
+    <h1>🏟 DIF Admin</h1>
+    <span class="save-status" id="save-status">Ansluten till GitHub</span>
+    <button class="btn btn-ghost btn-sm" onclick="resetSetup()">Byt konto</button>
+    <a href="index.html" class="btn btn-ghost btn-sm" target="_blank">Se sidan →</a>
+  </div>
+
+  <div class="admin-nav">
+    <button class="admin-tab active" onclick="showAdminPage('squad')">Trupp</button>
+    <button class="admin-tab" onclick="showAdminPage('news')">Nyheter</button>
+    <button class="admin-tab" onclick="showAdminPage('matches')">Matcher</button>
+  </div>
+
+  <div class="admin-content">
+
+    <!-- TRUPP -->
+    <div id="admin-squad" class="admin-page active">
+      <div class="sec-head">
+        <h2>Trupp</h2>
+        <button class="btn btn-primary" onclick="openPlayerModal()">+ Lägg till spelare</button>
+      </div>
+      <div class="card">
+        <table class="player-table">
+          <thead>
+            <tr>
+              <th>#</th><th>Spelare</th><th>Position</th><th>Kategori</th><th>Ålder</th><th>Land</th><th>M</th><th>Mål</th><th>Ass</th><th></th>
+            </tr>
+          </thead>
+          <tbody id="squad-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- NYHETER -->
+    <div id="admin-news" class="admin-page">
+      <div class="sec-head">
+        <h2>Nyheter</h2>
+        <button class="btn btn-primary" onclick="openNewsModal()">+ Lägg till nyhet</button>
+      </div>
+      <div id="news-admin-list"></div>
+    </div>
+
+    <!-- MATCHER -->
+    <div id="admin-matches" class="admin-page">
+      <div class="sec-head">
+        <h2>Matcher</h2>
+        <button class="btn btn-primary" onclick="openMatchModal()">+ Lägg till match</button>
+      </div>
+      <div class="card">
+        <table class="player-table">
+          <thead><tr><th>Datum</th><th>Match</th><th>Tävling</th><th>Resultat</th><th></th></tr></thead>
+          <tbody id="matches-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- PLAYER MODAL -->
+<div class="modal-overlay" id="player-modal" style="display:none" onclick="if(event.target===this)closePlayerModal()">
+  <div class="modal">
+    <div class="modal-head">
+      <h3 id="player-modal-title">Ny spelare</h3>
+      <button class="modal-close" onclick="closePlayerModal()">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-row">
+        <div class="form-group"><label>Nummer</label><input type="number" id="p-nr" placeholder="7"></div>
+        <div class="form-group"><label>Nationalitet (emoji)</label><input type="text" id="p-nat" placeholder="🇸🇪"></div>
+      </div>
+      <div class="form-row full">
+        <div class="form-group"><label>Namn</label><input type="text" id="p-name" placeholder="Förnamn Efternamn"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Position</label><input type="text" id="p-pos" placeholder="Mittfältare"></div>
+        <div class="form-group"><label>Kategori</label>
+          <select id="p-cat">
+            <option>Målvakt</option><option>Back</option><option>Mittfält</option><option>Forward</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Ålder</label><input type="number" id="p-age" placeholder="24"></div>
+        <div class="form-group"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Matcher</label><input type="number" id="p-matches" value="0"></div>
+        <div class="form-group"><label>Mål</label><input type="number" id="p-goals" value="0"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Assist</label><input type="number" id="p-assists" value="0"></div>
+        <div class="form-group"></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closePlayerModal()">Avbryt</button>
+      <button class="btn btn-primary" onclick="savePlayer()">Spara spelare</button>
+    </div>
+  </div>
+</div>
+
+<!-- NEWS MODAL -->
+<div class="modal-overlay" id="news-modal" style="display:none" onclick="if(event.target===this)closeNewsModal()">
+  <div class="modal">
+    <div class="modal-head">
+      <h3 id="news-modal-title">Ny nyhet</h3>
+      <button class="modal-close" onclick="closeNewsModal()">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-row full">
+        <div class="form-group">
+          <label>Klistra in artikel-URL (hämtar info automatiskt)</label>
+          <div class="url-row">
+            <input type="url" id="n-url" placeholder="https://www.sportbladet.se/artikel/...">
+            <button class="btn btn-ghost" onclick="fetchNewsUrl()">Hämta</button>
+          </div>
+        </div>
+      </div>
+      <div class="form-row full">
+        <div class="form-group"><label>Rubrik</label><input type="text" id="n-title" placeholder="Nyhetsrubrik"></div>
+      </div>
+      <div class="form-row full">
+        <div class="form-group"><label>Sammanfattning</label><textarea id="n-summary" placeholder="Kort beskrivning av nyheten..."></textarea></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Källa (namn)</label><input type="text" id="n-source" placeholder="Sportbladet"></div>
+        <div class="form-group"><label>Kategori</label>
+          <select id="n-category">
+            <option>Match</option><option>Skada</option><option>Trupp</option><option>Info</option><option>TV</option><option>Analys</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Käll-URL</label><input type="url" id="n-sourceUrl" placeholder="https://www.sportbladet.se"></div>
+        <div class="form-group"><label>Datum</label><input type="date" id="n-date"></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeNewsModal()">Avbryt</button>
+      <button class="btn btn-primary" onclick="saveNews()">Spara nyhet</button>
+    </div>
+  </div>
+</div>
+
+<!-- MATCH MODAL -->
+<div class="modal-overlay" id="match-modal" style="display:none" onclick="if(event.target===this)closeMatchModal()">
+  <div class="modal">
+    <div class="modal-head">
+      <h3 id="match-modal-title">Ny match</h3>
+      <button class="modal-close" onclick="closeMatchModal()">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-row">
+        <div class="form-group"><label>Datum</label><input type="date" id="m-date"></div>
+        <div class="form-group"><label>Tävling</label>
+          <select id="m-competition">
+            <option>Allsvenskan</option><option>Svenska Cupen</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row full">
+        <div class="form-group"><label>Hemmalag</label><input type="text" id="m-home" placeholder="Djurgårdens IF"></div>
+      </div>
+      <div class="form-row full">
+        <div class="form-group"><label>Bortalag</label><input type="text" id="m-away" placeholder="Motståndare"></div>
+      </div>
+      <div class="form-row full">
+        <div class="form-group"><label>Arena</label><input type="text" id="m-venue" placeholder="3Arena"></div>
+      </div>
+      <div style="background:var(--surface2);border-radius:var(--radius-sm);padding:14px;margin-bottom:12px">
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:var(--text2)">
+          <input type="checkbox" id="m-played" onchange="toggleResultFields()"> Matchen är spelad
+        </label>
+      </div>
+      <div id="result-fields" style="display:none">
+        <div class="form-row">
+          <div class="form-group"><label>Hemmamål</label><input type="number" id="m-home-score" value="0" min="0"></div>
+          <div class="form-group"><label>Bortamål</label><input type="number" id="m-away-score" value="0" min="0"></div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeMatchModal()">Avbryt</button>
+      <button class="btn btn-primary" onclick="saveMatch()">Spara match</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- SAVE BAR -->
+<div class="save-bar" id="save-bar">
+  <p>Du har <strong id="unsaved-count">0</strong> osparade ändringar</p>
+  <div style="display:flex;gap:10px">
+    <button class="btn btn-ghost" onclick="reloadData()">Ångra</button>
+    <button class="btn btn-accent" onclick="saveToGitHub()">💾 Spara till GitHub</button>
+  </div>
+</div>
+
+<script>
+let CONFIG = {};
+let DATA = {players:[], news:[], matches:[]};
+let editingPlayerId = null;
+let editingNewsId = null;
+let editingMatchId = null;
+let hasUnsaved = false;
+
+// ---- SETUP ----
+function setupConnect() {
+  const user = document.getElementById('setup-user').value.trim();
+  const repo = document.getElementById('setup-repo').value.trim();
+  const token = document.getElementById('setup-token').value.trim();
+  if (!user || !repo || !token) { showToast('Fyll i alla fält', true); return; }
+  CONFIG = {user, repo, token};
+  localStorage.setItem('dif_admin_config', JSON.stringify(CONFIG));
+  startAdmin();
+}
+
+function resetSetup() {
+  localStorage.removeItem('dif_admin_config');
+  location.reload();
+}
+
+async function startAdmin() {
+  document.getElementById('setup-screen').style.display = 'none';
+  document.getElementById('admin-main').style.display = 'block';
+  await loadData();
+}
+
+// ---- GITHUB API ----
+async function ghFetch(path, method='GET', body=null) {
+  const opts = {
+    method,
+    headers: {
+      'Authorization': `token ${CONFIG.token}`,
+      'Accept': 'application/vnd.github.v3+json',
+      'Content-Type': 'application/json'
+    }
+  };
+  if (body) opts.body = JSON.stringify(body);
+  const r = await fetch(`https://api.github.com/repos/${CONFIG.user}/${CONFIG.repo}/${path}`, opts);
+  return r.json();
+}
+
+async function loadData() {
+  try {
+    const res = await ghFetch('contents/data.json');
+    const content = atob(res.content.replace(/\n/g,''));
+    DATA = JSON.parse(content);
+    DATA._sha = res.sha;
+    renderAll();
+    showToast('Data laddad från GitHub ✓');
+  } catch(e) {
+    showToast('Kunde inte ladda data.json från GitHub', true);
+    console.error(e);
+  }
+}
+
+async function saveToGitHub() {
+  try {
+    document.getElementById('save-bar').querySelector('.btn-accent').textContent = 'Sparar...';
+    const dataToSave = {...DATA};
+    const sha = dataToSave._sha;
+    delete dataToSave._sha;
+    const content = btoa(unescape(encodeURIComponent(JSON.stringify(dataToSave, null, 2))));
+    await ghFetch('contents/data.json', 'PUT', {
+      message: 'Admin: uppdaterar data.json',
+      content,
+      sha
+    });
+    const res = await ghFetch('contents/data.json');
+    DATA._sha = res.sha;
+    setUnsaved(false);
+    showToast('Sparat till GitHub ✓');
+    document.getElementById('save-bar').querySelector('.btn-accent').textContent = '💾 Spara till GitHub';
+  } catch(e) {
+    showToast('Fel vid sparning – kontrollera token och repo', true);
+    document.getElementById('save-bar').querySelector('.btn-accent').textContent = '💾 Spara till GitHub';
+    console.error(e);
+  }
+}
+
+async function reloadData() {
+  if (confirm('Ångra alla ändringar och ladda om från GitHub?')) await loadData();
+}
+
+// ---- RENDER ----
+function renderAll() {
+  renderSquad();
+  renderNewsAdmin();
+  renderMatchesAdmin();
+}
+
+function renderSquad() {
+  const sorted = [...DATA.players].sort((a,b) => a.nr - b.nr);
+  document.getElementById('squad-tbody').innerHTML = sorted.map(p => `
+    <tr>
+      <td><strong>#${p.nr}</strong></td>
+      <td><strong>${p.name}</strong></td>
+      <td>${p.pos}</td>
+      <td><span class="pcat-badge pcat-${p.cat}">${p.cat}</span></td>
+      <td>${p.age||'–'}</td>
+      <td>${p.nationality||'–'}</td>
+      <td>${p.matches}</td>
+      <td>${p.goals}</td>
+      <td>${p.assists}</td>
+      <td style="display:flex;gap:6px">
+        <button class="btn btn-ghost btn-sm" onclick="openPlayerModal(${p.id})">Redigera</button>
+        <button class="btn btn-danger" onclick="deletePlayer(${p.id})">Ta bort</button>
+      </td>
+    </tr>`).join('');
+}
+
+function renderNewsAdmin() {
+  const sorted = [...DATA.news].sort((a,b) => new Date(b.date)-new Date(a.date));
+  document.getElementById('news-admin-list').innerHTML = sorted.map(n => `
+    <div class="card" style="margin-bottom:.75rem">
+      <div class="card-head">
+        <h3 style="font-size:14px;font-weight:500;color:var(--text)">${n.title}</h3>
+        <div style="display:flex;gap:6px;flex-shrink:0">
+          <button class="btn btn-ghost btn-sm" onclick="openNewsModal(${n.id})">Redigera</button>
+          <button class="btn btn-danger" onclick="deleteNews(${n.id})">Ta bort</button>
+        </div>
+      </div>
+      <div style="padding:10px 16px;font-size:12px;color:var(--text2);display:flex;gap:12px">
+        <span>${n.source}</span><span>${n.date}</span><span>${n.category}</span>
+      </div>
+    </div>`).join('') || '<div style="text-align:center;padding:2rem;color:var(--text3)">Inga nyheter ännu</div>';
+}
+
+function renderMatchesAdmin() {
+  const sorted = [...DATA.matches].sort((a,b) => new Date(a.date)-new Date(b.date));
+  document.getElementById('matches-tbody').innerHTML = sorted.map(m => `
+    <tr>
+      <td>${m.date}</td>
+      <td><strong>${m.home}</strong> – ${m.away}</td>
+      <td>${m.competition}</td>
+      <td>${m.played ? `${m.homeScore}–${m.awayScore}` : '<span style="color:var(--text3)">–</span>'}</td>
+      <td style="display:flex;gap:6px">
+        <button class="btn btn-ghost btn-sm" onclick="openMatchModal(${m.id})">Redigera</button>
+        <button class="btn btn-danger" onclick="deleteMatch(${m.id})">Ta bort</button>
+      </td>
+    </tr>`).join('');
+}
+
+// ---- PLAYER MODAL ----
+function openPlayerModal(id=null) {
+  editingPlayerId = id;
+  document.getElementById('player-modal-title').textContent = id ? 'Redigera spelare' : 'Ny spelare';
+  if (id) {
+    const p = DATA.players.find(x=>x.id===id);
+    document.getElementById('p-nr').value = p.nr;
+    document.getElementById('p-name').value = p.name;
+    document.getElementById('p-pos').value = p.pos;
+    document.getElementById('p-cat').value = p.cat;
+    document.getElementById('p-age').value = p.age||'';
+    document.getElementById('p-nat').value = p.nationality||'';
+    document.getElementById('p-matches').value = p.matches;
+    document.getElementById('p-goals').value = p.goals;
+    document.getElementById('p-assists').value = p.assists;
+  } else {
+    ['p-nr','p-name','p-pos','p-age','p-nat'].forEach(id=>document.getElementById(id).value='');
+    ['p-matches','p-goals','p-assists'].forEach(id=>document.getElementById(id).value=0);
+    document.getElementById('p-cat').value='Mittfält';
+  }
+  document.getElementById('player-modal').style.display='flex';
+}
+
+function closePlayerModal() { document.getElementById('player-modal').style.display='none'; }
+
+function savePlayer() {
+  const p = {
+    nr: parseInt(document.getElementById('p-nr').value),
+    name: document.getElementById('p-name').value.trim(),
+    pos: document.getElementById('p-pos').value.trim(),
+    cat: document.getElementById('p-cat').value,
+    age: parseInt(document.getElementById('p-age').value)||null,
+    nationality: document.getElementById('p-nat').value.trim(),
+    matches: parseInt(document.getElementById('p-matches').value)||0,
+    goals: parseInt(document.getElementById('p-goals').value)||0,
+    assists: parseInt(document.getElementById('p-assists').value)||0,
+    image: ''
+  };
+  if (!p.name || !p.nr) { showToast('Namn och nummer krävs', true); return; }
+  if (editingPlayerId) {
+    const idx = DATA.players.findIndex(x=>x.id===editingPlayerId);
+    DATA.players[idx] = {...DATA.players[idx], ...p};
+  } else {
+    p.id = Date.now();
+    DATA.players.push(p);
+  }
+  closePlayerModal();
+  renderSquad();
+  setUnsaved(true);
+  showToast(editingPlayerId ? 'Spelare uppdaterad' : 'Spelare tillagd');
+}
+
+function deletePlayer(id) {
+  if (!confirm('Ta bort spelaren?')) return;
+  DATA.players = DATA.players.filter(p=>p.id!==id);
+  renderSquad();
+  setUnsaved(true);
+  showToast('Spelare borttagen');
+}
+
+// ---- NEWS MODAL ----
+function openNewsModal(id=null) {
+  editingNewsId = id;
+  document.getElementById('news-modal-title').textContent = id ? 'Redigera nyhet' : 'Ny nyhet';
+  const today = new Date().toISOString().split('T')[0];
+  if (id) {
+    const n = DATA.news.find(x=>x.id===id);
+    document.getElementById('n-url').value = n.sourceUrl||'';
+    document.getElementById('n-title').value = n.title;
+    document.getElementById('n-summary').value = n.summary;
+    document.getElementById('n-source').value = n.source;
+    document.getElementById('n-sourceUrl').value = n.sourceUrl||'';
+    document.getElementById('n-category').value = n.category;
+    document.getElementById('n-date').value = n.date;
+  } else {
+    document.getElementById('n-url').value='';
+    document.getElementById('n-title').value='';
+    document.getElementById('n-summary').value='';
+    document.getElementById('n-source').value='';
+    document.getElementById('n-sourceUrl').value='';
+    document.getElementById('n-category').value='Match';
+    document.getElementById('n-date').value=today;
+  }
+  document.getElementById('news-modal').style.display='flex';
+}
+
+function closeNewsModal() { document.getElementById('news-modal').style.display='none'; }
+
+async function fetchNewsUrl() {
+  const url = document.getElementById('n-url').value.trim();
+  if (!url) return;
+  try {
+    const domain = new URL(url).hostname.replace('www.','');
+    const sourceName = domain.split('.')[0];
+    document.getElementById('n-sourceUrl').value = new URL(url).origin;
+    document.getElementById('n-source').value = sourceName.charAt(0).toUpperCase() + sourceName.slice(1);
+    showToast('Källinfo hämtad – fyll i rubrik och sammanfattning');
+  } catch(e) {
+    showToast('Ogiltig URL', true);
+  }
+}
+
+function saveNews() {
+  const n = {
+    title: document.getElementById('n-title').value.trim(),
+    summary: document.getElementById('n-summary').value.trim(),
+    source: document.getElementById('n-source').value.trim(),
+    sourceUrl: document.getElementById('n-sourceUrl').value.trim(),
+    favicon: '',
+    category: document.getElementById('n-category').value,
+    date: document.getElementById('n-date').value
+  };
+  if (!n.title) { showToast('Rubrik krävs', true); return; }
+  if (n.sourceUrl) {
+    try { n.favicon = new URL(n.sourceUrl).origin + '/favicon.ico'; } catch(e){}
+  }
+  if (editingNewsId) {
+    const idx = DATA.news.findIndex(x=>x.id===editingNewsId);
+    DATA.news[idx] = {...DATA.news[idx], ...n};
+  } else {
+    n.id = Date.now();
+    DATA.news.push(n);
+  }
+  closeNewsModal();
+  renderNewsAdmin();
+  setUnsaved(true);
+  showToast(editingNewsId ? 'Nyhet uppdaterad' : 'Nyhet tillagd');
+}
+
+function deleteNews(id) {
+  if (!confirm('Ta bort nyheten?')) return;
+  DATA.news = DATA.news.filter(n=>n.id!==id);
+  renderNewsAdmin();
+  setUnsaved(true);
+  showToast('Nyhet borttagen');
+}
+
+// ---- MATCH MODAL ----
+function openMatchModal(id=null) {
+  editingMatchId = id;
+  document.getElementById('match-modal-title').textContent = id ? 'Redigera match' : 'Ny match';
+  const today = new Date().toISOString().split('T')[0];
+  if (id) {
+    const m = DATA.matches.find(x=>x.id===id);
+    document.getElementById('m-date').value = m.date;
+    document.getElementById('m-competition').value = m.competition;
+    document.getElementById('m-home').value = m.home;
+    document.getElementById('m-away').value = m.away;
+    document.getElementById('m-venue').value = m.venue||'';
+    document.getElementById('m-played').checked = m.played;
+    document.getElementById('m-home-score').value = m.homeScore||0;
+    document.getElementById('m-away-score').value = m.awayScore||0;
+    toggleResultFields();
+  } else {
+    document.getElementById('m-date').value = today;
+    document.getElementById('m-competition').value = 'Allsvenskan';
+    document.getElementById('m-home').value = 'Djurgårdens IF';
+    document.getElementById('m-away').value = '';
+    document.getElementById('m-venue').value = '3Arena';
+    document.getElementById('m-played').checked = false;
+    document.getElementById('m-home-score').value = 0;
+    document.getElementById('m-away-score').value = 0;
+    toggleResultFields();
+  }
+  document.getElementById('match-modal').style.display='flex';
+}
+
+function closeMatchModal() { document.getElementById('match-modal').style.display='none'; }
+
+function toggleResultFields() {
+  const played = document.getElementById('m-played').checked;
+  document.getElementById('result-fields').style.display = played ? 'block' : 'none';
+}
+
+function saveMatch() {
+  const played = document.getElementById('m-played').checked;
+  const m = {
+    date: document.getElementById('m-date').value,
+    competition: document.getElementById('m-competition').value,
+    home: document.getElementById('m-home').value.trim(),
+    away: document.getElementById('m-away').value.trim(),
+    venue: document.getElementById('m-venue').value.trim(),
+    played,
+    homeScore: played ? parseInt(document.getElementById('m-home-score').value) : null,
+    awayScore: played ? parseInt(document.getElementById('m-away-score').value) : null
+  };
+  if (!m.home || !m.away || !m.date) { showToast('Fyll i alla obligatoriska fält', true); return; }
+  if (editingMatchId) {
+    const idx = DATA.matches.findIndex(x=>x.id===editingMatchId);
+    DATA.matches[idx] = {...DATA.matches[idx], ...m};
+  } else {
+    m.id = Date.now();
+    DATA.matches.push(m);
+  }
+  closeMatchModal();
+  renderMatchesAdmin();
+  setUnsaved(true);
+  showToast(editingMatchId ? 'Match uppdaterad' : 'Match tillagd');
+}
+
+function deleteMatch(id) {
+  if (!confirm('Ta bort matchen?')) return;
+  DATA.matches = DATA.matches.filter(m=>m.id!==id);
+  renderMatchesAdmin();
+  setUnsaved(true);
+  showToast('Match borttagen');
+}
+
+// ---- UI HELPERS ----
+function showAdminPage(id) {
+  document.querySelectorAll('.admin-page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.admin-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('admin-'+id).classList.add('active');
+  const order = ['squad','news','matches'];
+  document.querySelectorAll('.admin-tab')[order.indexOf(id)].classList.add('active');
+}
+
+function setUnsaved(val) {
+  hasUnsaved = val;
+  document.getElementById('save-bar').classList.toggle('show', val);
+  document.getElementById('unsaved-count').textContent = val ? '1+' : '0';
+}
+
+function showToast(msg, isError=false) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show' + (isError ? ' error' : '');
+  setTimeout(()=>t.className='toast', 3000);
+}
+
+// ---- INIT ----
+const saved = localStorage.getItem('dif_admin_config');
+if (saved) {
+  CONFIG = JSON.parse(saved);
+  document.getElementById('setup-user').value = CONFIG.user;
+  document.getElementById('setup-repo').value = CONFIG.repo;
+  startAdmin();
+}
+
+document.getElementById('n-date').value = new Date().toISOString().split('T')[0];
+</script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+{
+  "players": [
+    {"id": 1, "nr": 1,  "name": "Jacob Rinne",           "pos": "Målvakt",     "cat": "Målvakt",  "age": 31, "nationality": "🇸🇪", "matches": 0, "goals": 0, "assists": 0, "image": ""},
+    {"id": 2, "nr": 33, "name": "Oscar Jonsson",          "pos": "Målvakt",     "cat": "Målvakt",  "age": 22, "nationality": "🇸🇪", "matches": 0, "goals": 0, "assists": 0, "image": ""},
+    {"id": 3, "nr": 2,  "name": "Jacob Une Larsson",     "pos": "Högerback",   "cat": "Back",     "age": 24, "nationality": "🇸🇪", "matches": 0, "goals": 0, "assists": 0, "image": ""},
+    {"id": 4, "nr": 3,  "name": "Kristian Lien",         "pos": "Mittback",    "cat": "Back",     "age": 26, "nationality": "🇳🇴", "matches": 0, "goals": 0, "assists": 0, "image": ""},
+    {"id": 5, "nr": 5,  "name": "Marcus Danielsson",     "pos": "Mittback",    "cat": "Back",     "age": 35, "nationality": "🇸🇪", "matches": 0, "goals": 0, "assists": 0, "image": ""},
+    {"id": 6, "nr": 23, "name": "Jonathan Augustinsson", "pos": "Vänsterback", "cat": "Back",     "age": 29, "nationality": "🇸🇪", "matches": 0, "goals": 0, "assists": 0, "image": ""},
+    {"id": 7, "nr": 6,  "name": "Matias Siltanen",       "pos": "Mittfältare", "cat": "Mittfält", "age": 25, "nationality": "🇫🇮", "matches": 0, "goals": 0, "assists": 0, "image": ""},
+    {"id": 8, "nr": 8,  "name": "Mikael Anderson",       "pos": "Mittfältare", "cat": "Mittfält", "age": 27, "nationality": "🇸🇪", "matches": 0, "goals": 0, "assists": 0, "image": ""},
+    {"id": 9, "nr": 14, "name": "Ahmed Saeed",           "pos": "Mittfältare", "cat": "Mittfält", "age": 23, "nationality": "🇸🇪", "matches": 0, "goals": 0, "assists": 0, "image": ""},
+    {"id": 10,"nr": 18, "name": "Bo Hegland",            "pos": "Mittfältare", "cat": "Mittfält", "age": 22, "nationality": "🇳🇴", "matches": 0, "goals": 0, "assists": 0, "image": ""},
+    {"id": 11,"nr": 22, "name": "Keita Kosugi",          "pos": "Mittfältare", "cat": "Mittfält", "age": 24, "nationality": "🇯🇵", "matches": 0, "goals": 0, "assists": 0, "image": ""},
+    {"id": 12,"nr": 7,  "name": "Jeppe Okkels",          "pos": "Forward",     "cat": "Forward",  "age": 26, "nationality": "🇩🇰", "matches": 0, "goals": 0, "assists": 0, "image": ""},
+    {"id": 13,"nr": 9,  "name": "Nino Žugelj",           "pos": "Forward",     "cat": "Forward",  "age": 24, "nationality": "🇸🇮", "matches": 0, "goals": 0, "assists": 0, "image": ""},
+    {"id": 14,"nr": 11, "name": "Adam Ståhl",            "pos": "Forward",     "cat": "Forward",  "age": 28, "nationality": "🇸🇪", "matches": 0, "goals": 0, "assists": 0, "image": ""},
+    {"id": 15,"nr": 17, "name": "Zakaria Sawo",          "pos": "Forward",     "cat": "Forward",  "age": 21, "nationality": "🇸🇪", "matches": 0, "goals": 0, "assists": 0, "image": ""},
+    {"id": 16,"nr": 21, "name": "Oskar Fallenius",       "pos": "Forward",     "cat": "Forward",  "age": 23, "nationality": "🇸🇪", "matches": 0, "goals": 0, "assists": 0, "image": ""}
+  ],
+  "news": [
+    {
+      "id": 1,
+      "title": "Isländsk landslagsmittfältare skadad – missar inledningen av Allsvenskan",
+      "summary": "Djurgårdens isländske mittfältare skadade sig i samband med landskampen mot Haiti och blir borta ett antal veckor under våren.",
+      "source": "Djurgårdens IF",
+      "sourceUrl": "https://www.dif.se",
+      "favicon": "https://www.dif.se/favicon.ico",
+      "date": "2026-04-03",
+      "category": "Skada"
+    },
+    {
+      "id": 2,
+      "title": "Hemmapremiär mot Kalmar FF den 12 april – Kaminen öppnar",
+      "summary": "I samband med den allsvenska hemmapremiären mot Kalmar den 12 april slår Kaminen upp portarna – en ny samlingsplats i Slakthusområdet för alla Djurgårdare.",
+      "source": "Djurgårdens IF",
+      "sourceUrl": "https://www.dif.se",
+      "favicon": "https://www.dif.se/favicon.ico",
+      "date": "2026-04-01",
+      "category": "Info"
+    },
+    {
+      "id": 3,
+      "title": "Allsvenskan sänds exklusivt på TV4 Play från säsongen 2026",
+      "summary": "Från och med säsongen 2026 sänds samtliga Allsvenskan-matcher på TV4 Play. Djurgården erbjuder supportrar rabatterat pris.",
+      "source": "Sportbladet",
+      "sourceUrl": "https://www.sportbladet.se",
+      "favicon": "https://www.sportbladet.se/favicon.ico",
+      "date": "2026-03-15",
+      "category": "TV"
+    }
+  ],
+  "matches": [
+    {"id": 1,  "date": "2026-02-22", "home": "Djurgårdens IF", "away": "IF Brommapojkarna", "homeScore": 3, "awayScore": 1, "competition": "Svenska Cupen", "venue": "3Arena", "played": true},
+    {"id": 2,  "date": "2026-02-22", "home": "Falkenbergs FF", "away": "Djurgårdens IF",    "homeScore": 0, "awayScore": 2, "competition": "Svenska Cupen", "venue": "Falkenbergs IP", "played": true},
+    {"id": 3,  "date": "2026-03-07", "home": "Djurgårdens IF", "away": "Skövde AIK",        "homeScore": 4, "awayScore": 0, "competition": "Svenska Cupen", "venue": "3Arena", "played": true},
+    {"id": 4,  "date": "2026-04-06", "home": "GAIS",            "away": "Djurgårdens IF",   "homeScore": null, "awayScore": null, "competition": "Allsvenskan", "venue": "Kristianstads Fotbollsarena", "played": false},
+    {"id": 5,  "date": "2026-04-12", "home": "Djurgårdens IF", "away": "Kalmar FF",         "homeScore": null, "awayScore": null, "competition": "Allsvenskan", "venue": "3Arena", "played": false},
+    {"id": 6,  "date": "2026-04-17", "home": "Djurgårdens IF", "away": "Malmö FF",          "homeScore": null, "awayScore": null, "competition": "Allsvenskan", "venue": "3Arena", "played": false},
+    {"id": 7,  "date": "2026-04-22", "home": "IF Elfsborg",    "away": "Djurgårdens IF",    "homeScore": null, "awayScore": null, "competition": "Allsvenskan", "venue": "Borås Arena", "played": false},
+    {"id": 8,  "date": "2026-04-26", "home": "Djurgårdens IF", "away": "Hammarby IF",       "homeScore": null, "awayScore": null, "competition": "Allsvenskan", "venue": "3Arena", "played": false},
+    {"id": 9,  "date": "2026-05-04", "home": "Djurgårdens IF", "away": "IFK Göteborg",      "homeScore": null, "awayScore": null, "competition": "Allsvenskan", "venue": "3Arena", "played": false},
+    {"id": 10, "date": "2026-05-10", "home": "AIK",             "away": "Djurgårdens IF",   "homeScore": null, "awayScore": null, "competition": "Allsvenskan", "venue": "Friends Arena", "played": false},
+    {"id": 11, "date": "2026-05-18", "home": "Djurgårdens IF", "away": "IK Sirius",         "homeScore": null, "awayScore": null, "competition": "Allsvenskan", "venue": "3Arena", "played": false},
+    {"id": 12, "date": "2026-05-25", "home": "Djurgårdens IF", "away": "IF Brommapojkarna", "homeScore": null, "awayScore": null, "competition": "Allsvenskan", "venue": "3Arena", "played": false},
+    {"id": 13, "date": "2026-05-31", "home": "Mjällby AIF",    "away": "Djurgårdens IF",    "homeScore": null, "awayScore": null, "competition": "Allsvenskan", "venue": "Strandvallen", "played": false}
+  ]
+}

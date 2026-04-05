@@ -4,332 +4,237 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Djurgårdens IF – Allsvenskan 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
 <style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f2f2f0; color: #1a1a1a; }
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --blue:#005B9A;--dark:#002B50;--accent:#E8A020;--red:#C8102E;
+  --bg:#0f1923;--surface:#1a2535;--surface2:#212f42;--surface3:#263448;
+  --border:rgba(255,255,255,0.07);--text:#eef2f7;--text2:#8a9bb0;--text3:#5a6e85;
+  --radius:12px;--radius-sm:8px;
+}
+body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
 
-:root {
-  --dif-blue: #005B9A;
-  --dif-dark: #003B6F;
-  --dif-accent: #E8A020;
-  --dif-red: #C8102E;
-  --bg: #f2f2f0;
-  --surface: #ffffff;
-  --surface2: #f7f7f5;
-  --border: rgba(0,0,0,0.1);
-  --text: #1a1a1a;
-  --text2: #666;
-  --radius: 10px;
-}
+/* TOPBAR */
+.topbar{background:#000;padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:36px;font-size:11px;letter-spacing:0.5px}
+.topbar-left{color:var(--text3)}
+.topbar a{color:var(--text2);text-decoration:none;margin-left:20px;transition:color .15s}
+.topbar a:hover{color:var(--text)}
 
-.topbar {
-  background: var(--dif-dark);
-  color: #aac4de;
-  padding: 0 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 38px;
-  font-size: 12px;
-}
-.topbar a { color: #aac4de; text-decoration: none; margin-left: 16px; }
+/* HEADER */
+.header{background:linear-gradient(160deg,#001428 0%,#002B50 60%,#003d73 100%);border-bottom:1px solid var(--border);padding:0 1.5rem}
+.header-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:1.25rem;padding:1rem 0}
+.club-badge{width:64px;height:64px;background:white;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 0 0 3px rgba(232,160,32,0.4)}
+.club-badge span:first-child{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;color:#002B50;line-height:1}
+.club-badge span:last-child{font-size:9px;font-weight:600;color:#5580a0;letter-spacing:1px}
+.header-info{flex:1}
+.header-info h1{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:700;letter-spacing:0.5px;color:white}
+.header-info p{font-size:12px;color:#6a90b0;margin-top:2px}
+.header-next{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:var(--radius-sm);padding:10px 16px;text-align:center;min-width:200px}
+.header-next .label{font-size:10px;font-weight:600;color:var(--accent);letter-spacing:1px;text-transform:uppercase}
+.header-next .teams{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;color:white;margin:4px 0 2px}
+.header-next .meta{font-size:11px;color:var(--text2)}
 
-.header {
-  background: linear-gradient(135deg, #003B6F 0%, #005B9A 100%);
-  padding: 0 1rem;
-}
-.header-inner {
-  max-width: 1100px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 0.85rem 0;
-}
-.club-badge {
-  width: 58px; height: 58px;
-  background: white; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-weight: 600; font-size: 11px; color: var(--dif-dark);
-  text-align: center; line-height: 1.3; flex-shrink: 0;
-}
-.header-title h1 { color: white; font-size: 22px; font-weight: 600; letter-spacing: -0.3px; }
-.header-title p { color: #aac4de; font-size: 12px; margin-top: 3px; }
+/* NAV */
+.nav{background:var(--dark);border-bottom:2px solid var(--accent);position:sticky;top:0;z-index:100}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex;padding:0 1.5rem;overflow-x:auto}
+.nav-tab{padding:13px 20px;color:var(--text2);font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;border:none;background:none;border-bottom:2px solid transparent;margin-bottom:-2px;transition:color .15s;letter-spacing:0.3px;font-family:'Barlow',sans-serif}
+.nav-tab:hover{color:var(--text)}
+.nav-tab.active{color:white;border-bottom-color:var(--accent)}
 
-.nav-tabs { background: var(--dif-blue); border-bottom: 3px solid var(--dif-accent); }
-.nav-inner { max-width: 1100px; margin: 0 auto; display: flex; padding: 0 1rem; overflow-x: auto; }
-.nav-tab {
-  padding: 11px 18px; color: #aac4de; font-size: 13px; font-weight: 500;
-  cursor: pointer; white-space: nowrap; border: none; background: none;
-  border-bottom: 3px solid transparent; margin-bottom: -3px; transition: color 0.15s;
-}
-.nav-tab:hover { color: white; }
-.nav-tab.active { color: white; border-bottom-color: var(--dif-accent); }
+/* LAYOUT */
+.content{max-width:1200px;margin:0 auto;padding:1.5rem}
+.page{display:none}
+.page.active{display:block}
+.grid-main{display:grid;grid-template-columns:1fr 340px;gap:1.5rem}
+@media(max-width:900px){.grid-main{grid-template-columns:1fr}}
 
-.content { max-width: 1100px; margin: 0 auto; padding: 1.25rem 1rem; }
-.page { display: none; }
-.page.active { display: block; }
+/* SECTION HEADERS */
+.sec-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+.sec-head h2{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:700;color:white;letter-spacing:0.5px;display:flex;align-items:center;gap:8px}
+.sec-head h2::before{content:'';display:block;width:4px;height:20px;background:var(--accent);border-radius:2px}
+.sec-link{font-size:12px;color:var(--accent);cursor:pointer;font-weight:600;letter-spacing:0.3px}
 
-.grid-2 { display: grid; grid-template-columns: 2fr 1fr; gap: 1rem; }
-@media (max-width: 720px) { .grid-2 { grid-template-columns: 1fr; } }
+/* NEWS CARDS */
+.news-featured{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+@media(max-width:600px){.news-featured{grid-template-columns:1fr}}
 
-.card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  overflow: hidden;
-  margin-bottom: 1rem;
-}
-.card-head {
-  padding: 11px 15px;
-  border-bottom: 1px solid var(--border);
-  display: flex; align-items: center; justify-content: space-between;
-}
-.card-head h3 { font-size: 12px; font-weight: 600; color: var(--text2); text-transform: uppercase; letter-spacing: 0.6px; }
-.card-head .see-all { font-size: 12px; color: var(--dif-blue); cursor: pointer; text-decoration: none; }
+.news-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:border-color .2s,transform .2s;cursor:pointer}
+.news-card:hover{border-color:rgba(255,255,255,0.18);transform:translateY(-2px)}
+.news-card-top{height:6px;background:var(--blue)}
+.news-card-body{padding:14px 16px 16px}
+.news-source{display:flex;align-items:center;gap:6px;margin-bottom:8px}
+.news-source img{width:16px;height:16px;border-radius:3px;object-fit:contain;background:white;padding:1px}
+.news-source .src-name{font-size:11px;font-weight:600;color:var(--text2);letter-spacing:0.3px;text-transform:uppercase}
+.news-source .src-date{font-size:11px;color:var(--text3);margin-left:auto}
+.news-cat{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;margin-bottom:8px;letter-spacing:0.5px;text-transform:uppercase}
+.cat-skada{background:rgba(200,16,46,0.15);color:#f06070}
+.cat-info{background:rgba(0,91,154,0.2);color:#70b0e0}
+.cat-tv{background:rgba(80,60,180,0.2);color:#a090f0}
+.cat-match{background:rgba(30,160,80,0.2);color:#60c880}
+.cat-trupp{background:rgba(232,160,32,0.15);color:#e8c060}
+.cat-analys{background:rgba(100,100,100,0.2);color:#a0a0b0}
+.news-card h3{font-size:15px;font-weight:600;color:var(--text);line-height:1.45;margin-bottom:6px}
+.news-card p{font-size:13px;color:var(--text2);line-height:1.6}
 
-/* Next match */
-.next-match-card {
-  background: var(--dif-dark); border-radius: var(--radius);
-  overflow: hidden; margin-bottom: 1rem;
-}
-.next-match-label {
-  background: var(--dif-accent); color: #3a2000;
-  font-size: 11px; font-weight: 600; padding: 5px 15px; letter-spacing: 0.6px;
-}
-.next-match-body { padding: 1rem 1.25rem; }
-.next-match-teams { display: flex; align-items: center; justify-content: space-between; margin: 0.75rem 0; }
-.next-match-team { text-align: center; flex: 1; }
-.next-match-team .name { font-size: 16px; font-weight: 600; color: white; }
-.next-match-team .sub { font-size: 12px; color: #aac4de; margin-top: 3px; }
-.next-match-vs { font-size: 24px; font-weight: 700; color: var(--dif-accent); padding: 0 1rem; }
-.next-match-info { display: flex; gap: 16px; flex-wrap: wrap; }
-.next-match-info span { font-size: 12px; color: #aac4de; }
-.next-match-info span::before { content: "·"; margin-right: 8px; color: #5580a0; }
-.next-match-info span:first-child::before { display: none; }
+.news-list-item{display:flex;gap:12px;padding:14px 16px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .15s}
+.news-list-item:last-child{border-bottom:none}
+.news-list-item:hover{background:var(--surface2)}
+.nli-source{display:flex;align-items:center;gap:5px;margin-bottom:5px}
+.nli-source img{width:14px;height:14px;border-radius:2px;background:white;padding:1px;object-fit:contain}
+.nli-source span{font-size:11px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:0.3px}
+.nli-source .nli-date{margin-left:auto;font-size:11px;color:var(--text3)}
+.news-list-item h4{font-size:14px;font-weight:500;color:var(--text);line-height:1.4}
+.nli-body{flex:1}
 
-/* Match rows */
-.match-row {
-  display: flex; align-items: center; padding: 10px 15px;
-  border-bottom: 1px solid var(--border); font-size: 13px; gap: 10px;
-}
-.match-row:last-child { border-bottom: none; }
-.match-row:hover { background: var(--surface2); }
-.match-date { color: var(--text2); width: 52px; flex-shrink: 0; font-size: 12px; }
-.match-teams { flex: 1; color: var(--text); }
-.match-result {
-  font-weight: 600; padding: 3px 9px; border-radius: 5px;
-  font-size: 12px; min-width: 40px; text-align: center;
-}
-.result-upcoming { background: #f0f0ee; color: #888; }
+/* SIDEBAR */
+.sidebar{}
+.widget{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:1rem}
+.widget-head{padding:12px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.widget-head h3{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;color:white;letter-spacing:0.5px}
+.widget-head a{font-size:11px;color:var(--accent);cursor:pointer;font-weight:600}
 
-/* Stats */
-.stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; padding: 1rem; }
-@media (max-width: 500px) { .stat-grid { grid-template-columns: repeat(2,1fr); } }
-.stat-box { background: var(--surface2); border-radius: 8px; padding: 12px; text-align: center; }
-.stat-box .val { font-size: 24px; font-weight: 700; color: var(--text); }
-.stat-box .lbl { font-size: 11px; color: var(--text2); margin-top: 2px; }
+/* NEXT MATCH WIDGET */
+.next-match-widget{background:linear-gradient(135deg,#001e38,#003060);border:1px solid rgba(0,91,154,0.4);border-radius:var(--radius);overflow:hidden;margin-bottom:1rem}
+.nmw-label{background:var(--accent);padding:5px 16px;font-size:10px;font-weight:700;color:#3a2000;letter-spacing:1px;text-transform:uppercase}
+.nmw-body{padding:16px}
+.nmw-comp{font-size:11px;color:var(--text2);margin-bottom:10px;font-weight:600;letter-spacing:0.3px}
+.nmw-teams{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.nmw-team{text-align:center;flex:1}
+.nmw-team .tname{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;color:white}
+.nmw-team .tsub{font-size:11px;color:var(--text2);margin-top:2px}
+.nmw-vs{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:700;color:var(--accent);padding:0 12px}
+.nmw-meta{display:flex;flex-wrap:wrap;gap:8px}
+.nmw-meta span{font-size:11px;color:var(--text2);background:rgba(255,255,255,0.05);padding:4px 10px;border-radius:20px}
 
-/* News */
-.news-item {
-  display: flex; gap: 10px; padding: 13px 15px;
-  border-bottom: 1px solid var(--border); cursor: default;
-}
-.news-item:last-child { border-bottom: none; }
-.news-item:hover { background: var(--surface2); }
-.news-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--dif-blue); margin-top: 5px; flex-shrink: 0; }
-.news-item h4 { font-size: 14px; font-weight: 500; color: var(--text); line-height: 1.4; }
-.news-item p { font-size: 12px; color: var(--text2); margin-top: 3px; line-height: 1.5; }
-.news-badge {
-  font-size: 10px; padding: 2px 7px; border-radius: 3px;
-  background: #deeaf7; color: #185FA5; margin-right: 6px; font-weight: 600;
-  display: inline-block; margin-bottom: 4px;
-}
+/* MATCH ROWS */
+.match-row{display:flex;align-items:center;padding:11px 16px;border-bottom:1px solid var(--border);font-size:13px;gap:10px;transition:background .15s}
+.match-row:last-child{border-bottom:none}
+.match-row:hover{background:var(--surface2)}
+.mr-date{color:var(--text3);width:46px;flex-shrink:0;font-size:11px;font-weight:600}
+.mr-comp{font-size:10px;font-weight:700;padding:2px 7px;border-radius:3px;flex-shrink:0;letter-spacing:0.3px}
+.comp-allsvenskan{background:rgba(0,91,154,0.25);color:#70b0e0}
+.comp-cup{background:rgba(232,160,32,0.2);color:#e8c060}
+.mr-teams{flex:1;color:var(--text)}
+.mr-teams strong{color:white}
+.mr-result{font-weight:700;padding:3px 10px;border-radius:5px;font-size:13px;min-width:42px;text-align:center;font-family:'Barlow Condensed',sans-serif;font-size:15px}
+.res-w{background:rgba(30,160,80,0.2);color:#60c880}
+.res-l{background:rgba(200,16,46,0.15);color:#f06070}
+.res-d{background:rgba(200,160,0,0.15);color:#c8b040}
+.res-upcoming{background:rgba(255,255,255,0.05);color:var(--text2)}
 
-/* Table */
-.standing-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-.standing-table th {
-  text-align: left; padding: 8px 15px; font-size: 11px;
-  color: var(--text2); font-weight: 600; border-bottom: 1px solid var(--border); letter-spacing: 0.3px;
-}
-.standing-table td { padding: 9px 15px; border-bottom: 1px solid var(--border); }
-.standing-table tr:last-child td { border-bottom: none; }
-.standing-table tr:hover td { background: var(--surface2); }
-.standing-table tr.highlight td { background: #deeaf7; color: #185FA5; font-weight: 600; }
-.pos-badge {
-  width: 22px; height: 22px; border-radius: 50%; background: #f0f0ee;
-  display: inline-flex; align-items: center; justify-content: center;
-  font-size: 11px; font-weight: 600;
-}
-.pos-1 { background: #faeeda; color: #854F0B; }
-.pos-dif { background: #deeaf7; color: #185FA5; }
+/* STAT BOXES */
+.stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:12px}
+@media(max-width:500px){.stat-row{grid-template-columns:repeat(2,1fr)}}
+.stat-box{background:var(--surface2);border-radius:var(--radius-sm);padding:12px;text-align:center}
+.stat-box .sv{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:700;color:white}
+.stat-box .sl{font-size:11px;color:var(--text2);margin-top:2px;font-weight:500}
 
-/* Players */
-.player-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 1rem; padding: 1rem; }
-.player-card {
-  background: var(--surface2); border-radius: var(--radius);
-  padding: 15px; text-align: center; border: 1px solid var(--border);
-  transition: box-shadow 0.15s, border-color 0.15s;
-}
-.player-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.08); border-color: #aaa; }
-.player-avatar {
-  width: 52px; height: 52px; border-radius: 50%; margin: 0 auto 9px;
-  display: flex; align-items: center; justify-content: center;
-  font-weight: 700; font-size: 16px; color: white;
-}
-.player-card .name { font-size: 14px; font-weight: 600; color: var(--text); }
-.player-card .pos { font-size: 12px; color: var(--text2); margin-top: 2px; }
-.player-card .nr {
-  font-size: 11px; color: white; background: var(--dif-blue);
-  border-radius: 4px; padding: 2px 7px; display: inline-block; margin-top: 7px;
-}
-.player-stats-row { display: flex; justify-content: space-around; margin-top: 11px; padding-top: 10px; border-top: 1px solid var(--border); }
-.player-stat .v { font-size: 16px; font-weight: 700; color: var(--text); }
-.player-stat .l { font-size: 10px; color: var(--text2); }
+/* TABLE */
+.table-standings{width:100%;border-collapse:collapse;font-size:13px}
+.table-standings th{padding:8px 12px;font-size:10px;font-weight:700;color:var(--text3);border-bottom:1px solid var(--border);text-align:left;letter-spacing:0.5px;text-transform:uppercase}
+.table-standings td{padding:10px 12px;border-bottom:1px solid var(--border);color:var(--text2)}
+.table-standings tr:last-child td{border-bottom:none}
+.table-standings tr:hover td{background:var(--surface2)}
+.table-standings tr.dif td{color:white;font-weight:600;background:rgba(0,91,154,0.15)}
+.pos-num{width:22px;height:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;background:var(--surface3)}
 
-/* Filter */
-.filter-bar { display: flex; gap: 6px; padding: 10px 15px; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
-.filter-btn {
-  padding: 5px 13px; border-radius: 20px; font-size: 12px;
-  border: 1px solid #ccc; background: white; color: var(--text2); cursor: pointer;
-  font-family: inherit;
-}
-.filter-btn:hover { border-color: #999; }
-.filter-btn.active { background: var(--dif-blue); color: white; border-color: var(--dif-blue); }
+/* PLAYERS */
+.player-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1rem;padding:1rem}
+.player-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:16px;text-align:center;transition:border-color .2s,transform .2s;cursor:default}
+.player-card:hover{border-color:rgba(255,255,255,0.2);transform:translateY(-2px)}
+.pa{width:56px;height:56px;border-radius:50%;margin:0 auto 10px;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:19px;font-weight:700;color:white}
+.player-card .pname{font-size:14px;font-weight:600;color:white}
+.player-card .ppos{font-size:12px;color:var(--text2);margin-top:2px}
+.player-card .pnr{font-size:11px;font-weight:700;color:white;background:var(--blue);border-radius:4px;padding:2px 8px;display:inline-block;margin-top:7px}
+.player-card .pnat{font-size:14px;margin-top:5px}
+.p-stats{display:flex;justify-content:space-around;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
+.p-stat .pv{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;color:white}
+.p-stat .pl{font-size:10px;color:var(--text3);font-weight:600}
 
-/* Schedule */
-.sched-round {
-  padding: 8px 15px 5px; font-size: 11px; color: var(--text2);
-  font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;
-  background: var(--surface2); border-bottom: 1px solid var(--border);
-}
-.sched-match {
-  display: flex; align-items: center; gap: 10px;
-  padding: 10px 15px; border-bottom: 1px solid var(--border); font-size: 13px;
-}
-.sched-match:hover { background: var(--surface2); }
-.sched-match:last-child { border-bottom: none; }
-.sched-date { width: 54px; flex-shrink: 0; color: var(--text2); font-size: 12px; }
-.sched-teams { flex: 1; color: var(--text); }
-.sched-teams .home { font-weight: 600; }
-.sched-time { color: var(--dif-blue); font-size: 12px; font-weight: 600; }
-.sched-match.dif-match { background: #ecf4fb; }
-.sched-match.dif-match .sched-teams .home { color: #185FA5; }
+/* FILTER BAR */
+.filter-bar{display:flex;gap:6px;padding:10px 16px;border-bottom:1px solid var(--border);flex-wrap:wrap}
+.fbtn{padding:5px 14px;border-radius:20px;font-size:12px;border:1px solid var(--border);background:transparent;color:var(--text2);cursor:pointer;font-family:'Barlow',sans-serif;font-weight:600;transition:all .15s}
+.fbtn:hover{border-color:rgba(255,255,255,0.2);color:var(--text)}
+.fbtn.active{background:var(--blue);color:white;border-color:var(--blue)}
 
-/* AI news */
-.ai-btn {
-  font-size: 12px; padding: 5px 12px;
-  background: var(--dif-blue); color: white; border: none;
-  border-radius: 5px; cursor: pointer; font-family: inherit;
-}
-.ai-btn:hover { background: var(--dif-dark); }
-.ai-status { font-size: 12px; color: var(--text2); padding: 12px 0; }
-.ai-news-area { padding: 0 15px 15px; }
+/* SCHEDULE */
+.sched-round{padding:7px 16px;font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.8px;background:var(--surface2);border-bottom:1px solid var(--border)}
 
-/* Responsive */
-@media (max-width: 480px) {
-  .header-title h1 { font-size: 18px; }
-  .nav-tab { padding: 10px 12px; font-size: 12px; }
-  .next-match-vs { font-size: 18px; }
+/* LOADING */
+.loading{text-align:center;padding:3rem;color:var(--text2);font-size:14px}
+
+@media(max-width:600px){
+  .header-next{display:none}
+  .header-info h1{font-size:22px}
+  .content{padding:1rem}
 }
 </style>
 </head>
 <body>
 
 <div class="topbar">
-  <span>Allsvenskan 2026 · Djurgårdens IF</span>
-  <div>
-    <a href="https://www.dif.se" target="_blank">dif.se</a>
-    <a href="https://www.dif.se/biljetter" target="_blank">Biljetter</a>
-  </div>
+  <span class="topbar-left">Djurgårdens IF · Allsvenskan 2026</span>
+  <div><a href="https://www.dif.se" target="_blank">dif.se</a><a href="https://www.dif.se/biljetter" target="_blank">Biljetter</a></div>
 </div>
 
 <div class="header">
   <div class="header-inner">
-    <div class="club-badge">DIF<br>1891</div>
-    <div class="header-title">
+    <div class="club-badge"><span>DIF</span><span>1891</span></div>
+    <div class="header-info">
       <h1>Djurgårdens IF</h1>
-      <p>Allsvenskan 2026 · Stockholms hjärta</p>
+      <p>Allsvenskan 2026 · Stockholms hjärta sedan 1891</p>
+    </div>
+    <div class="header-next" id="header-next">
+      <div class="label">Nästa match</div>
+      <div class="teams" id="hn-teams">Laddar...</div>
+      <div class="meta" id="hn-meta"></div>
     </div>
   </div>
 </div>
 
-<div class="nav-tabs">
+<div class="nav">
   <div class="nav-inner">
-    <button class="nav-tab active" onclick="showPage('overview')">Översikt</button>
+    <button class="nav-tab active" onclick="showPage('news')">Nyheter</button>
     <button class="nav-tab" onclick="showPage('matches')">Matcher</button>
     <button class="nav-tab" onclick="showPage('squad')">Trupp</button>
     <button class="nav-tab" onclick="showPage('schedule')">Spelprogram</button>
-    <button class="nav-tab" onclick="showPage('news')">Nyheter</button>
   </div>
 </div>
 
 <div class="content">
 
-<!-- OVERVIEW -->
-<div id="page-overview" class="page active">
-  <div class="next-match-card">
-    <div class="next-match-label">NÄSTA MATCH · ALLSVENSKAN OMGÅNG 1</div>
-    <div class="next-match-body">
-      <div class="next-match-teams">
-        <div class="next-match-team"><div class="name">GAIS</div><div class="sub">Hemmalag</div></div>
-        <div class="next-match-vs">VS</div>
-        <div class="next-match-team"><div class="name">Djurgårdens IF</div><div class="sub">Bortalag</div></div>
+<!-- NEWS -->
+<div id="page-news" class="page active">
+  <div class="grid-main">
+    <div>
+      <div class="sec-head">
+        <h2>Senaste nytt</h2>
       </div>
-      <div class="next-match-info">
-        <span>Måndag 6 april 2026</span>
-        <span>19:00</span>
-        <span>Kristianstads Fotbollsarena</span>
-        <span>Omgång 1</span>
+      <div class="news-featured" id="news-featured"></div>
+      <div class="widget" id="news-list-widget">
+        <div class="widget-head"><h3>Fler nyheter</h3></div>
+        <div id="news-list"></div>
       </div>
     </div>
-  </div>
-
-  <div class="grid-2">
-    <div>
-      <div class="card">
-        <div class="card-head"><h3>Säsongsstatistik 2026</h3></div>
-        <div class="stat-grid">
-          <div class="stat-box"><div class="val">0</div><div class="lbl">Spelade</div></div>
-          <div class="stat-box"><div class="val">0</div><div class="lbl">Vinster</div></div>
-          <div class="stat-box"><div class="val">0</div><div class="lbl">Mål</div></div>
-          <div class="stat-box"><div class="val">4</div><div class="lbl">Tabell-plats</div></div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-head">
-          <h3>Kommande matcher</h3>
-          <span class="see-all" onclick="showPage('schedule')">Se alla →</span>
-        </div>
-        <div class="match-row"><span class="match-date">6 apr</span><span class="match-teams">GAIS – Djurgårdens IF</span><span class="match-result result-upcoming">19:00</span></div>
-        <div class="match-row"><span class="match-date">12 apr</span><span class="match-teams">Djurgårdens IF – Kalmar FF</span><span class="match-result result-upcoming">15:00</span></div>
-        <div class="match-row"><span class="match-date">17 apr</span><span class="match-teams">Djurgårdens IF – Malmö FF</span><span class="match-result result-upcoming">17:00</span></div>
-        <div class="match-row"><span class="match-date">22 apr</span><span class="match-teams">IF Elfsborg – Djurgårdens IF</span><span class="match-result result-upcoming">19:00</span></div>
-        <div class="match-row"><span class="match-date">26 apr</span><span class="match-teams">Djurgårdens IF – Hammarby IF</span><span class="match-result result-upcoming">—</span></div>
-      </div>
-    </div>
-    <div>
-      <div class="card">
-        <div class="card-head"><h3>Allsvenskan Tabell</h3></div>
-        <table class="standing-table">
+    <div class="sidebar">
+      <div class="next-match-widget" id="next-match-widget"></div>
+      <div class="widget">
+        <div class="widget-head"><h3>Allsvenskan Tabell</h3></div>
+        <table class="table-standings">
           <thead><tr><th>#</th><th>Lag</th><th>M</th><th>P</th></tr></thead>
           <tbody>
-            <tr><td><span class="pos-badge pos-1">1</span></td><td>Hammarby IF</td><td>0</td><td>0</td></tr>
-            <tr><td><span class="pos-badge">2</span></td><td>Malmö FF</td><td>0</td><td>0</td></tr>
-            <tr><td><span class="pos-badge">3</span></td><td>IFK Göteborg</td><td>0</td><td>0</td></tr>
-            <tr class="highlight"><td><span class="pos-badge pos-dif">4</span></td><td><b>Djurgårdens IF</b></td><td>0</td><td>0</td></tr>
-            <tr><td><span class="pos-badge">5</span></td><td>AIK</td><td>0</td><td>0</td></tr>
-            <tr><td><span class="pos-badge">6</span></td><td>BK Häcken</td><td>0</td><td>0</td></tr>
-            <tr><td><span class="pos-badge">7</span></td><td>IF Elfsborg</td><td>0</td><td>0</td></tr>
-            <tr><td><span class="pos-badge">8</span></td><td>GAIS</td><td>0</td><td>0</td></tr>
+            <tr><td><span class="pos-num">1</span></td><td>Hammarby IF</td><td>0</td><td>0</td></tr>
+            <tr><td><span class="pos-num">2</span></td><td>Malmö FF</td><td>0</td><td>0</td></tr>
+            <tr><td><span class="pos-num">3</span></td><td>IFK Göteborg</td><td>0</td><td>0</td></tr>
+            <tr class="dif"><td><span class="pos-num" style="background:var(--blue);color:white">4</span></td><td>Djurgårdens IF</td><td>0</td><td>0</td></tr>
+            <tr><td><span class="pos-num">5</span></td><td>AIK</td><td>0</td><td>0</td></tr>
+            <tr><td><span class="pos-num">6</span></td><td>BK Häcken</td><td>0</td><td>0</td></tr>
+            <tr><td><span class="pos-num">7</span></td><td>IF Elfsborg</td><td>0</td><td>0</td></tr>
+            <tr><td><span class="pos-num">8</span></td><td>GAIS</td><td>0</td><td>0</td></tr>
           </tbody>
         </table>
-      </div>
-      <div class="card">
-        <div class="card-head"><h3>Senaste nytt</h3><span class="see-all" onclick="showPage('news')">Se alla →</span></div>
-        <div class="news-item"><div class="news-dot"></div><div><h4>Isländsk mittfältare skadad – missar veckor</h4><p>3 apr 2026 · Skador</p></div></div>
-        <div class="news-item"><div class="news-dot"></div><div><h4>Hemmapremiär mot Kalmar 12 april</h4><p>1 apr 2026 · Info</p></div></div>
-        <div class="news-item"><div class="news-dot"></div><div><h4>Kaminen öppnar i Slakthusområdet</h4><p>28 mar 2026 · Klubben</p></div></div>
       </div>
     </div>
   </div>
@@ -337,37 +242,29 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 
 <!-- MATCHES -->
 <div id="page-matches" class="page">
-  <div class="card">
-    <div class="card-head"><h3>Alla matcher 2026</h3></div>
-    <div class="filter-bar">
-      <button class="filter-btn active" onclick="filterMatches('all',this)">Alla</button>
-      <button class="filter-btn" onclick="filterMatches('upcoming',this)">Kommande</button>
+  <div class="sec-head"><h2>Matcher 2026</h2></div>
+  <div class="widget">
+    <div class="filter-bar" id="match-filter">
+      <button class="fbtn active" onclick="filterMatches('all',this)">Alla</button>
+      <button class="fbtn" onclick="filterMatches('Allsvenskan',this)">Allsvenskan</button>
+      <button class="fbtn" onclick="filterMatches('Svenska Cupen',this)">Svenska Cupen</button>
+      <button class="fbtn" onclick="filterMatches('played',this)">Spelade</button>
+      <button class="fbtn" onclick="filterMatches('upcoming',this)">Kommande</button>
     </div>
-    <div id="match-list">
-      <div class="match-row" data-type="upcoming"><span class="match-date">6 apr</span><span class="match-teams">GAIS – Djurgårdens IF &nbsp;<small style="color:#999">(Omg. 1)</small></span><span class="match-result result-upcoming">19:00</span></div>
-      <div class="match-row" data-type="upcoming"><span class="match-date">12 apr</span><span class="match-teams">Djurgårdens IF – Kalmar FF &nbsp;<small style="color:#999">(Omg. 2)</small></span><span class="match-result result-upcoming">15:00</span></div>
-      <div class="match-row" data-type="upcoming"><span class="match-date">17 apr</span><span class="match-teams">Djurgårdens IF – Malmö FF &nbsp;<small style="color:#999">(Omg. 3)</small></span><span class="match-result result-upcoming">17:00</span></div>
-      <div class="match-row" data-type="upcoming"><span class="match-date">22 apr</span><span class="match-teams">IF Elfsborg – Djurgårdens IF &nbsp;<small style="color:#999">(Omg. 4)</small></span><span class="match-result result-upcoming">19:00</span></div>
-      <div class="match-row" data-type="upcoming"><span class="match-date">26 apr</span><span class="match-teams">Djurgårdens IF – Hammarby IF &nbsp;<small style="color:#999">(Omg. 5)</small></span><span class="match-result result-upcoming">—</span></div>
-      <div class="match-row" data-type="upcoming"><span class="match-date">4 maj</span><span class="match-teams">Djurgårdens IF – IFK Göteborg &nbsp;<small style="color:#999">(Omg. 6)</small></span><span class="match-result result-upcoming">19:00</span></div>
-      <div class="match-row" data-type="upcoming"><span class="match-date">10 maj</span><span class="match-teams">AIK – Djurgårdens IF &nbsp;<small style="color:#999">(Omg. 7)</small></span><span class="match-result result-upcoming">14:00</span></div>
-      <div class="match-row" data-type="upcoming"><span class="match-date">18 maj</span><span class="match-teams">Djurgårdens IF – IK Sirius &nbsp;<small style="color:#999">(Omg. 8)</small></span><span class="match-result result-upcoming">19:00</span></div>
-      <div class="match-row" data-type="upcoming"><span class="match-date">25 maj</span><span class="match-teams">Djurgårdens IF – IF Brommapojkarna &nbsp;<small style="color:#999">(Omg. 9)</small></span><span class="match-result result-upcoming">—</span></div>
-      <div class="match-row" data-type="upcoming"><span class="match-date">31 maj</span><span class="match-teams">Mjällby AIF – Djurgårdens IF &nbsp;<small style="color:#999">(Omg. 10)</small></span><span class="match-result result-upcoming">—</span></div>
-    </div>
+    <div id="match-list"></div>
   </div>
 </div>
 
 <!-- SQUAD -->
 <div id="page-squad" class="page">
-  <div class="card">
-    <div class="card-head"><h3>Trupp 2026</h3></div>
+  <div class="sec-head"><h2>Trupp 2026</h2></div>
+  <div class="widget">
     <div class="filter-bar">
-      <button class="filter-btn active" onclick="filterSquad('all',this)">Alla</button>
-      <button class="filter-btn" onclick="filterSquad('Målvakt',this)">Målvakter</button>
-      <button class="filter-btn" onclick="filterSquad('Back',this)">Backar</button>
-      <button class="filter-btn" onclick="filterSquad('Mittfält',this)">Mittfält</button>
-      <button class="filter-btn" onclick="filterSquad('Forward',this)">Forwards</button>
+      <button class="fbtn active" onclick="filterSquad('all',this)">Alla</button>
+      <button class="fbtn" onclick="filterSquad('Målvakt',this)">Målvakter</button>
+      <button class="fbtn" onclick="filterSquad('Back',this)">Backar</button>
+      <button class="fbtn" onclick="filterSquad('Mittfält',this)">Mittfält</button>
+      <button class="fbtn" onclick="filterSquad('Forward',this)">Forwards</button>
     </div>
     <div class="player-grid" id="player-grid"></div>
   </div>
@@ -375,164 +272,222 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 
 <!-- SCHEDULE -->
 <div id="page-schedule" class="page">
-  <div class="card">
-    <div class="card-head"><h3>Spelprogram Allsvenskan 2026 – Djurgårdens IF</h3></div>
-    <div id="schedule-list"></div>
-  </div>
+  <div class="sec-head"><h2>Spelprogram</h2></div>
+  <div class="widget" id="schedule-widget"></div>
 </div>
 
-<!-- NEWS -->
-<div id="page-news" class="page">
-  <div class="card">
-    <div class="card-head">
-      <h3>Senaste nyheter</h3>
-      <button class="ai-btn" onclick="loadAINews()">Hämta AI-nyheter ↻</button>
-    </div>
-    <div class="news-item"><div class="news-dot"></div><div><span class="news-badge">SKADA</span><h4>Isländsk landslagsmittfältare skadad – missar inledningen av Allsvenskan</h4><p>Djurgårdens isländske mittfältare skadade sig i samband med landskampen mot Haiti och blir borta ett antal veckor under våren.</p><p style="margin-top:5px;font-size:11px;color:#999">3 april 2026</p></div></div>
-    <div class="news-item"><div class="news-dot"></div><div><span class="news-badge">INFO</span><h4>Hemmapremiär mot Kalmar FF den 12 april på 3Arena</h4><p>Djurgårdens allsvenska hemmapremiär spelas den 12 april mot Kalmar FF. Passa på att hylla avgående tränare Bosse Andersson.</p><p style="margin-top:5px;font-size:11px;color:#999">1 april 2026</p></div></div>
-    <div class="news-item"><div class="news-dot"></div><div><span class="news-badge">KLUBBEN</span><h4>Kaminen öppnar – ny samlingsplats för DIF-fans i Slakthusområdet</h4><p>I samband med hemmapremiären slår Kaminen upp portarna – en ny mötesplats för alla Djurgårdare i Slakthusområdet vid 3Arena.</p><p style="margin-top:5px;font-size:11px;color:#999">28 mars 2026</p></div></div>
-    <div class="news-item"><div class="news-dot"></div><div><span class="news-badge">TV</span><h4>Allsvenskan sänds exklusivt på TV4 Play från säsongen 2026</h4><p>Samtliga Allsvenskan-matcher visas på TV4 Play. Djurgården erbjuder supportrar ett rabatterat pris – klubben får samtidigt 300 kronor per abonnemang.</p><p style="margin-top:5px;font-size:11px;color:#999">15 mars 2026</p></div></div>
-    <div class="news-item"><div class="news-dot"></div><div><span class="news-badge">TRUPP</span><h4>Dansk mittfältare ny i truppen – klar från Lyngby</h4><p>Den 22-årige danske mittfältaren ansluter till Djurgården från danska Lyngby inför säsongen 2026.</p><p style="margin-top:5px;font-size:11px;color:#999">10 mars 2026</p></div></div>
-    <div class="ai-news-area" id="ai-news-area" style="display:none">
-      <div class="ai-status" id="ai-status"></div>
-      <div id="ai-news-content"></div>
-    </div>
-  </div>
 </div>
-
-</div><!-- /content -->
 
 <script>
-const players = [
-  {nr:1,  name:"Jacob Rinne",           pos:"Målvakt",       cat:"Målvakt",  color:"#1D9E75"},
-  {nr:33, name:"Oscar Jonsson",          pos:"Målvakt",       cat:"Målvakt",  color:"#1D9E75"},
-  {nr:2,  name:"Jacob Une Larsson",     pos:"Högerback",     cat:"Back",     color:"#005B9A"},
-  {nr:3,  name:"Kristian Lien",         pos:"Mittback",      cat:"Back",     color:"#005B9A"},
-  {nr:5,  name:"Marcus Danielsson",     pos:"Mittback",      cat:"Back",     color:"#005B9A"},
-  {nr:23, name:"Jonathan Augustinsson", pos:"Vänsterback",   cat:"Back",     color:"#005B9A"},
-  {nr:6,  name:"Matias Siltanen",       pos:"Mittfältare",   cat:"Mittfält", color:"#534AB7"},
-  {nr:8,  name:"Mikael Anderson",       pos:"Mittfältare",   cat:"Mittfält", color:"#534AB7"},
-  {nr:14, name:"Ahmed Saeed",           pos:"Mittfältare",   cat:"Mittfält", color:"#534AB7"},
-  {nr:18, name:"Bo Hegland",            pos:"Mittfältare",   cat:"Mittfält", color:"#534AB7"},
-  {nr:22, name:"Keita Kosugi",          pos:"Mittfältare",   cat:"Mittfält", color:"#534AB7"},
-  {nr:7,  name:"Jeppe Okkels",          pos:"Forward",       cat:"Forward",  color:"#C8102E"},
-  {nr:9,  name:"Nino Žugelj",           pos:"Forward",       cat:"Forward",  color:"#C8102E"},
-  {nr:11, name:"Adam Ståhl",            pos:"Forward",       cat:"Forward",  color:"#C8102E"},
-  {nr:17, name:"Zakaria Sawo",          pos:"Forward",       cat:"Forward",  color:"#C8102E"},
-  {nr:21, name:"Oskar Fallenius",       pos:"Forward",       cat:"Forward",  color:"#C8102E"},
-];
+const DATA_URL = 'data.json';
+let DATA = null;
 
-const schedule = [
-  {round:1,  date:"6 apr",  home:"GAIS",              away:"Djurgårdens IF",       time:"19:00", dif:true},
-  {round:2,  date:"12 apr", home:"Djurgårdens IF",    away:"Kalmar FF",            time:"15:00", dif:true},
-  {round:3,  date:"17 apr", home:"Djurgårdens IF",    away:"Malmö FF",             time:"17:00", dif:true},
-  {round:4,  date:"22 apr", home:"IF Elfsborg",       away:"Djurgårdens IF",       time:"19:00", dif:true},
-  {round:5,  date:"26 apr", home:"Djurgårdens IF",    away:"Hammarby IF",          time:"—",     dif:true},
-  {round:6,  date:"4 maj",  home:"Djurgårdens IF",    away:"IFK Göteborg",         time:"19:00", dif:true},
-  {round:7,  date:"10 maj", home:"AIK",               away:"Djurgårdens IF",       time:"14:00", dif:true},
-  {round:8,  date:"18 maj", home:"Djurgårdens IF",    away:"IK Sirius",            time:"19:00", dif:true},
-  {round:9,  date:"25 maj", home:"Djurgårdens IF",    away:"IF Brommapojkarna",    time:"—",     dif:true},
-  {round:10, date:"31 maj", home:"Mjällby AIF",       away:"Djurgårdens IF",       time:"—",     dif:true},
-];
+const catColors = {
+  Målvakt:'#1D9E75', Back:'#005B9A', Mittfält:'#534AB7', Forward:'#C8102E'
+};
 
-function initPlayers() {
-  document.getElementById('player-grid').innerHTML = players.map(p => {
+function fmtDate(str) {
+  const d = new Date(str);
+  return d.toLocaleDateString('sv-SE',{day:'numeric',month:'short'});
+}
+
+function catClass(cat) {
+  const m = {'Skada':'cat-skada','Info':'cat-info','TV':'cat-tv','Match':'cat-match','Trupp':'cat-trupp','Analys':'cat-analys'};
+  return m[cat] || 'cat-info';
+}
+
+function compClass(c) {
+  return c === 'Allsvenskan' ? 'comp-allsvenskan' : 'comp-cup';
+}
+
+function resultClass(m) {
+  if (!m.played) return 'res-upcoming';
+  const dif_home = m.home === 'Djurgårdens IF';
+  const dif_score = dif_home ? m.homeScore : m.awayScore;
+  const opp_score = dif_home ? m.awayScore : m.homeScore;
+  if (dif_score > opp_score) return 'res-w';
+  if (dif_score < opp_score) return 'res-l';
+  return 'res-d';
+}
+
+function resultText(m) {
+  if (!m.played) return fmtDate(m.date);
+  return `${m.homeScore}–${m.awayScore}`;
+}
+
+function faviconImg(url, name) {
+  const domain = url ? new URL(url).hostname : '';
+  const src = domain ? `https://www.google.com/s2/favicons?domain=${domain}&sz=32` : '';
+  return src ? `<img src="${src}" onerror="this.style.display='none'" alt="${name}">` : '';
+}
+
+function renderNews(news) {
+  const sorted = [...news].sort((a,b) => new Date(b.date) - new Date(a.date));
+  const featured = sorted.slice(0,2);
+  const rest = sorted.slice(2);
+
+  document.getElementById('news-featured').innerHTML = featured.map(n => `
+    <div class="news-card" onclick="if('${n.sourceUrl}')window.open('${n.sourceUrl}','_blank')">
+      <div class="news-card-top" style="background:${n.category==='Skada'?'var(--red)':n.category==='Match'?'#1a8040':'var(--blue)'}"></div>
+      <div class="news-card-body">
+        <div class="news-source">
+          ${faviconImg(n.sourceUrl, n.source)}
+          <span class="src-name">${n.source}</span>
+          <span class="src-date">${fmtDate(n.date)}</span>
+        </div>
+        <span class="news-cat ${catClass(n.category)}">${n.category}</span>
+        <h3>${n.title}</h3>
+        <p>${n.summary}</p>
+      </div>
+    </div>`).join('');
+
+  document.getElementById('news-list').innerHTML = rest.map(n => `
+    <div class="news-list-item" onclick="if('${n.sourceUrl}')window.open('${n.sourceUrl}','_blank')">
+      <div class="nli-body">
+        <div class="nli-source">
+          ${faviconImg(n.sourceUrl, n.source)}
+          <span>${n.source}</span>
+          <span class="nli-date">${fmtDate(n.date)}</span>
+        </div>
+        <h4>${n.title}</h4>
+      </div>
+    </div>`).join('') || '<div style="padding:1.5rem;text-align:center;color:var(--text3);font-size:13px">Inga fler nyheter</div>';
+}
+
+function renderNextMatch(matches) {
+  const upcoming = matches.filter(m => !m.played).sort((a,b) => new Date(a.date)-new Date(b.date));
+  const next = upcoming[0];
+  if (!next) return;
+
+  const d = new Date(next.date);
+  const dateStr = d.toLocaleDateString('sv-SE',{weekday:'long',day:'numeric',month:'long'});
+
+  document.getElementById('hn-teams').textContent = `${next.home} – ${next.away}`;
+  document.getElementById('hn-meta').textContent = `${dateStr} · ${next.competition}`;
+
+  document.getElementById('next-match-widget').innerHTML = `
+    <div class="nmw-label">Nästa match</div>
+    <div class="nmw-body">
+      <div class="nmw-comp">${next.competition}</div>
+      <div class="nmw-teams">
+        <div class="nmw-team"><div class="tname">${next.home}</div><div class="tsub">Hemmalag</div></div>
+        <div class="nmw-vs">VS</div>
+        <div class="nmw-team"><div class="tname">${next.away}</div><div class="tsub">Bortalag</div></div>
+      </div>
+      <div class="nmw-meta">
+        <span>${dateStr}</span>
+        <span>${next.venue}</span>
+      </div>
+    </div>`;
+}
+
+let allMatches = [];
+function renderMatches(matches) {
+  allMatches = [...matches].sort((a,b) => new Date(a.date)-new Date(b.date));
+  displayMatches(allMatches);
+}
+
+function displayMatches(list) {
+  document.getElementById('match-list').innerHTML = list.map(m => {
+    const dif_home = m.home === 'Djurgårdens IF';
+    const homeStr = dif_home ? `<strong>${m.home}</strong>` : m.home;
+    const awayStr = !dif_home ? `<strong>${m.away}</strong>` : m.away;
+    return `<div class="match-row">
+      <span class="mr-date">${fmtDate(m.date)}</span>
+      <span class="mr-comp ${compClass(m.competition)}">${m.competition === 'Allsvenskan' ? 'ALL' : 'CUP'}</span>
+      <span class="mr-teams">${homeStr} – ${awayStr}</span>
+      <span class="mr-result ${resultClass(m)}">${resultText(m)}</span>
+    </div>`;
+  }).join('') || '<div class="loading">Inga matcher</div>';
+}
+
+function filterMatches(type, btn) {
+  document.querySelectorAll('#match-filter .fbtn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  let list = allMatches;
+  if (type === 'played') list = allMatches.filter(m => m.played);
+  else if (type === 'upcoming') list = allMatches.filter(m => !m.played);
+  else if (type !== 'all') list = allMatches.filter(m => m.competition === type);
+  displayMatches(list);
+}
+
+let allPlayers = [];
+function renderPlayers(players) {
+  allPlayers = players;
+  displayPlayers(players);
+}
+
+function displayPlayers(list) {
+  document.getElementById('player-grid').innerHTML = list.map(p => {
     const ini = p.name.split(' ').map(n=>n[0]).join('').slice(0,2);
+    const col = catColors[p.cat] || '#005B9A';
     return `<div class="player-card" data-cat="${p.cat}">
-      <div class="player-avatar" style="background:${p.color}">${ini}</div>
-      <div class="name">${p.name}</div>
-      <div class="pos">${p.pos}</div>
-      <span class="nr">#${p.nr}</span>
-      <div class="player-stats-row">
-        <div class="player-stat"><div class="v">0</div><div class="l">Matcher</div></div>
-        <div class="player-stat"><div class="v">0</div><div class="l">Mål</div></div>
-        <div class="player-stat"><div class="v">0</div><div class="l">Ass.</div></div>
+      <div class="pa" style="background:${col}">${ini}</div>
+      <div class="pname">${p.name}</div>
+      <div class="ppos">${p.pos}</div>
+      <div class="pnat">${p.nationality||''}</div>
+      <span class="pnr">#${p.nr}</span>
+      <div class="p-stats">
+        <div class="p-stat"><div class="pv">${p.matches}</div><div class="pl">Matcher</div></div>
+        <div class="p-stat"><div class="pv">${p.goals}</div><div class="pl">Mål</div></div>
+        <div class="p-stat"><div class="pv">${p.assists}</div><div class="pl">Ass.</div></div>
       </div>
     </div>`;
   }).join('');
 }
 
-function initSchedule() {
-  let html = '', lastRound = -1;
-  schedule.forEach(m => {
-    if (m.round !== lastRound) {
-      html += `<div class="sched-round">Omgång ${m.round}</div>`;
-      lastRound = m.round;
-    }
-    html += `<div class="sched-match${m.dif?' dif-match':''}">
-      <span class="sched-date">${m.date}</span>
-      <span class="sched-teams"><span class="home">${m.home}</span> – ${m.away}</span>
-      <span class="sched-time">${m.time}</span>
-    </div>`;
+function filterSquad(cat, btn) {
+  document.querySelectorAll('#page-squad .fbtn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  displayPlayers(cat === 'all' ? allPlayers : allPlayers.filter(p => p.cat === cat));
+}
+
+function renderSchedule(matches) {
+  const sorted = [...matches].sort((a,b) => new Date(a.date)-new Date(b.date));
+  const groups = {};
+  sorted.forEach(m => {
+    const k = m.competition;
+    if (!groups[k]) groups[k] = [];
+    groups[k].push(m);
   });
-  document.getElementById('schedule-list').innerHTML = html;
+  let html = '';
+  for (const [comp, list] of Object.entries(groups)) {
+    html += `<div class="sched-round">${comp}</div>`;
+    list.forEach(m => {
+      const dif_home = m.home === 'Djurgårdens IF';
+      html += `<div class="match-row">
+        <span class="mr-date">${fmtDate(m.date)}</span>
+        <span class="mr-teams">${dif_home?'<strong>'+m.home+'</strong>':m.home} – ${!dif_home?'<strong>'+m.away+'</strong>':m.away}</span>
+        <span class="mr-result ${resultClass(m)}">${resultText(m)}</span>
+      </div>`;
+    });
+  }
+  document.getElementById('schedule-widget').innerHTML = html;
 }
 
 function showPage(id) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
   document.getElementById('page-'+id).classList.add('active');
-  const order = ['overview','matches','squad','schedule','news'];
+  const order = ['news','matches','squad','schedule'];
   document.querySelectorAll('.nav-tab')[order.indexOf(id)].classList.add('active');
 }
 
-function filterMatches(type, btn) {
-  document.querySelectorAll('#match-list .match-row').forEach(r => {
-    r.style.display = (type==='all' || r.dataset.type===type) ? '' : 'none';
-  });
-  document.querySelectorAll('#page-matches .filter-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-}
-
-function filterSquad(cat, btn) {
-  document.querySelectorAll('#player-grid .player-card').forEach(c => {
-    c.style.display = (cat==='all' || c.dataset.cat===cat) ? '' : 'none';
-  });
-  document.querySelectorAll('#page-squad .filter-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-}
-
-async function loadAINews() {
-  const area = document.getElementById('ai-news-area');
-  const status = document.getElementById('ai-status');
-  const content = document.getElementById('ai-news-content');
-  area.style.display = 'block';
-  status.textContent = 'Hämtar AI-genererade nyhetssammanfattningar...';
-  content.innerHTML = '';
+async function loadData() {
   try {
-    const resp = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        model: "claude-sonnet-4-20250514",
-        max_tokens: 1000,
-        messages: [{
-          role: "user",
-          content: `Du är sportredaktör för Djurgårdens IF. Skriv 3 korta, realistiska nyhetsrubriker och sammanfattningar (2-3 meningar) om DIF inför Allsvenskan 2026. Seriepremiären GAIS-Djurgården spelas 6 april, hemmapremiär mot Kalmar FF 12 april. Svara BARA med JSON array utan markdown: [{"badge":"KATEGORI","title":"Rubrik","text":"Text","date":"Datum"}]. Kategorier: MATCH, TRUPP, ANALYS, INFO`
-        }]
-      })
-    });
-    const data = await resp.json();
-    const raw = data.content.map(i => i.text || '').join('');
-    const items = JSON.parse(raw.replace(/\`\`\`json|\`\`\`/g,'').trim());
-    status.textContent = '';
-    content.innerHTML = items.map(n => `
-      <div class="news-item">
-        <div class="news-dot" style="background:#E8A020"></div>
-        <div>
-          <span class="news-badge" style="background:#faeeda;color:#854F0B">${n.badge}</span>
-          <h4>${n.title}</h4>
-          <p>${n.text}</p>
-          <p style="margin-top:5px;font-size:11px;color:#999">${n.date} · AI-genererad</p>
-        </div>
-      </div>`).join('');
+    const r = await fetch(`data.json?v=${Date.now()}`);
+    DATA = await r.json();
+    renderNews(DATA.news);
+    renderNextMatch(DATA.matches);
+    renderMatches(DATA.matches);
+    renderPlayers(DATA.players);
+    renderSchedule(DATA.matches);
   } catch(e) {
-    status.textContent = 'Kunde inte hämta AI-nyheter. Kontrollera din anslutning.';
+    console.error('Kunde inte ladda data.json', e);
   }
 }
 
-initPlayers();
-initSchedule();
+loadData();
 </script>
 </body>
 </html>
