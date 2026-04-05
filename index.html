@@ -365,13 +365,13 @@ async function apiFetch(url){
 async function getLastMatches(){
   const c = cGet('last'); if(c) return c;
   const j = await apiFetch(`${TSDB}/eventslast.php?id=${TEAM_ID}`);
-  const v = (j.results||[]).map(normalizeMatch);
+  const v = (j.results||[]).map(normalizeMatch).filter(Boolean);
   cSet('last',v); return v;
 }
 async function getNextMatches(){
   const c = cGet('next'); if(c) return c;
   const j = await apiFetch(`${TSDB}/eventsnext.php?id=${TEAM_ID}`);
-  const v = (j.events||[]).map(normalizeMatch);
+  const v = (j.events||[]).map(normalizeMatch).filter(Boolean);
   cSet('next',v); return v;
 }
 async function getStandings(){
@@ -402,7 +402,10 @@ async function getNews(){
 }
 
 function normalizeMatch(e){
-  const isHome = e.idHomeTeam===TEAM_ID || e.strHomeTeam==='Djurgårdens IF' || e.strHomeTeam==='Djurgarden';
+  const DIF_NAMES = ['Djurgårdens IF','Djurgarden','Djurgaarden','DIF','Djurgårdens IF Fotboll'];
+  const isHome = e.idHomeTeam===TEAM_ID || DIF_NAMES.some(n=>e.strHomeTeam===n);
+  const isDIF = isHome || DIF_NAMES.some(n=>e.strAwayTeam===n);
+  if(!isDIF) return null; // skip non-DIF matches
   const hs = e.intHomeScore!=null?+e.intHomeScore:null;
   const as = e.intAwayScore!=null?+e.intAwayScore:null;
   const ds = isHome?hs:as, os = isHome?as:hs;
