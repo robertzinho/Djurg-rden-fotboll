@@ -1,192 +1,750 @@
 <!DOCTYPE html>
 <html lang="sv" data-theme="dark">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="theme-color" content="#002B50">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="description" content="Djurgårdens IF – Matcher, trupp och tabell Allsvenskan 2026">
-  <title>Djurgårdens IF</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0a0e1a">
+<title>Djurgårdens IF</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+  --blue:#1a56db;--dif:#005B9A;--accent:#f59e0b;--green:#10b981;--red:#ef4444;--gray:#6b7280;
+  --bg:#0a0e1a;--bg2:#111827;--bg3:#1f2937;--bg4:#374151;
+  --surface:#151c2c;--surface2:#1a2236;
+  --border:#1f2937;--border2:#2d3748;
+  --text:#f9fafb;--text2:#9ca3af;--text3:#6b7280;
+  --nav:60px;--safe:env(safe-area-inset-bottom,0px);
+  --r:12px;--r2:8px;--r3:6px;
+  --shadow:0 4px 24px rgba(0,0,0,.5);
+}
+[data-theme=light]{
+  --bg:#f3f4f6;--bg2:#fff;--bg3:#f9fafb;--bg4:#e5e7eb;
+  --surface:#fff;--surface2:#f9fafb;
+  --border:#e5e7eb;--border2:#d1d5db;
+  --text:#111827;--text2:#4b5563;--text3:#9ca3af;
+  --shadow:0 2px 12px rgba(0,0,0,.08);
+}
+html{font-size:15px;-webkit-text-size-adjust:100%}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100dvh;padding-bottom:calc(var(--nav) + var(--safe));overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;font-family:inherit;border:none;background:none;color:inherit}
+img{display:block;max-width:100%}
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles/main.css">
+/* TOPBAR */
+.topbar{position:sticky;top:0;z-index:200;height:52px;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 16px;backdrop-filter:blur(12px)}
+.topbar-logo{display:flex;align-items:center;gap:10px}
+.logo-badge{width:32px;height:32px;background:#fff;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 0 0 2px rgba(245,158,11,.5)}
+.logo-badge b{font-size:9px;font-weight:800;color:#0a2447;line-height:1}
+.logo-badge small{font-size:6px;color:#6b7280;letter-spacing:.5px}
+.topbar-name{font-size:16px;font-weight:800;letter-spacing:-.3px}
+.topbar-right{display:flex;gap:8px}
+.icon-btn{width:34px;height:34px;border-radius:50%;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:15px;color:var(--text2);transition:background .15s}
+.icon-btn:active{background:var(--bg4)}
+
+/* BOTTOM NAV */
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:200;height:calc(var(--nav) + var(--safe));padding-bottom:var(--safe);background:var(--bg2);border-top:1px solid var(--border);display:flex;align-items:stretch}
+.nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--text3);font-size:10px;font-weight:600;letter-spacing:.2px;transition:color .15s;padding:8px 0;position:relative}
+.nav-btn svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.nav-btn.active{color:var(--dif)}
+.nav-btn.active::after{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:32px;height:2px;background:var(--dif);border-radius:0 0 4px 4px}
+
+/* PAGES */
+.page{display:none;min-height:60vh}
+.page.active{display:block}
+
+/* ── HOME ── */
+.hero-card{margin:12px;border-radius:var(--r);background:linear-gradient(145deg,#0a1628 0%,#0d1f3c 40%,#0a2a4a 100%);border:1px solid rgba(0,91,154,.35);overflow:hidden;position:relative}
+.hero-card::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% -20%,rgba(0,91,154,.25) 0%,transparent 60%);pointer-events:none}
+.hero-badge{background:var(--accent);padding:5px 14px;font-size:10px;font-weight:700;color:#000;letter-spacing:.8px;text-transform:uppercase;display:flex;justify-content:space-between}
+.hero-inner{padding:16px;position:relative;z-index:1}
+.hero-comp{font-size:11px;color:#7090b0;font-weight:600;margin-bottom:14px;text-transform:uppercase;letter-spacing:.5px}
+.hero-teams{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:14px}
+.hero-team{flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center}
+.hero-team-logo{width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.hero-team-logo img{width:100%;height:100%;object-fit:contain;padding:4px}
+.hero-team-ini{font-size:14px;font-weight:800;color:#fff}
+.hero-team-name{font-size:13px;font-weight:700;color:#fff;line-height:1.2}
+.hero-vs{font-size:22px;font-weight:900;color:var(--accent);flex-shrink:0}
+.hero-info{display:flex;gap:8px;flex-wrap:wrap}
+.hero-chip{font-size:11px;color:#7090b0;background:rgba(255,255,255,.06);padding:4px 10px;border-radius:20px}
+
+/* SECTION */
+.section-hd{display:flex;align-items:center;justify-content:space-between;padding:16px 16px 10px}
+.section-title{font-size:13px;font-weight:700;color:var(--text);text-transform:uppercase;letter-spacing:.5px;display:flex;align-items:center;gap:6px}
+.section-title::before{content:'';width:3px;height:14px;background:var(--accent);border-radius:2px;display:block}
+.see-all{font-size:12px;color:var(--dif);font-weight:600;padding:4px 10px;background:rgba(0,91,154,.12);border-radius:20px}
+
+/* RESULTS SCROLL */
+.results-row{display:flex;gap:8px;padding:0 12px 12px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.results-row::-webkit-scrollbar{display:none}
+.result-chip{flex-shrink:0;width:88px;background:var(--surface);border-radius:var(--r2);padding:10px 8px;border:1px solid var(--border);text-align:center;border-top:3px solid var(--border2)}
+.result-chip.win{border-top-color:var(--green)}
+.result-chip.loss{border-top-color:var(--red)}
+.result-chip.draw{border-top-color:var(--gray)}
+.rc-opp{font-size:11px;color:var(--text2);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rc-score{font-size:20px;font-weight:800;color:var(--text);margin:4px 0;letter-spacing:-.5px}
+.rc-date{font-size:10px;color:var(--text3)}
+
+/* MATCH CARD */
+.match-card{background:var(--surface);border-radius:var(--r);margin:0 12px 8px;border:1px solid var(--border);overflow:hidden;position:relative}
+.match-card-bar{height:3px;background:var(--border)}
+.match-card-bar.win{background:var(--green)}
+.match-card-bar.loss{background:var(--red)}
+.match-card-bar.draw{background:var(--gray)}
+.mc-top{display:flex;align-items:center;gap:8px;padding:10px 12px 8px}
+.mc-comp{flex:1;font-size:11px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:.3px}
+.mc-date{font-size:11px;color:var(--text3)}
+.badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;letter-spacing:.3px}
+.badge-ft{background:var(--bg3);color:var(--text3)}
+.badge-live{background:rgba(239,68,68,.15);color:#f87171;display:flex;align-items:center;gap:4px}
+.badge-ns{background:rgba(0,91,154,.15);color:#60a5fa}
+.live-dot{width:6px;height:6px;border-radius:50%;background:#f87171;animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.mc-teams{display:flex;align-items:center;gap:6px;padding:4px 12px 12px}
+.mc-team{flex:1;display:flex;align-items:center;gap:8px;min-width:0}
+.mc-team-r{flex-direction:row-reverse}
+.mc-logo{width:26px;height:26px;border-radius:3px;background:var(--bg3);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0}
+.mc-logo img{width:22px;height:22px;object-fit:contain}
+.mc-logo-ini{font-size:8px;font-weight:800;color:var(--text3)}
+.mc-name{font-size:13px;color:var(--text2);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mc-name.dif{color:var(--text);font-weight:700}
+.mc-score{min-width:60px;text-align:center;flex-shrink:0}
+.mc-score-val{font-size:22px;font-weight:800;letter-spacing:-1px}
+.mc-score-val.win{color:var(--green)}
+.mc-score-val.loss{color:var(--red)}
+.mc-score-val.draw{color:var(--text2)}
+.mc-time{font-size:18px;font-weight:700;color:var(--text)}
+.mc-upcoming{text-align:center}
+.mc-upcoming .mc-time{display:block;font-size:17px;font-weight:700}
+.mc-upcoming .mc-soon{font-size:10px;color:var(--accent);margin-top:2px;font-weight:600}
+
+/* NEWS */
+.news-feat{display:block;margin:0 12px 8px;background:var(--surface);border-radius:var(--r);border:1px solid var(--border);overflow:hidden;transition:opacity .15s}
+.news-feat:active{opacity:.8}
+.news-accent{height:3px}
+.news-feat-body{padding:12px}
+.news-src-row{display:flex;align-items:center;gap:5px;margin-bottom:6px}
+.news-src-row img{width:14px;height:14px;border-radius:2px;background:#fff;padding:1px;object-fit:contain;flex-shrink:0}
+.news-src-name{font-size:11px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:.3px}
+.news-src-ago{margin-left:auto;font-size:11px;color:var(--text3)}
+.news-feat h3{font-size:15px;font-weight:700;color:var(--text);line-height:1.4;margin-bottom:5px}
+.news-feat p{font-size:13px;color:var(--text2);line-height:1.55}
+.news-item{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--border);transition:background .15s}
+.news-item:last-child{border-bottom:none}
+.news-item:active{background:var(--bg3)}
+.news-item-body{flex:1;min-width:0}
+.news-item h4{font-size:13px;font-weight:600;color:var(--text);line-height:1.4}
+.news-chevron{color:var(--text3);font-size:18px;font-weight:300;flex-shrink:0}
+.news-list-wrap{margin:0 12px 12px;background:var(--surface);border-radius:var(--r);border:1px solid var(--border);overflow:hidden}
+
+/* STANDINGS */
+.table-wrap{margin:0 12px;background:var(--surface);border-radius:var(--r);border:1px solid var(--border);overflow:hidden}
+.standings-tbl{width:100%;border-collapse:collapse;font-size:13px}
+.standings-tbl th{padding:9px 8px;font-size:10px;font-weight:700;color:var(--text3);border-bottom:1px solid var(--border);text-align:center;text-transform:uppercase;letter-spacing:.4px;background:var(--bg3)}
+.standings-tbl th:nth-child(2){text-align:left;padding-left:4px}
+.standings-tbl td{padding:10px 8px;border-bottom:1px solid var(--border);color:var(--text2);text-align:center}
+.standings-tbl td:nth-child(2){text-align:left;padding-left:4px}
+.standings-tbl tr:last-child td{border-bottom:none}
+.standings-tbl tr:hover td{background:var(--bg3)}
+.standings-tbl tr.row-dif td{background:rgba(0,91,154,.1);color:var(--text);font-weight:700}
+.pos-pill{width:22px;height:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;background:var(--bg4);color:var(--text3)}
+.pos-top{background:rgba(245,158,11,.15);color:var(--accent)}
+.pos-down{background:rgba(239,68,68,.12);color:#f87171}
+.team-cell{display:flex;align-items:center;gap:6px}
+.team-cell img{width:18px;height:18px;border-radius:2px;object-fit:contain;flex-shrink:0}
+.tbl-legend{display:flex;gap:14px;padding:10px 12px;border-top:1px solid var(--border);background:var(--bg3)}
+.tbl-leg-item{font-size:11px;color:var(--text3);padding-left:10px;position:relative}
+.tbl-leg-item::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:3px;height:12px;border-radius:2px}
+.leg-eu::before{background:var(--accent)}
+.leg-down::before{background:#f87171}
+.hx{display:none}
+@media(min-width:480px){.hx{display:table-cell}}
+
+/* SQUAD */
+.squad-filters{display:flex;gap:6px;padding:0 12px 12px;overflow-x:auto;scrollbar-width:none}
+.squad-filters::-webkit-scrollbar{display:none}
+.sq-chip{padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;border:1px solid var(--border);background:transparent;color:var(--text2);white-space:nowrap;transition:all .15s}
+.sq-chip.active{background:var(--dif);color:#fff;border-color:var(--dif)}
+.pos-group-label{font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.8px;padding:10px 16px 6px;background:var(--bg3);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.player-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:10px 12px}
+@media(min-width:400px){.player-grid{grid-template-columns:repeat(4,1fr)}}
+@media(min-width:600px){.player-grid{grid-template-columns:repeat(5,1fr)}}
+.player-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:12px 8px 10px;text-align:center;position:relative;transition:transform .15s}
+.player-card:active{transform:scale(.97)}
+.fav-btn{position:absolute;top:6px;right:8px;font-size:14px;color:var(--text3);transition:color .15s}
+.fav-btn.on{color:var(--accent)}
+.pl-img{width:46px;height:46px;border-radius:50%;margin:0 auto 7px;background:var(--bg3);display:flex;align-items:center;justify-content:center;overflow:hidden;border:2px solid var(--border2)}
+.pl-img img{width:100%;height:100%;object-fit:cover}
+.pl-ini{font-size:14px;font-weight:800;color:var(--text3)}
+.pl-num{font-size:10px;font-weight:700;color:var(--text3);margin-bottom:2px}
+.pl-name{font-size:11px;font-weight:700;color:var(--text);line-height:1.3}
+.pl-pos{font-size:10px;font-weight:600;margin-top:2px}
+.pl-nat{font-size:10px;color:var(--text3);margin-top:1px}
+
+/* SKELETON */
+.sk{background:linear-gradient(90deg,var(--bg3) 25%,var(--bg4) 50%,var(--bg3) 75%);background-size:200% 100%;animation:shimmer 1.4s infinite;border-radius:4px}
+@keyframes shimmer{to{background-position:-200% 0}}
+.sk-text{height:12px;border-radius:3px}
+.sk-block{border-radius:var(--r2)}
+.sk-circle{border-radius:50%}
+
+/* MATCH TAB BAR */
+.tab-bar{display:flex;gap:6px;padding:12px 12px 0;overflow-x:auto;scrollbar-width:none}
+.tab-bar::-webkit-scrollbar{display:none}
+.tab-btn{padding:7px 16px;border-radius:20px;font-size:12px;font-weight:600;border:1px solid var(--border);background:transparent;color:var(--text2);white-space:nowrap;transition:all .15s}
+.tab-btn.active{background:var(--dif);color:#fff;border-color:var(--dif)}
+
+/* EMPTY / ERROR */
+.empty{text-align:center;padding:2.5rem 1rem;color:var(--text3);font-size:13px}
+
+/* DESKTOP */
+@media(min-width:760px){
+  body{padding-bottom:0}
+  .bottom-nav{display:none}
+  .desktop-nav{display:flex !important;background:var(--bg2);border-bottom:1px solid var(--border);padding:0 20px}
+  .desktop-nav .nav-btn{flex:none;flex-direction:row;gap:6px;padding:12px 16px;font-size:13px;border-bottom:2px solid transparent;margin-bottom:-1px;color:var(--text2)}
+  .desktop-nav .nav-btn.active{color:var(--dif);border-bottom-color:var(--dif)}
+  .desktop-nav .nav-btn::after{display:none}
+  .desktop-nav .nav-btn svg{width:16px;height:16px}
+  .page-wrap{max-width:1060px;margin:0 auto;display:grid;grid-template-columns:1fr 320px;gap:20px;padding:20px 20px}
+  .main-col,.side-col{}
+  .hero-card,.match-card,.news-feat,.news-list-wrap,.table-wrap{margin-left:0;margin-right:0}
+  .player-grid{grid-template-columns:repeat(5,1fr)}
+}
+</style>
 </head>
 <body>
 
-<!-- Pull to refresh indicator -->
-<div id="ptr-indicator" aria-hidden="true">↻</div>
-
-<!-- ── APP HEADER ───────────────────────────────────────── -->
-<header class="app-header" role="banner">
-  <div class="header-logo">
-    <div class="header-badge" aria-hidden="true">
-      <span>DIF</span>
-      <span>1891</span>
-    </div>
-    <span class="header-title">Djurgårdens IF</span>
+<!-- TOPBAR -->
+<header class="topbar">
+  <div class="topbar-logo">
+    <div class="logo-badge"><b>DIF</b><small>1891</small></div>
+    <span class="topbar-name">Djurgårdens IF</span>
   </div>
-  <div class="header-actions">
-    <button class="icon-btn" id="dark-btn" onclick="__toggleDark()" aria-label="Byt tema">☀️</button>
+  <div class="topbar-right">
+    <button class="icon-btn" id="dark-btn" onclick="toggleTheme()" aria-label="Byt tema">☀️</button>
   </div>
 </header>
 
-<!-- Desktop top nav (hidden on mobile) -->
-<nav class="desktop-nav" style="display:none" aria-label="Huvudnavigation">
-  <button class="nav-item active" data-tab="home" aria-label="Hem">
-    <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-    Hem
+<!-- DESKTOP NAV -->
+<nav class="desktop-nav" style="display:none">
+  <button class="nav-btn active" onclick="nav('home',this)">
+    <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Hem
   </button>
-  <button class="nav-item" data-tab="matches" aria-label="Matcher">
-    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 000 20 14.5 14.5 0 000-20"/><path d="M2 12h20"/></svg>
-    Matcher
+  <button class="nav-btn" onclick="nav('matches',this)">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 000 20M2 12h20"/></svg>Matcher
   </button>
-  <button class="nav-item" data-tab="squad" aria-label="Trupp">
-    <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
-    Trupp
+  <button class="nav-btn" onclick="nav('squad',this)">
+    <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>Trupp
   </button>
-  <button class="nav-item" data-tab="standings" aria-label="Tabell">
-    <svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
-    Tabell
+  <button class="nav-btn" onclick="nav('standings',this)">
+    <svg viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>Tabell
   </button>
 </nav>
 
-<!-- ── PAGES ─────────────────────────────────────────────── -->
-<main id="main" role="main">
+<main>
 
-  <!-- HOME -->
-  <div id="page-home" class="page active" role="tabpanel" aria-label="Hem">
-    <div class="page-inner">
-      <div>
-        <!-- Next match hero -->
-        <div id="home-next" aria-label="Nästa match"></div>
-
-        <!-- Last results -->
-        <section class="section" aria-labelledby="results-heading">
-          <div class="section-header">
-            <h2 class="section-title" id="results-heading">Senaste</h2>
-            <button class="see-all" onclick="__showPage('matches')" aria-label="Se alla matcher">Se alla</button>
-          </div>
-        </section>
-        <div id="home-results" class="results-scroll" role="list" aria-label="Senaste resultat"></div>
-
-        <!-- News -->
-        <section class="section" aria-labelledby="news-heading">
-          <div class="section-header">
-            <h2 class="section-title" id="news-heading">Nyheter</h2>
-          </div>
-          <div class="card-block" style="background:var(--surface);border-radius:var(--radius);border:1px solid var(--border);overflow:hidden">
-            <div id="home-news" role="list" aria-label="Nyheter"></div>
-          </div>
-        </section>
+<!-- HOME -->
+<div id="pg-home" class="page active">
+  <div class="page-wrap">
+    <div class="main-col">
+      <div id="home-hero"></div>
+      <div class="section-hd">
+        <span class="section-title">Senaste resultat</span>
+        <button class="see-all" onclick="nav('matches',null)">Se alla</button>
       </div>
-
-      <!-- Desktop sidebar -->
-      <div class="sidebar-col">
-        <section aria-labelledby="table-home-heading">
-          <div class="section-header" style="padding:1rem 0 .75rem">
-            <h2 class="section-title" id="table-home-heading">Tabell</h2>
-            <button class="see-all" onclick="__showPage('standings')">Fullständig</button>
-          </div>
-          <div style="background:var(--surface);border-radius:var(--radius);border:1px solid var(--border);overflow:hidden">
-            <div id="home-standings-table">
-              <div class="empty-state">Laddar tabell...</div>
-            </div>
-          </div>
-        </section>
+      <div class="results-row" id="home-results"></div>
+      <div class="section-hd">
+        <span class="section-title">Nyheter</span>
       </div>
+      <div id="home-news-feat"></div>
+      <div class="news-list-wrap"><div id="home-news-list"></div></div>
+    </div>
+    <div class="side-col">
+      <div class="section-hd">
+        <span class="section-title">Tabell</span>
+        <button class="see-all" onclick="nav('standings',null)">Fullständig</button>
+      </div>
+      <div class="table-wrap"><div id="home-table"></div></div>
     </div>
   </div>
+</div>
 
-  <!-- MATCHES -->
-  <div id="page-matches" class="page" role="tabpanel" aria-label="Matcher">
-    <div class="page-inner page-inner--full">
-      <!-- Tab switcher -->
-      <div class="filter-scroll" role="tablist" aria-label="Matchtyp">
-        <button class="filter-chip match-tab-btn active" data-filter="upcoming"
-          onclick="__setMatchTab('upcoming', this)" role="tab" aria-selected="true">
-          Kommande
-        </button>
-        <button class="filter-chip match-tab-btn" data-filter="results"
-          onclick="__setMatchTab('results', this)" role="tab" aria-selected="false">
-          Resultat
-        </button>
-      </div>
-      <div id="matches-list" class="card-list" role="list" aria-label="Matcher"></div>
-    </div>
+<!-- MATCHES -->
+<div id="pg-matches" class="page">
+  <div class="tab-bar">
+    <button class="tab-btn active" id="tab-up" onclick="switchMatchTab('upcoming',this)">Kommande</button>
+    <button class="tab-btn" id="tab-res" onclick="switchMatchTab('results',this)">Resultat</button>
   </div>
+  <div style="padding-top:10px" id="matches-list"></div>
+</div>
 
-  <!-- SQUAD -->
-  <div id="page-squad" class="page" role="tabpanel" aria-label="Trupp">
-    <div class="page-inner page-inner--full">
-      <!-- Position filter -->
-      <div class="filter-scroll" role="group" aria-label="Filtrera position">
-        <button class="filter-chip active" data-filter="all"
-          onclick="__filterSquad('all', this)">Alla</button>
-        <button class="filter-chip" data-filter="Goalkeeper"
-          onclick="__filterSquad('Goalkeeper', this)">Målvakter</button>
-        <button class="filter-chip" data-filter="Defender"
-          onclick="__filterSquad('Defender', this)">Backar</button>
-        <button class="filter-chip" data-filter="Midfielder"
-          onclick="__filterSquad('Midfielder', this)">Mittfält</button>
-        <button class="filter-chip" data-filter="Forward"
-          onclick="__filterSquad('Forward', this)">Forwards</button>
-      </div>
-      <div id="squad-grid" role="list" aria-label="Spelartrupp"></div>
+<!-- SQUAD -->
+<div id="pg-squad" class="page">
+  <div style="padding-top:10px">
+    <div class="squad-filters" id="squad-filters">
+      <button class="sq-chip active" onclick="filterSquad('all',this)">Alla</button>
+      <button class="sq-chip" onclick="filterSquad('Goalkeeper',this)">Målvakter</button>
+      <button class="sq-chip" onclick="filterSquad('Defender',this)">Backar</button>
+      <button class="sq-chip" onclick="filterSquad('Midfielder',this)">Mittfält</button>
+      <button class="sq-chip" onclick="filterSquad('Forward',this)">Forwards</button>
     </div>
+    <div id="squad-grid"></div>
   </div>
+</div>
 
-  <!-- STANDINGS -->
-  <div id="page-standings" class="page" role="tabpanel" aria-label="Tabell">
-    <div class="page-inner page-inner--full">
-      <section aria-labelledby="standings-heading">
-        <div class="section-header" style="padding:1rem 1rem .75rem">
-          <h2 class="section-title" id="standings-heading">Allsvenskan 2026</h2>
-        </div>
-        <div style="background:var(--surface);border-radius:var(--radius);border:1px solid var(--border);overflow:hidden;margin:0 1rem">
-          <div id="standings-table" aria-label="Tabellställning"></div>
-        </div>
-      </section>
-    </div>
+<!-- STANDINGS -->
+<div id="pg-standings" class="page">
+  <div style="padding:12px 0 0">
+    <div class="section-hd"><span class="section-title">Allsvenskan 2026</span></div>
+    <div class="table-wrap"><div id="standings-full"></div></div>
   </div>
+</div>
 
 </main>
 
-<!-- ── BOTTOM NAV (mobile) ────────────────────────────────── -->
-<nav class="bottom-nav" role="navigation" aria-label="Bottenmeny">
-  <button class="nav-item active" data-tab="home" aria-label="Hem" aria-selected="true">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-    Hem
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+  <button class="nav-btn active" id="bn-home" onclick="nav('home',this)">
+    <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Hem
   </button>
-  <button class="nav-item" data-tab="matches" aria-label="Matcher" aria-selected="false">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 000 20 14.5 14.5 0 000-20"/><path d="M2 12h20"/></svg>
-    Matcher
+  <button class="nav-btn" id="bn-matches" onclick="nav('matches',this)">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 000 20M2 12h20"/></svg>Matcher
   </button>
-  <button class="nav-item" data-tab="squad" aria-label="Trupp" aria-selected="false">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
-    Trupp
+  <button class="nav-btn" id="bn-squad" onclick="nav('squad',this)">
+    <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>Trupp
   </button>
-  <button class="nav-item" data-tab="standings" aria-label="Tabell" aria-selected="false">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
-    Tabell
+  <button class="nav-btn" id="bn-standings" onclick="nav('standings',this)">
+    <svg viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>Tabell
   </button>
 </nav>
 
-<script type="module" src="app.js"></script>
+<script>
+// ── CONFIG ──────────────────────────────────────────────────
+const TEAM_ID    = '134162';
+const TSDB       = 'https://www.thesportsdb.com/api/v1/json/3';
+const WORKER     = 'https://dif-proxy.r-robertjohansson.workers.dev';
+const CACHE_TTL  = 8 * 60 * 1000;
 
-<!-- Preload standings into home sidebar -->
-<script type="module">
-import { fetchStandings } from './services/api.js';
-import { renderStandingsTable } from './components/ui.js';
-setTimeout(async () => {
-  try {
-    const table = await fetchStandings();
-    const el = document.getElementById('home-standings-table');
-    if (el) el.innerHTML = renderStandingsTable(table.slice ? table.slice(0,10) : table);
-  } catch(e) {}
-}, 500);
+// ── STATE ────────────────────────────────────────────────────
+let S = {
+  dark: localStorage.getItem('dif_theme') !== 'light',
+  tab: 'home',
+  matchTab: 'upcoming',
+  squadFilter: 'all',
+  last: [], next: [], standings: [], squad: [], news: [],
+  favs: JSON.parse(localStorage.getItem('dif_favs')||'[]'),
+  loaded: {},
+};
+
+// ── THEME ────────────────────────────────────────────────────
+function applyTheme(){
+  document.documentElement.setAttribute('data-theme', S.dark?'dark':'light');
+  const b = document.getElementById('dark-btn');
+  if(b) b.textContent = S.dark ? '☀️' : '🌙';
+}
+function toggleTheme(){
+  S.dark = !S.dark;
+  localStorage.setItem('dif_theme', S.dark?'dark':'light');
+  applyTheme();
+}
+applyTheme();
+
+// ── CACHE ────────────────────────────────────────────────────
+function cGet(k){ try{ const d=JSON.parse(localStorage.getItem('c_'+k)||'null'); return d&&Date.now()-d.t<CACHE_TTL?d.v:null; }catch(e){return null} }
+function cSet(k,v){ try{ localStorage.setItem('c_'+k,JSON.stringify({v,t:Date.now()})); }catch(e){} }
+
+// ── FETCH ────────────────────────────────────────────────────
+async function apiFetch(url){
+  const r = await fetch(url);
+  if(!r.ok) throw new Error('HTTP '+r.status);
+  return r.json();
+}
+
+async function getLastMatches(){
+  const c = cGet('last'); if(c) return c;
+  const j = await apiFetch(`${TSDB}/eventslast.php?id=${TEAM_ID}`);
+  const v = (j.results||[]).map(normalizeMatch);
+  cSet('last',v); return v;
+}
+async function getNextMatches(){
+  const c = cGet('next'); if(c) return c;
+  const j = await apiFetch(`${TSDB}/eventsnext.php?id=${TEAM_ID}`);
+  const v = (j.events||[]).map(normalizeMatch);
+  cSet('next',v); return v;
+}
+async function getStandings(){
+  const c = cGet('standings'); if(c) return c;
+  const j = await apiFetch(`${WORKER}/standings`);
+  const v = j.table||[];
+  cSet('standings',v); return v;
+}
+async function getSquad(){
+  const c = cGet('squad'); if(c) return c;
+  try{
+    const j = await apiFetch(`${TSDB}/lookup_all_players.php?id=${TEAM_ID}`);
+    if(j.player?.length){
+      const v = j.player.map(p=>({id:p.idPlayer,name:p.strPlayer,pos:p.strPosition||'',nat:p.strNationality||'',num:p.strNumber||'?',img:p.strThumb||p.strCutout||''}));
+      cSet('squad',v); return v;
+    }
+  }catch(e){}
+  return FALLBACK_SQUAD;
+}
+async function getNews(){
+  const c = cGet('news'); if(c) return c;
+  try{
+    const j = await apiFetch(`${WORKER}/news`);
+    const v = j.items||[];
+    if(v.length){ cSet('news',v); return v; }
+  }catch(e){}
+  return [];
+}
+
+function normalizeMatch(e){
+  const isHome = e.idHomeTeam===TEAM_ID || e.strHomeTeam==='Djurgårdens IF' || e.strHomeTeam==='Djurgarden';
+  const hs = e.intHomeScore!=null?+e.intHomeScore:null;
+  const as = e.intAwayScore!=null?+e.intAwayScore:null;
+  const ds = isHome?hs:as, os = isHome?as:hs;
+  let result='upcoming';
+  if(ds!=null&&os!=null){ result = ds>os?'win':ds<os?'loss':'draw'; }
+  const status = e.strStatus==='Match Finished'||hs!=null?'FT':'NS';
+  return {
+    id:e.idEvent, date:e.dateEvent, time:(e.strTime||'').slice(0,5),
+    home:e.strHomeTeam, away:e.strAwayTeam,
+    hl:e.strHomeTeamBadge||'', al:e.strAwayTeamBadge||'',
+    hs, as, ds, os, isHome,
+    opponent:isHome?e.strAwayTeam:e.strHomeTeam,
+    oppLogo:isHome?e.strAwayTeamBadge:e.strHomeTeamBadge,
+    competition:e.strLeague||'', venue:e.strVenue||'',
+    status, result,
+  };
+}
+
+// ── NAV ──────────────────────────────────────────────────────
+function nav(tab, el){
+  S.tab = tab;
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('pg-'+tab)?.classList.add('active');
+  // Update all nav buttons
+  document.querySelectorAll('.nav-btn').forEach(b=>{
+    const match = b.getAttribute('onclick')?.includes("'"+tab+"'");
+    b.classList.toggle('active', !!match);
+  });
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(tab==='home') loadHome();
+  if(tab==='matches') loadMatches();
+  if(tab==='squad') loadSquad();
+  if(tab==='standings') loadStandings();
+}
+
+// ── UTILS ────────────────────────────────────────────────────
+function fd(s){
+  if(!s) return '';
+  const d=new Date(s);
+  return d.toLocaleDateString('sv-SE',{day:'numeric',month:'short'});
+}
+function timeAgo(s){
+  const diff=Date.now()-new Date(s).getTime();
+  const m=Math.floor(diff/60000);
+  if(m<1) return 'Nu'; if(m<60) return m+'m';
+  const h=Math.floor(m/60);
+  if(h<24) return h+'h'; return Math.floor(h/24)+'d';
+}
+function ini(name){ return (name||'').split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase(); }
+function logoImg(url,name,sz=26){
+  if(url) return `<img src="${url}" width="${sz}" height="${sz}" loading="lazy" onerror="this.style.display='none'" alt="${name}">`;
+  return `<span class="mc-logo-ini">${ini(name)}</span>`;
+}
+function daysUntil(d){
+  const diff=new Date(d)-new Date(); const days=Math.ceil(diff/86400000);
+  if(days<=0) return 'Idag'; if(days===1) return 'Imorgon'; return 'Om '+days+'d';
+}
+
+// ── SKELETON ─────────────────────────────────────────────────
+function skelMatchCard(){
+  return `<div class="match-card" style="padding:12px">
+    <div style="display:flex;gap:8px;align-items:center">
+      <div class="sk sk-circle" style="width:26px;height:26px;flex-shrink:0"></div>
+      <div class="sk sk-text" style="flex:1"></div>
+      <div class="sk sk-block" style="width:50px;height:22px"></div>
+      <div class="sk sk-text" style="flex:1"></div>
+      <div class="sk sk-circle" style="width:26px;height:26px;flex-shrink:0"></div>
+    </div>
+  </div>`;
+}
+
+// ── RENDER HERO ───────────────────────────────────────────────
+function renderHero(m){
+  const d = new Date(m.date);
+  const ds = d.toLocaleDateString('sv-SE',{weekday:'long',day:'numeric',month:'long'});
+  return `
+  <div class="hero-card">
+    <div class="hero-badge"><span>NÄSTA MATCH</span><span class="hero-comp">${m.competition}</span></div>
+    <div class="hero-inner">
+      <div class="hero-teams">
+        <div class="hero-team">
+          <div class="hero-team-logo">${m.hl?`<img src="${m.hl}" loading="lazy" alt="${m.home}" onerror="this.parentElement.innerHTML='<span class=hero-team-ini>${ini(m.home)}</span>'">`:`<span class="hero-team-ini">${ini(m.home)}</span>`}</div>
+          <span class="hero-team-name">${m.home}</span>
+        </div>
+        <span class="hero-vs">VS</span>
+        <div class="hero-team">
+          <div class="hero-team-logo">${m.al?`<img src="${m.al}" loading="lazy" alt="${m.away}" onerror="this.parentElement.innerHTML='<span class=hero-team-ini>${ini(m.away)}</span>'">`:`<span class="hero-team-ini">${ini(m.away)}</span>`}</div>
+          <span class="hero-team-name">${m.away}</span>
+        </div>
+      </div>
+      <div class="hero-info">
+        <span class="hero-chip">📅 ${ds}</span>
+        <span class="hero-chip">🕐 ${m.time||'TBD'}</span>
+        ${m.venue?`<span class="hero-chip">📍 ${m.venue}</span>`:''}
+      </div>
+    </div>
+  </div>`;
+}
+
+// ── RENDER MATCH CARD ─────────────────────────────────────────
+function renderMatchCard(m){
+  const badge = m.status==='FT'
+    ? `<span class="badge badge-ft">FT</span>`
+    : m.status==='LIVE'
+    ? `<span class="badge badge-live"><span class="live-dot"></span>LIVE</span>`
+    : `<span class="badge badge-ns">${m.time||'–'}</span>`;
+
+  const center = m.status==='FT'
+    ? `<div class="mc-score">
+        <span class="mc-score-val ${m.result}">${m.hs}–${m.as}</span>
+       </div>`
+    : `<div class="mc-upcoming">
+        <span class="mc-time">${m.time||'–'}</span>
+        <div class="mc-soon">${daysUntil(m.date)}</div>
+       </div>`;
+
+  const bar = m.status==='FT' ? `<div class="match-card-bar ${m.result}"></div>` : '<div class="match-card-bar"></div>';
+
+  return `
+  <div class="match-card">
+    ${bar}
+    <div class="mc-top">
+      <span class="mc-comp">${m.competition}</span>
+      ${badge}
+      <span class="mc-date">${fd(m.date)}</span>
+    </div>
+    <div class="mc-teams">
+      <div class="mc-team">
+        <div class="mc-logo">${logoImg(m.hl,m.home)}</div>
+        <span class="mc-name ${m.isHome?'dif':''}">${m.home}</span>
+      </div>
+      ${center}
+      <div class="mc-team mc-team-r">
+        <span class="mc-name ${!m.isHome?'dif':''}">${m.away}</span>
+        <div class="mc-logo">${logoImg(m.al,m.away)}</div>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ── RENDER STANDINGS ──────────────────────────────────────────
+function renderStandings(table, limit=999){
+  if(!table?.length) return '<div class="empty">Tabell ej tillgänglig</div>';
+  const rows = table.slice(0,limit).map((t,i)=>{
+    const pos = +t.intRank||i+1;
+    const isDif = /djurgård/i.test(t.strTeam||'');
+    const pc = pos<=3?'pos-top':pos>=15?'pos-down':'';
+    return `<tr class="${isDif?'row-dif':''}">
+      <td><span class="pos-pill ${pc}">${pos}</span></td>
+      <td><div class="team-cell">${t.strTeamBadge?`<img src="${t.strTeamBadge}" loading="lazy" onerror="this.style.display='none'">`:''}
+        <span>${isDif?`<strong>${t.strTeam}</strong>`:t.strTeam}</span></div></td>
+      <td>${t.intPlayed||0}</td>
+      <td class="hx">${t.intWin||0}</td>
+      <td class="hx">${t.intDraw||0}</td>
+      <td class="hx">${t.intLoss||0}</td>
+      <td><strong>${t.intPoints||0}</strong></td>
+    </tr>`;
+  }).join('');
+  return `<table class="standings-tbl">
+    <thead><tr><th>#</th><th>Lag</th><th>M</th><th class="hx">V</th><th class="hx">O</th><th class="hx">F</th><th>P</th></tr></thead>
+    <tbody>${rows}</tbody>
+  </table>
+  <div class="tbl-legend">
+    <span class="tbl-leg-item leg-eu">Europaplats</span>
+    <span class="tbl-leg-item leg-down">Nedflyttning</span>
+  </div>`;
+}
+
+// ── RENDER NEWS ───────────────────────────────────────────────
+function renderNewsFeat(n){
+  const fav = n.fav?`<img src="${n.fav}" onerror="this.style.display='none'" alt="">`:'';
+  return `<a class="news-feat" href="${n.link||'#'}" target="_blank" rel="noopener">
+    <div class="news-accent" style="background:${n.scolor||'#005B9A'}"></div>
+    <div class="news-feat-body">
+      <div class="news-src-row">${fav}<span class="news-src-name">${n.sname||''}</span><span class="news-src-ago">${timeAgo(n.date)}</span></div>
+      <h3>${n.title}</h3>
+      ${n.summary?`<p>${n.summary.slice(0,120)}…</p>`:''}
+    </div>
+  </a>`;
+}
+function renderNewsItem(n){
+  const fav = n.fav?`<img src="${n.fav}" onerror="this.style.display='none'" alt="" width="14" height="14" style="border-radius:2px;background:#fff;padding:1px;object-fit:contain;flex-shrink:0">`:'';
+  return `<a class="news-item" href="${n.link||'#'}" target="_blank" rel="noopener">
+    <div class="news-item-body">
+      <div class="news-src-row">${fav}<span class="news-src-name">${n.sname||''}</span><span class="news-src-ago">${timeAgo(n.date)}</span></div>
+      <h4>${n.title}</h4>
+    </div>
+    <span class="news-chevron">›</span>
+  </a>`;
+}
+
+// ── RENDER PLAYER ─────────────────────────────────────────────
+const posColor = {Goalkeeper:'#f59e0b',Defender:'#3b82f6',Midfielder:'#8b5cf6',Forward:'#ef4444'};
+const posLabel = {Goalkeeper:'Målvakt',Defender:'Back',Midfielder:'Mittfältare',Forward:'Forward'};
+function renderPlayer(p){
+  const isFav = S.favs.includes(p.id);
+  const ini2 = ini(p.name);
+  const posKey = Object.keys(posColor).find(k=>p.pos?.includes(k))||'';
+  const col = posColor[posKey]||'#6b7280';
+  return `
+  <div class="player-card">
+    <button class="fav-btn ${isFav?'on':''}" onclick="toggleFav('${p.id}',this)" aria-label="Favorit">★</button>
+    <div class="pl-img" style="border-color:${col}">
+      ${p.img?`<img src="${p.img}" loading="lazy" onerror="this.parentElement.innerHTML='<span class=pl-ini>${ini2}</span>'" alt="${p.name}">`:`<span class="pl-ini">${ini2}</span>`}
+    </div>
+    <div class="pl-num">#${p.num}</div>
+    <div class="pl-name">${p.name}</div>
+    <div class="pl-pos" style="color:${col}">${posLabel[posKey]||p.pos||''}</div>
+    <div class="pl-nat">${p.nat}</div>
+  </div>`;
+}
+
+// ── LOAD PAGES ────────────────────────────────────────────────
+async function loadHome(){
+  if(S.loaded.home) return;
+
+  // Skeletons
+  set('home-hero',`<div style="margin:12px;background:var(--surface);border-radius:var(--r);height:160px;display:flex;align-items:center;justify-content:center"><div class="sk" style="width:80%;height:14px;border-radius:4px"></div></div>`);
+  set('home-results','<div style="display:flex;gap:8px;padding:0 12px 12px">'+Array(4).fill('<div class="sk sk-block" style="width:88px;height:78px;flex-shrink:0"></div>').join('')+'</div>');
+  set('home-news-feat',skelMatchCard());
+  set('home-news-list','<div style="padding:1.5rem;text-align:center"><div class="sk sk-text" style="width:60%;margin:auto"></div></div>');
+
+  try{
+    const [last, next, news, table] = await Promise.all([getLastMatches(), getNextMatches(), getNews(), getStandings()]);
+    S.last=last; S.next=next; S.news=news; S.standings=table;
+
+    // Hero
+    set('home-hero', next[0] ? renderHero(next[0]) : '<div class="empty">Inga kommande matcher</div>');
+
+    // Results scroll
+    set('home-results', last.slice(0,5).map(m=>`
+      <div class="result-chip ${m.result}">
+        <div class="rc-opp">${m.opponent}</div>
+        <div class="rc-score">${m.ds}–${m.os}</div>
+        <div class="rc-date">${fd(m.date)}</div>
+      </div>`).join('') || '<div class="empty">–</div>');
+
+    // News
+    set('home-news-feat', news.slice(0,2).map((n,i)=>renderNewsFeat(n)).join('') || '<div class="empty">Inga nyheter</div>');
+    set('home-news-list', news.slice(2,8).map(renderNewsItem).join('') || '<div class="empty" style="padding:1rem">–</div>');
+
+    // Sidebar table
+    set('home-table', renderStandings(table, 8));
+
+    S.loaded.home = true;
+  }catch(e){
+    console.error(e);
+    set('home-hero','<div class="empty">Kunde inte ladda data</div>');
+  }
+}
+
+async function loadMatches(){
+  if(!S.last.length || !S.next.length){
+    set('matches-list', Array(4).fill(skelMatchCard()).join(''));
+    try{
+      const [last,next] = await Promise.all([getLastMatches(), getNextMatches()]);
+      S.last=last; S.next=next;
+    }catch(e){ set('matches-list','<div class="empty">Kunde inte ladda matcher</div>'); return; }
+  }
+  renderMatchesView();
+}
+
+function renderMatchesView(){
+  const list = S.matchTab==='upcoming' ? S.next : S.last;
+  set('matches-list', list.length ? list.map(renderMatchCard).join('') : `<div class="empty">Inga ${S.matchTab==='upcoming'?'kommande':'spelade'} matcher</div>`);
+}
+
+function switchMatchTab(tab, el){
+  S.matchTab = tab;
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  renderMatchesView();
+}
+
+async function loadSquad(){
+  if(S.squad.length){ renderSquadView(S.squad, S.squadFilter); return; }
+  set('squad-grid','<div class="player-grid">'+Array(8).fill('<div class="sk sk-block" style="height:130px;border-radius:var(--r2)"></div>').join('')+'</div>');
+  try{
+    S.squad = await getSquad();
+    renderSquadView(S.squad, S.squadFilter);
+  }catch(e){ set('squad-grid','<div class="empty">Kunde inte ladda truppen</div>'); }
+}
+
+function renderSquadView(players, filter){
+  S.squadFilter = filter;
+  document.querySelectorAll('.sq-chip').forEach(c=>c.classList.toggle('active', c.getAttribute('onclick')?.includes("'"+filter+"'")));
+  const filtered = filter==='all' ? players : players.filter(p=>p.pos?.includes(filter));
+  if(filter==='all'){
+    const groups = {Goalkeeper:[],Defender:[],Midfielder:[],Forward:[]};
+    filtered.forEach(p=>{ const k=Object.keys(groups).find(k=>p.pos?.includes(k)); if(k) groups[k].push(p); });
+    const labels = {Goalkeeper:'Målvakter',Defender:'Backar',Midfielder:'Mittfältare',Forward:'Forwards'};
+    set('squad-grid', Object.entries(groups).filter(([,v])=>v.length).map(([k,v])=>
+      `<div class="pos-group-label">${labels[k]} (${v.length})</div><div class="player-grid">${v.map(renderPlayer).join('')}</div>`
+    ).join(''));
+  } else {
+    set('squad-grid', `<div class="player-grid">${filtered.map(renderPlayer).join('')}</div>`);
+  }
+}
+
+function filterSquad(f,el){ renderSquadView(S.squad.length?S.squad:[], f); loadSquad(); }
+
+async function loadStandings(){
+  if(S.standings.length){ set('standings-full',renderStandings(S.standings)); return; }
+  set('standings-full','<div class="empty">Laddar...</div>');
+  try{
+    S.standings = await getStandings();
+    set('standings-full', renderStandings(S.standings));
+  }catch(e){ set('standings-full','<div class="empty">Kunde inte ladda tabell</div>'); }
+}
+
+function toggleFav(id, btn){
+  const idx = S.favs.indexOf(id);
+  if(idx===-1) S.favs.push(id); else S.favs.splice(idx,1);
+  localStorage.setItem('dif_favs', JSON.stringify(S.favs));
+  btn.classList.toggle('on', S.favs.includes(id));
+}
+
+function set(id,html){ const el=document.getElementById(id); if(el) el.innerHTML=html; }
+
+// ── FALLBACK SQUAD ────────────────────────────────────────────
+const FALLBACK_SQUAD = [
+  {id:'f1',name:'Jacob Rinne',pos:'Goalkeeper',nat:'Sweden',num:'1',img:''},
+  {id:'f2',name:'Oscar Jonsson',pos:'Goalkeeper',nat:'Sweden',num:'33',img:''},
+  {id:'f3',name:'Jacob Une Larsson',pos:'Defender',nat:'Sweden',num:'2',img:''},
+  {id:'f4',name:'Kristian Lien',pos:'Defender',nat:'Norway',num:'3',img:''},
+  {id:'f5',name:'Marcus Danielsson',pos:'Defender',nat:'Sweden',num:'5',img:''},
+  {id:'f6',name:'Jonathan Augustinsson',pos:'Defender',nat:'Sweden',num:'23',img:''},
+  {id:'f7',name:'Matias Siltanen',pos:'Midfielder',nat:'Finland',num:'6',img:''},
+  {id:'f8',name:'Mikael Anderson',pos:'Midfielder',nat:'Sweden',num:'8',img:''},
+  {id:'f9',name:'Ahmed Saeed',pos:'Midfielder',nat:'Sweden',num:'14',img:''},
+  {id:'f10',name:'Bo Hegland',pos:'Midfielder',nat:'Norway',num:'18',img:''},
+  {id:'f11',name:'Keita Kosugi',pos:'Midfielder',nat:'Japan',num:'22',img:''},
+  {id:'f12',name:'Jeppe Okkels',pos:'Forward',nat:'Denmark',num:'7',img:''},
+  {id:'f13',name:'Nino Žugelj',pos:'Forward',nat:'Slovenia',num:'9',img:''},
+  {id:'f14',name:'Adam Ståhl',pos:'Forward',nat:'Sweden',num:'11',img:''},
+  {id:'f15',name:'Zakaria Sawo',pos:'Forward',nat:'Sweden',num:'17',img:''},
+  {id:'f16',name:'Oskar Fallenius',pos:'Forward',nat:'Sweden',num:'21',img:''},
+];
+
+// ── INIT ──────────────────────────────────────────────────────
+loadHome();
+setInterval(()=>{ if(document.visibilityState==='visible'){ S.loaded.home=false; if(S.tab==='home') loadHome(); } }, 5*60*1000);
 </script>
-
 </body>
 </html>
