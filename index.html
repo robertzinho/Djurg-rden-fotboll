@@ -9,129 +9,107 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --blue:#005B9A;--dark:#002B50;--accent:#E8A020;--red:#C8102E;
+  --blue:#005B9A;--dark:#002B50;--accent:#E8A020;--red:#C8102E;--green:#1a8040;
   --bg:#0f1923;--surface:#1a2535;--surface2:#212f42;--surface3:#263448;
   --border:rgba(255,255,255,0.07);--text:#eef2f7;--text2:#8a9bb0;--text3:#5a6e85;
   --radius:12px;--radius-sm:8px;
 }
 body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
 
-/* TOPBAR */
-.topbar{background:#000;padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:36px;font-size:11px;letter-spacing:0.5px}
+.topbar{background:#000;padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:36px;font-size:11px}
 .topbar-left{color:var(--text3)}
-.topbar a{color:var(--text2);text-decoration:none;margin-left:20px;transition:color .15s}
+.topbar a{color:var(--text2);text-decoration:none;margin-left:20px}
 .topbar a:hover{color:var(--text)}
 
-/* HEADER */
 .header{background:linear-gradient(160deg,#001428 0%,#002B50 60%,#003d73 100%);border-bottom:1px solid var(--border);padding:0 1.5rem}
 .header-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:1.25rem;padding:1rem 0}
 .club-badge{width:64px;height:64px;background:white;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 0 0 3px rgba(232,160,32,0.4)}
 .club-badge span:first-child{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;color:#002B50;line-height:1}
 .club-badge span:last-child{font-size:9px;font-weight:600;color:#5580a0;letter-spacing:1px}
 .header-info{flex:1}
-.header-info h1{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:700;letter-spacing:0.5px;color:white}
+.header-info h1{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:700;color:white}
 .header-info p{font-size:12px;color:#6a90b0;margin-top:2px}
 .header-next{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:var(--radius-sm);padding:10px 16px;text-align:center;min-width:200px}
-.header-next .label{font-size:10px;font-weight:600;color:var(--accent);letter-spacing:1px;text-transform:uppercase}
+.header-next .label{font-size:10px;font-weight:700;color:var(--accent);letter-spacing:1px;text-transform:uppercase}
 .header-next .teams{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;color:white;margin:4px 0 2px}
 .header-next .meta{font-size:11px;color:var(--text2)}
 
-/* NAV */
 .nav{background:var(--dark);border-bottom:2px solid var(--accent);position:sticky;top:0;z-index:100}
-.nav-inner{max-width:1200px;margin:0 auto;display:flex;padding:0 1.5rem;overflow-x:auto}
-.nav-tab{padding:13px 20px;color:var(--text2);font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;border:none;background:none;border-bottom:2px solid transparent;margin-bottom:-2px;transition:color .15s;letter-spacing:0.3px;font-family:'Barlow',sans-serif}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;padding:0 1.5rem}
+.nav-tab{padding:13px 20px;color:var(--text2);font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;border:none;background:none;border-bottom:2px solid transparent;margin-bottom:-2px;transition:color .15s;font-family:'Barlow',sans-serif}
 .nav-tab:hover{color:var(--text)}
 .nav-tab.active{color:white;border-bottom-color:var(--accent)}
+.nav-spacer{flex:1}
+.last-sync{font-size:11px;color:var(--text3);margin-right:8px;white-space:nowrap}
+.sync-btn{display:flex;align-items:center;gap:6px;padding:6px 14px;background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:20px;color:var(--text2);font-size:12px;font-weight:600;cursor:pointer;font-family:'Barlow',sans-serif;white-space:nowrap}
+.sync-btn:hover{background:rgba(255,255,255,0.1);color:var(--text)}
+.sync-icon{display:inline-block}
+.sync-btn.spinning .sync-icon{animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
 
-/* LAYOUT */
 .content{max-width:1200px;margin:0 auto;padding:1.5rem}
 .page{display:none}
 .page.active{display:block}
 .grid-main{display:grid;grid-template-columns:1fr 340px;gap:1.5rem}
 @media(max-width:900px){.grid-main{grid-template-columns:1fr}}
 
-/* SECTION HEADERS */
-.sec-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
-.sec-head h2{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:700;color:white;letter-spacing:0.5px;display:flex;align-items:center;gap:8px}
+.sec-head{display:flex;align-items:center;margin-bottom:1rem}
+.sec-head h2{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:700;color:white;display:flex;align-items:center;gap:8px}
 .sec-head h2::before{content:'';display:block;width:4px;height:20px;background:var(--accent);border-radius:2px}
-.sec-link{font-size:12px;color:var(--accent);cursor:pointer;font-weight:600;letter-spacing:0.3px}
 
-/* NEWS CARDS */
+/* SOURCE FILTER */
+.source-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1rem}
+.stab{padding:5px 13px;border-radius:20px;font-size:12px;font-weight:600;border:1px solid var(--border);background:transparent;color:var(--text2);cursor:pointer;font-family:'Barlow',sans-serif;display:flex;align-items:center;gap:5px;transition:all .15s}
+.stab:hover{border-color:rgba(255,255,255,0.2);color:var(--text)}
+.stab.active{background:var(--blue);color:white;border-color:var(--blue)}
+.stab img{width:14px;height:14px;border-radius:2px;background:white;padding:1px;object-fit:contain}
+
+.rss-bar{font-size:11px;color:var(--text3);padding:6px 0;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.rss-dot{width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0}
+.rss-dot.pulsing{background:var(--accent);animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* NEWS */
 .news-featured{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
 @media(max-width:600px){.news-featured{grid-template-columns:1fr}}
-
-.news-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:border-color .2s,transform .2s;cursor:pointer}
+.news-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;cursor:pointer;text-decoration:none;display:block;transition:border-color .2s,transform .2s}
 .news-card:hover{border-color:rgba(255,255,255,0.18);transform:translateY(-2px)}
-.news-card-top{height:6px;background:var(--blue)}
+.news-accent{height:3px}
 .news-card-body{padding:14px 16px 16px}
-.news-source{display:flex;align-items:center;gap:6px;margin-bottom:8px}
-.news-source img{width:16px;height:16px;border-radius:3px;object-fit:contain;background:white;padding:1px}
-.news-source .src-name{font-size:11px;font-weight:600;color:var(--text2);letter-spacing:0.3px;text-transform:uppercase}
-.news-source .src-date{font-size:11px;color:var(--text3);margin-left:auto}
-.news-cat{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;margin-bottom:8px;letter-spacing:0.5px;text-transform:uppercase}
-.cat-skada{background:rgba(200,16,46,0.15);color:#f06070}
-.cat-info{background:rgba(0,91,154,0.2);color:#70b0e0}
-.cat-tv{background:rgba(80,60,180,0.2);color:#a090f0}
-.cat-match{background:rgba(30,160,80,0.2);color:#60c880}
-.cat-trupp{background:rgba(232,160,32,0.15);color:#e8c060}
-.cat-analys{background:rgba(100,100,100,0.2);color:#a0a0b0}
+.news-source-row{display:flex;align-items:center;gap:6px;margin-bottom:8px}
+.news-source-row img{width:16px;height:16px;border-radius:3px;background:white;padding:1px;object-fit:contain;flex-shrink:0}
+.src-name{font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.3px}
+.src-date{font-size:11px;color:var(--text3);margin-left:auto}
 .news-card h3{font-size:15px;font-weight:600;color:var(--text);line-height:1.45;margin-bottom:6px}
 .news-card p{font-size:13px;color:var(--text2);line-height:1.6}
 
-.news-list-item{display:flex;gap:12px;padding:14px 16px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .15s}
-.news-list-item:last-child{border-bottom:none}
-.news-list-item:hover{background:var(--surface2)}
-.nli-source{display:flex;align-items:center;gap:5px;margin-bottom:5px}
-.nli-source img{width:14px;height:14px;border-radius:2px;background:white;padding:1px;object-fit:contain}
-.nli-source span{font-size:11px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:0.3px}
-.nli-source .nli-date{margin-left:auto;font-size:11px;color:var(--text3)}
-.news-list-item h4{font-size:14px;font-weight:500;color:var(--text);line-height:1.4}
-.nli-body{flex:1}
-
-/* SIDEBAR */
-.sidebar{}
 .widget{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:1rem}
 .widget-head{padding:12px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
-.widget-head h3{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;color:white;letter-spacing:0.5px}
-.widget-head a{font-size:11px;color:var(--accent);cursor:pointer;font-weight:600}
+.widget-head h3{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;color:white}
 
-/* NEXT MATCH WIDGET */
+.nli{display:flex;gap:10px;padding:12px 16px;border-bottom:1px solid var(--border);cursor:pointer;text-decoration:none;transition:background .15s}
+.nli:last-child{border-bottom:none}
+.nli:hover{background:var(--surface2)}
+.nli img{width:14px;height:14px;border-radius:2px;background:white;padding:1px;object-fit:contain;flex-shrink:0;margin-top:3px}
+.nli-right{flex:1}
+.nli-top{display:flex;align-items:center;gap:6px;margin-bottom:3px}
+.nli-src{font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.3px}
+.nli-dt{font-size:10px;color:var(--text3);margin-left:auto}
+.nli h4{font-size:13px;font-weight:500;color:var(--text);line-height:1.4}
+
+/* SIDEBAR */
 .next-match-widget{background:linear-gradient(135deg,#001e38,#003060);border:1px solid rgba(0,91,154,0.4);border-radius:var(--radius);overflow:hidden;margin-bottom:1rem}
 .nmw-label{background:var(--accent);padding:5px 16px;font-size:10px;font-weight:700;color:#3a2000;letter-spacing:1px;text-transform:uppercase}
 .nmw-body{padding:16px}
-.nmw-comp{font-size:11px;color:var(--text2);margin-bottom:10px;font-weight:600;letter-spacing:0.3px}
-.nmw-teams{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.nmw-comp{font-size:11px;color:var(--text2);margin-bottom:10px;font-weight:600}
+.nmw-teams{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
 .nmw-team{text-align:center;flex:1}
 .nmw-team .tname{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;color:white}
 .nmw-team .tsub{font-size:11px;color:var(--text2);margin-top:2px}
 .nmw-vs{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:700;color:var(--accent);padding:0 12px}
-.nmw-meta{display:flex;flex-wrap:wrap;gap:8px}
+.nmw-meta{display:flex;flex-wrap:wrap;gap:6px}
 .nmw-meta span{font-size:11px;color:var(--text2);background:rgba(255,255,255,0.05);padding:4px 10px;border-radius:20px}
 
-/* MATCH ROWS */
-.match-row{display:flex;align-items:center;padding:11px 16px;border-bottom:1px solid var(--border);font-size:13px;gap:10px;transition:background .15s}
-.match-row:last-child{border-bottom:none}
-.match-row:hover{background:var(--surface2)}
-.mr-date{color:var(--text3);width:46px;flex-shrink:0;font-size:11px;font-weight:600}
-.mr-comp{font-size:10px;font-weight:700;padding:2px 7px;border-radius:3px;flex-shrink:0;letter-spacing:0.3px}
-.comp-allsvenskan{background:rgba(0,91,154,0.25);color:#70b0e0}
-.comp-cup{background:rgba(232,160,32,0.2);color:#e8c060}
-.mr-teams{flex:1;color:var(--text)}
-.mr-teams strong{color:white}
-.mr-result{font-weight:700;padding:3px 10px;border-radius:5px;font-size:13px;min-width:42px;text-align:center;font-family:'Barlow Condensed',sans-serif;font-size:15px}
-.res-w{background:rgba(30,160,80,0.2);color:#60c880}
-.res-l{background:rgba(200,16,46,0.15);color:#f06070}
-.res-d{background:rgba(200,160,0,0.15);color:#c8b040}
-.res-upcoming{background:rgba(255,255,255,0.05);color:var(--text2)}
-
-/* STAT BOXES */
-.stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:12px}
-@media(max-width:500px){.stat-row{grid-template-columns:repeat(2,1fr)}}
-.stat-box{background:var(--surface2);border-radius:var(--radius-sm);padding:12px;text-align:center}
-.stat-box .sv{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:700;color:white}
-.stat-box .sl{font-size:11px;color:var(--text2);margin-top:2px;font-weight:500}
-
-/* TABLE */
 .table-standings{width:100%;border-collapse:collapse;font-size:13px}
 .table-standings th{padding:8px 12px;font-size:10px;font-weight:700;color:var(--text3);border-bottom:1px solid var(--border);text-align:left;letter-spacing:0.5px;text-transform:uppercase}
 .table-standings td{padding:10px 12px;border-bottom:1px solid var(--border);color:var(--text2)}
@@ -140,36 +118,59 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
 .table-standings tr.dif td{color:white;font-weight:600;background:rgba(0,91,154,0.15)}
 .pos-num{width:22px;height:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;background:var(--surface3)}
 
-/* PLAYERS */
-.player-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1rem;padding:1rem}
-.player-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:16px;text-align:center;transition:border-color .2s,transform .2s;cursor:default}
-.player-card:hover{border-color:rgba(255,255,255,0.2);transform:translateY(-2px)}
-.pa{width:56px;height:56px;border-radius:50%;margin:0 auto 10px;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:19px;font-weight:700;color:white}
-.player-card .pname{font-size:14px;font-weight:600;color:white}
-.player-card .ppos{font-size:12px;color:var(--text2);margin-top:2px}
-.player-card .pnr{font-size:11px;font-weight:700;color:white;background:var(--blue);border-radius:4px;padding:2px 8px;display:inline-block;margin-top:7px}
-.player-card .pnat{font-size:14px;margin-top:5px}
-.p-stats{display:flex;justify-content:space-around;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
-.p-stat .pv{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;color:white}
-.p-stat .pl{font-size:10px;color:var(--text3);font-weight:600}
-
-/* FILTER BAR */
+/* MATCHES */
 .filter-bar{display:flex;gap:6px;padding:10px 16px;border-bottom:1px solid var(--border);flex-wrap:wrap}
 .fbtn{padding:5px 14px;border-radius:20px;font-size:12px;border:1px solid var(--border);background:transparent;color:var(--text2);cursor:pointer;font-family:'Barlow',sans-serif;font-weight:600;transition:all .15s}
 .fbtn:hover{border-color:rgba(255,255,255,0.2);color:var(--text)}
 .fbtn.active{background:var(--blue);color:white;border-color:var(--blue)}
 
-/* SCHEDULE */
-.sched-round{padding:7px 16px;font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.8px;background:var(--surface2);border-bottom:1px solid var(--border)}
+.match-row{display:flex;align-items:center;padding:12px 16px;border-bottom:1px solid var(--border);gap:10px;cursor:pointer;transition:background .15s}
+.match-row:last-child{border-bottom:none}
+.match-row:hover{background:var(--surface2)}
+.match-row.expanded{background:var(--surface2)}
+.mr-date{color:var(--text3);width:52px;flex-shrink:0;font-size:11px;font-weight:600}
+.mr-badge{font-size:10px;font-weight:700;padding:2px 7px;border-radius:3px;flex-shrink:0}
+.b-all{background:rgba(0,91,154,0.25);color:#70b0e0}
+.b-cup{background:rgba(232,160,32,0.2);color:#e8c060}
+.mr-teams{flex:1;font-size:13px;color:var(--text)}
+.mr-teams strong{color:white}
+.art-pill{font-size:10px;color:var(--text3);background:var(--surface3);padding:2px 8px;border-radius:10px;flex-shrink:0}
+.mr-result{font-weight:700;padding:3px 10px;border-radius:5px;min-width:48px;text-align:center;font-family:'Barlow Condensed',sans-serif;font-size:15px;flex-shrink:0}
+.res-w{background:rgba(30,160,80,0.2);color:#60c880}
+.res-l{background:rgba(200,16,46,0.15);color:#f06070}
+.res-d{background:rgba(200,160,0,0.15);color:#c8b040}
+.res-u{background:rgba(255,255,255,0.05);color:var(--text2);font-size:12px;font-family:'Barlow',sans-serif;font-weight:600}
+.mr-chev{color:var(--text3);font-size:11px;transition:transform .2s;flex-shrink:0}
+.match-row.expanded .mr-chev{transform:rotate(180deg)}
 
-/* LOADING */
-.loading{text-align:center;padding:3rem;color:var(--text2);font-size:14px}
+.match-drawer{display:none;background:var(--surface3);border-bottom:1px solid var(--border);padding:14px 16px}
+.match-drawer.open{display:block}
+.drawer-head{font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.drawer-head .count{background:var(--blue);color:white;font-size:10px;padding:1px 8px;border-radius:10px}
+.drawer-art{display:flex;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.05);text-decoration:none}
+.drawer-art:last-child{border-bottom:none;padding-bottom:0}
+.drawer-art:hover .dart-title{color:var(--accent)}
+.dart-fav{width:14px;height:14px;border-radius:2px;background:white;padding:1px;object-fit:contain;flex-shrink:0;margin-top:2px}
+.dart-title{font-size:13px;color:var(--text);line-height:1.4;font-weight:500;transition:color .15s}
+.dart-meta{font-size:11px;color:var(--text3);margin-top:2px}
+.drawer-empty{font-size:12px;color:var(--text3);font-style:italic}
 
-@media(max-width:600px){
-  .header-next{display:none}
-  .header-info h1{font-size:22px}
-  .content{padding:1rem}
-}
+/* SQUAD */
+.player-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1rem;padding:1rem}
+.player-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:16px;text-align:center;transition:border-color .2s,transform .2s}
+.player-card:hover{border-color:rgba(255,255,255,0.2);transform:translateY(-2px)}
+.pa{width:56px;height:56px;border-radius:50%;margin:0 auto 10px;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:19px;font-weight:700;color:white}
+.pname{font-size:14px;font-weight:600;color:white}
+.ppos{font-size:12px;color:var(--text2);margin-top:2px}
+.pnat{font-size:14px;margin-top:5px}
+.pnr{font-size:11px;font-weight:700;color:white;background:var(--blue);border-radius:4px;padding:2px 8px;display:inline-block;margin-top:7px}
+.p-stats{display:flex;justify-content:space-around;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
+.p-stat .pv{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;color:white}
+.p-stat .pl{font-size:10px;color:var(--text3);font-weight:600}
+
+.empty-msg{text-align:center;padding:2rem;color:var(--text3);font-size:13px}
+
+@media(max-width:600px){.header-next{display:none}.header-info h1{font-size:22px}.content{padding:1rem}}
 </style>
 </head>
 <body>
@@ -186,7 +187,7 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
       <h1>Djurgårdens IF</h1>
       <p>Allsvenskan 2026 · Stockholms hjärta sedan 1891</p>
     </div>
-    <div class="header-next" id="header-next">
+    <div class="header-next">
       <div class="label">Nästa match</div>
       <div class="teams" id="hn-teams">Laddar...</div>
       <div class="meta" id="hn-meta"></div>
@@ -199,7 +200,11 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
     <button class="nav-tab active" onclick="showPage('news')">Nyheter</button>
     <button class="nav-tab" onclick="showPage('matches')">Matcher</button>
     <button class="nav-tab" onclick="showPage('squad')">Trupp</button>
-    <button class="nav-tab" onclick="showPage('schedule')">Spelprogram</button>
+    <div class="nav-spacer"></div>
+    <span class="last-sync" id="last-sync-label"></span>
+    <button class="sync-btn" id="sync-btn" onclick="syncAll(true)">
+      <span class="sync-icon">↻</span> Synka
+    </button>
   </div>
 </div>
 
@@ -209,16 +214,23 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
 <div id="page-news" class="page active">
   <div class="grid-main">
     <div>
-      <div class="sec-head">
-        <h2>Senaste nytt</h2>
+      <div class="sec-head"><h2>Senaste nytt</h2></div>
+      <div class="source-tabs" id="source-tabs">
+        <button class="stab active" onclick="filterSource('all',this)">Alla källor</button>
       </div>
-      <div class="news-featured" id="news-featured"></div>
-      <div class="widget" id="news-list-widget">
+      <div class="rss-bar">
+        <span class="rss-dot pulsing" id="rss-dot"></span>
+        <span id="rss-status">Hämtar nyheter...</span>
+      </div>
+      <div class="news-featured" id="news-featured">
+        <div class="empty-msg" style="grid-column:1/-1">Hämtar nyheter från källorna...</div>
+      </div>
+      <div class="widget">
         <div class="widget-head"><h3>Fler nyheter</h3></div>
-        <div id="news-list"></div>
+        <div id="news-more"><div class="empty-msg">Laddar...</div></div>
       </div>
     </div>
-    <div class="sidebar">
+    <div>
       <div class="next-match-widget" id="next-match-widget"></div>
       <div class="widget">
         <div class="widget-head"><h3>Allsvenskan Tabell</h3></div>
@@ -244,7 +256,7 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
 <div id="page-matches" class="page">
   <div class="sec-head"><h2>Matcher 2026</h2></div>
   <div class="widget">
-    <div class="filter-bar" id="match-filter">
+    <div class="filter-bar">
       <button class="fbtn active" onclick="filterMatches('all',this)">Alla</button>
       <button class="fbtn" onclick="filterMatches('Allsvenskan',this)">Allsvenskan</button>
       <button class="fbtn" onclick="filterMatches('Svenska Cupen',this)">Svenska Cupen</button>
@@ -270,102 +282,244 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
   </div>
 </div>
 
-<!-- SCHEDULE -->
-<div id="page-schedule" class="page">
-  <div class="sec-head"><h2>Spelprogram</h2></div>
-  <div class="widget" id="schedule-widget"></div>
-</div>
-
 </div>
 
 <script>
-const DATA_URL = 'data.json';
+const PROXY = 'https://api.rss2json.com/v1/api.json?rss_url=';
+const SOURCES = [
+  {id:'dif',      name:'DIF.se',          url:'https://www.dif.se/feed',                                    color:'#005B9A', fav:'https://www.dif.se/favicon.ico'},
+  {id:'fk',       name:'Fotbollskanalen', url:'https://www.fotbollskanalen.se/rss/allsvenskan/',             color:'#e8320a', fav:'https://www.fotbollskanalen.se/favicon.ico'},
+  {id:'fd',       name:'Fotbolldirekt',   url:'https://fotbolldirekt.se/feed',                               color:'#1a6e2a', fav:'https://fotbolldirekt.se/favicon.ico'},
+  {id:'ab',       name:'Aftonbladet',     url:'https://rss.aftonbladet.se/rss2/small/pages/sections/senastenytt/', color:'#FFDD00', fav:'https://www.aftonbladet.se/favicon.ico'},
+  {id:'exp',      name:'Expressen',       url:'https://feeds.expressen.se/sport/',                           color:'#e30613', fav:'https://www.expressen.se/favicon.ico'},
+  {id:'sf',       name:'SvenskaFans',     url:'https://www.svenskafans.com/fotboll/lag/dif/rss.aspx',        color:'#1a4f8a', fav:'https://www.svenskafans.com/favicon.ico'},
+];
+
+const DIF_KW = ['djurgård','djurgarden',' dif ','jacob rinne','matias siltanen','mikael anderson',
+  'jeppe okkels','nino','adam ståhl','zakaria sawo','bo hegland','keita kosugi',
+  'jacob une larsson','kristian lien','jonathan augustinsson','oscar jonsson','ahmed saeed'];
+
+let ALL_NEWS = [];
 let DATA = null;
+let allMatches = [];
+let allPlayers = [];
+let activeSource = 'all';
+let matchFilter = 'all';
 
-const catColors = {
-  Målvakt:'#1D9E75', Back:'#005B9A', Mittfält:'#534AB7', Forward:'#C8102E'
-};
-
-function fmtDate(str) {
-  const d = new Date(str);
+// ── UTILS ──────────────────────────────────────────────────────────
+function fmtDate(d){
+  if(!(d instanceof Date))d=new Date(d);
   return d.toLocaleDateString('sv-SE',{day:'numeric',month:'short'});
 }
+function stripHTML(s){return s.replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').replace(/&amp;/g,'&').replace(/&quot;/g,'"').replace(/&#39;/g,"'").trim()}
+function clean(s){return stripHTML(s||'')}
+function isDIF(text){const t=text.toLowerCase();return DIF_KW.some(k=>t.includes(k))}
 
-function catClass(cat) {
-  const m = {'Skada':'cat-skada','Info':'cat-info','TV':'cat-tv','Match':'cat-match','Trupp':'cat-trupp','Analys':'cat-analys'};
-  return m[cat] || 'cat-info';
+// ── DATA ───────────────────────────────────────────────────────────
+async function loadData(){
+  try{
+    const r=await fetch('data.json?v='+Date.now());
+    DATA=await r.json();
+    renderNextMatch();
+    renderMatchList();
+    renderPlayers(DATA.players);
+  }catch(e){console.error(e)}
 }
 
-function compClass(c) {
-  return c === 'Allsvenskan' ? 'comp-allsvenskan' : 'comp-cup';
+// ── RSS ────────────────────────────────────────────────────────────
+async function fetchRSS(src){
+  try{
+    const r=await fetch(PROXY+encodeURIComponent(src.url)+'&count=40');
+    const j=await r.json();
+    if(!j.items)return[];
+    return j.items
+      .filter(i=>isDIF(i.title+' '+(i.description||'')))
+      .map(i=>({
+        id:i.link,
+        title:clean(i.title),
+        summary:clean(i.description||'').slice(0,200),
+        link:i.link,
+        date:new Date(i.pubDate),
+        sid:src.id,
+        sname:src.name,
+        scolor:src.color,
+        fav:src.fav
+      }));
+  }catch(e){return[]}
 }
 
-function resultClass(m) {
-  if (!m.played) return 'res-upcoming';
-  const dif_home = m.home === 'Djurgårdens IF';
-  const dif_score = dif_home ? m.homeScore : m.awayScore;
-  const opp_score = dif_home ? m.awayScore : m.homeScore;
-  if (dif_score > opp_score) return 'res-w';
-  if (dif_score < opp_score) return 'res-l';
-  return 'res-d';
+async function syncAll(manual=false){
+  const btn=document.getElementById('sync-btn');
+  const dot=document.getElementById('rss-dot');
+  const st=document.getElementById('rss-status');
+  btn.classList.add('spinning');
+  dot.classList.add('pulsing');
+  st.textContent='Hämtar nyheter...';
+
+  const results=await Promise.all(SOURCES.map(fetchRSS));
+  let items=results.flat().sort((a,b)=>b.date-a.date);
+  // deduplicate
+  const seen=new Set();
+  ALL_NEWS=items.filter(i=>{const k=i.title.slice(0,50);if(seen.has(k))return false;seen.add(k);return true});
+
+  linkArticles();
+  buildSourceTabs();
+  renderNews(activeSource==='all'?ALL_NEWS:ALL_NEWS.filter(n=>n.sid===activeSource));
+  renderMatchList();
+
+  btn.classList.remove('spinning');
+  dot.classList.remove('pulsing');
+  const now=new Date();
+  localStorage.setItem('dif_sync',now.toISOString());
+  const t=now.toLocaleTimeString('sv-SE',{hour:'2-digit',minute:'2-digit'});
+  document.getElementById('last-sync-label').textContent='Uppdaterad '+t;
+  st.textContent=ALL_NEWS.length+' nyheter från '+SOURCES.length+' källor';
 }
 
-function resultText(m) {
-  if (!m.played) return fmtDate(m.date);
-  return `${m.homeScore}–${m.awayScore}`;
+function linkArticles(){
+  if(!DATA)return;
+  DATA.matches.forEach(m=>{
+    const opp=(m.home==='Djurgårdens IF'?m.away:m.home).toLowerCase();
+    const oppShort=opp.replace(/\s+/g,'').slice(0,6);
+    const md=new Date(m.date);
+    const s=new Date(md);s.setDate(s.getDate()-2);
+    const e=new Date(md);e.setDate(e.getDate()+5);
+    m._arts=ALL_NEWS.filter(n=>{
+      const t=n.title.toLowerCase();
+      return n.date>=s&&n.date<=e&&(t.includes(oppShort)||t.includes('djurgård'));
+    }).slice(0,6);
+  });
 }
 
-function faviconImg(url, name) {
-  const domain = url ? new URL(url).hostname : '';
-  const src = domain ? `https://www.google.com/s2/favicons?domain=${domain}&sz=32` : '';
-  return src ? `<img src="${src}" onerror="this.style.display='none'" alt="${name}">` : '';
+// ── NEWS RENDER ────────────────────────────────────────────────────
+function buildSourceTabs(){
+  const ids=[...new Set(ALL_NEWS.map(n=>n.sid))];
+  const c=document.getElementById('source-tabs');
+  c.innerHTML=`<button class="stab ${activeSource==='all'?'active':''}" onclick="filterSource('all',this)">Alla källor</button>`;
+  ids.forEach(id=>{
+    const s=SOURCES.find(x=>x.id===id);
+    if(!s)return;
+    c.innerHTML+=`<button class="stab ${activeSource===id?'active':''}" onclick="filterSource('${id}',this)">
+      <img src="${s.fav}" onerror="this.style.display='none'" alt="">${s.name}
+    </button>`;
+  });
 }
 
-function renderNews(news) {
-  const sorted = [...news].sort((a,b) => new Date(b.date) - new Date(a.date));
-  const featured = sorted.slice(0,2);
-  const rest = sorted.slice(2);
+function filterSource(id,btn){
+  activeSource=id;
+  document.querySelectorAll('.stab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderNews(id==='all'?ALL_NEWS:ALL_NEWS.filter(n=>n.sid===id));
+}
 
-  document.getElementById('news-featured').innerHTML = featured.map(n => `
-    <div class="news-card" onclick="if('${n.sourceUrl}')window.open('${n.sourceUrl}','_blank')">
-      <div class="news-card-top" style="background:${n.category==='Skada'?'var(--red)':n.category==='Match'?'#1a8040':'var(--blue)'}"></div>
-      <div class="news-card-body">
-        <div class="news-source">
-          ${faviconImg(n.sourceUrl, n.source)}
-          <span class="src-name">${n.source}</span>
-          <span class="src-date">${fmtDate(n.date)}</span>
+function renderNews(items){
+  const feat=items.slice(0,2);
+  const more=items.slice(2,25);
+
+  document.getElementById('news-featured').innerHTML=feat.length
+    ?feat.map(n=>`
+      <a class="news-card" href="${n.link}" target="_blank" rel="noopener">
+        <div class="news-accent" style="background:${n.scolor}"></div>
+        <div class="news-card-body">
+          <div class="news-source-row">
+            <img src="${n.fav}" onerror="this.style.display='none'" alt="">
+            <span class="src-name">${n.sname}</span>
+            <span class="src-date">${fmtDate(n.date)}</span>
+          </div>
+          <h3>${n.title}</h3>
+          <p>${n.summary}</p>
         </div>
-        <span class="news-cat ${catClass(n.category)}">${n.category}</span>
-        <h3>${n.title}</h3>
-        <p>${n.summary}</p>
-      </div>
-    </div>`).join('');
+      </a>`).join('')
+    :'<div class="empty-msg" style="grid-column:1/-1">Inga nyheter hittades – prova Synka</div>';
 
-  document.getElementById('news-list').innerHTML = rest.map(n => `
-    <div class="news-list-item" onclick="if('${n.sourceUrl}')window.open('${n.sourceUrl}','_blank')">
-      <div class="nli-body">
-        <div class="nli-source">
-          ${faviconImg(n.sourceUrl, n.source)}
-          <span>${n.source}</span>
-          <span class="nli-date">${fmtDate(n.date)}</span>
+  document.getElementById('news-more').innerHTML=more.length
+    ?more.map(n=>`
+      <a class="nli" href="${n.link}" target="_blank" rel="noopener">
+        <img src="${n.fav}" onerror="this.style.display='none'" alt="">
+        <div class="nli-right">
+          <div class="nli-top">
+            <span class="nli-src">${n.sname}</span>
+            <span class="nli-dt">${fmtDate(n.date)}</span>
+          </div>
+          <h4>${n.title}</h4>
         </div>
-        <h4>${n.title}</h4>
-      </div>
-    </div>`).join('') || '<div style="padding:1.5rem;text-align:center;color:var(--text3);font-size:13px">Inga fler nyheter</div>';
+      </a>`).join('')
+    :'<div class="empty-msg" style="font-size:12px">Inga fler nyheter</div>';
 }
 
-function renderNextMatch(matches) {
-  const upcoming = matches.filter(m => !m.played).sort((a,b) => new Date(a.date)-new Date(b.date));
-  const next = upcoming[0];
-  if (!next) return;
+// ── MATCHES ────────────────────────────────────────────────────────
+function renderMatches(matches){
+  allMatches=[...matches].sort((a,b)=>new Date(a.date)-new Date(b.date));
+  renderMatchList();
+}
 
-  const d = new Date(next.date);
-  const dateStr = d.toLocaleDateString('sv-SE',{weekday:'long',day:'numeric',month:'long'});
+function renderMatchList(){
+  if(!DATA)return;
+  let list=DATA.matches.slice().sort((a,b)=>new Date(a.date)-new Date(b.date));
+  if(matchFilter==='played')list=list.filter(m=>m.played);
+  else if(matchFilter==='upcoming')list=list.filter(m=>!m.played);
+  else if(matchFilter!=='all')list=list.filter(m=>m.competition===matchFilter);
 
-  document.getElementById('hn-teams').textContent = `${next.home} – ${next.away}`;
-  document.getElementById('hn-meta').textContent = `${dateStr} · ${next.competition}`;
+  document.getElementById('match-list').innerHTML=list.map(m=>{
+    const dh=m.home==='Djurgårdens IF';
+    const ht=dh?`<strong>${m.home}</strong>`:m.home;
+    const at=!dh?`<strong>${m.away}</strong>`:m.away;
+    const arts=m._arts||[];
+    let rc='res-u',rt=fmtDate(new Date(m.date));
+    if(m.played){
+      rt=`${m.homeScore}–${m.awayScore}`;
+      const ds=dh?m.homeScore:m.awayScore,os=dh?m.awayScore:m.homeScore;
+      rc=ds>os?'res-w':ds<os?'res-l':'res-d';
+    }
+    return `
+      <div class="match-row" id="mr${m.id}" onclick="toggleDrawer(${m.id})">
+        <span class="mr-date">${fmtDate(new Date(m.date))}</span>
+        <span class="mr-badge ${m.competition==='Allsvenskan'?'b-all':'b-cup'}">${m.competition==='Allsvenskan'?'ALL':'CUP'}</span>
+        <span class="mr-teams">${ht} – ${at}</span>
+        ${arts.length?`<span class="art-pill">${arts.length} art.</span>`:''}
+        <span class="mr-result ${rc}">${rt}</span>
+        <span class="mr-chev">▾</span>
+      </div>
+      <div class="match-drawer" id="md${m.id}">
+        <div class="drawer-head">Artiklar ${arts.length?`<span class="count">${arts.length}</span>`:''}</div>
+        ${arts.length
+          ?arts.map(a=>`
+            <a class="drawer-art" href="${a.link}" target="_blank" rel="noopener">
+              <img class="dart-fav" src="${a.fav}" onerror="this.style.display='none'" alt="">
+              <div><div class="dart-title">${a.title}</div><div class="dart-meta">${a.sname} · ${fmtDate(a.date)}</div></div>
+            </a>`).join('')
+          :`<div class="drawer-empty">Inga artiklar kopplade ännu. Artiklar dyker upp automatiskt inom 2 dagar runt matchdatum efter nästa synk.</div>`
+        }
+      </div>`;
+  }).join('');
+}
 
-  document.getElementById('next-match-widget').innerHTML = `
+function toggleDrawer(id){
+  const row=document.getElementById('mr'+id);
+  const drawer=document.getElementById('md'+id);
+  const wasOpen=drawer.classList.contains('open');
+  document.querySelectorAll('.match-drawer.open').forEach(d=>d.classList.remove('open'));
+  document.querySelectorAll('.match-row.expanded').forEach(r=>r.classList.remove('expanded'));
+  if(!wasOpen){drawer.classList.add('open');row.classList.add('expanded')}
+}
+
+function filterMatches(type,btn){
+  matchFilter=type;
+  document.querySelectorAll('#page-matches .fbtn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderMatchList();
+}
+
+// ── NEXT MATCH ─────────────────────────────────────────────────────
+function renderNextMatch(){
+  if(!DATA)return;
+  const next=[...DATA.matches].filter(m=>!m.played).sort((a,b)=>new Date(a.date)-new Date(b.date))[0];
+  if(!next)return;
+  const d=new Date(next.date);
+  const ds=d.toLocaleDateString('sv-SE',{weekday:'long',day:'numeric',month:'long'});
+  document.getElementById('hn-teams').textContent=`${next.home} – ${next.away}`;
+  document.getElementById('hn-meta').textContent=`${ds} · ${next.competition}`;
+  document.getElementById('next-match-widget').innerHTML=`
     <div class="nmw-label">Nästa match</div>
     <div class="nmw-body">
       <div class="nmw-comp">${next.competition}</div>
@@ -374,120 +528,64 @@ function renderNextMatch(matches) {
         <div class="nmw-vs">VS</div>
         <div class="nmw-team"><div class="tname">${next.away}</div><div class="tsub">Bortalag</div></div>
       </div>
-      <div class="nmw-meta">
-        <span>${dateStr}</span>
-        <span>${next.venue}</span>
-      </div>
+      <div class="nmw-meta"><span>${ds}</span><span>${next.venue}</span></div>
     </div>`;
 }
 
-let allMatches = [];
-function renderMatches(matches) {
-  allMatches = [...matches].sort((a,b) => new Date(a.date)-new Date(b.date));
-  displayMatches(allMatches);
-}
-
-function displayMatches(list) {
-  document.getElementById('match-list').innerHTML = list.map(m => {
-    const dif_home = m.home === 'Djurgårdens IF';
-    const homeStr = dif_home ? `<strong>${m.home}</strong>` : m.home;
-    const awayStr = !dif_home ? `<strong>${m.away}</strong>` : m.away;
-    return `<div class="match-row">
-      <span class="mr-date">${fmtDate(m.date)}</span>
-      <span class="mr-comp ${compClass(m.competition)}">${m.competition === 'Allsvenskan' ? 'ALL' : 'CUP'}</span>
-      <span class="mr-teams">${homeStr} – ${awayStr}</span>
-      <span class="mr-result ${resultClass(m)}">${resultText(m)}</span>
-    </div>`;
-  }).join('') || '<div class="loading">Inga matcher</div>';
-}
-
-function filterMatches(type, btn) {
-  document.querySelectorAll('#match-filter .fbtn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  let list = allMatches;
-  if (type === 'played') list = allMatches.filter(m => m.played);
-  else if (type === 'upcoming') list = allMatches.filter(m => !m.played);
-  else if (type !== 'all') list = allMatches.filter(m => m.competition === type);
-  displayMatches(list);
-}
-
-let allPlayers = [];
-function renderPlayers(players) {
-  allPlayers = players;
+// ── SQUAD ──────────────────────────────────────────────────────────
+const CC={Målvakt:'#1D9E75',Back:'#005B9A',Mittfält:'#534AB7',Forward:'#C8102E'};
+function renderPlayers(players){
+  allPlayers=players;
   displayPlayers(players);
 }
-
-function displayPlayers(list) {
-  document.getElementById('player-grid').innerHTML = list.map(p => {
-    const ini = p.name.split(' ').map(n=>n[0]).join('').slice(0,2);
-    const col = catColors[p.cat] || '#005B9A';
-    return `<div class="player-card" data-cat="${p.cat}">
-      <div class="pa" style="background:${col}">${ini}</div>
-      <div class="pname">${p.name}</div>
-      <div class="ppos">${p.pos}</div>
+function displayPlayers(list){
+  document.getElementById('player-grid').innerHTML=list.map(p=>{
+    const ini=p.name.split(' ').map(n=>n[0]).join('').slice(0,2);
+    return `<div class="player-card">
+      <div class="pa" style="background:${CC[p.cat]||'#005B9A'}">${ini}</div>
+      <div class="pname">${p.name}</div><div class="ppos">${p.pos}</div>
       <div class="pnat">${p.nationality||''}</div>
       <span class="pnr">#${p.nr}</span>
       <div class="p-stats">
         <div class="p-stat"><div class="pv">${p.matches}</div><div class="pl">Matcher</div></div>
         <div class="p-stat"><div class="pv">${p.goals}</div><div class="pl">Mål</div></div>
         <div class="p-stat"><div class="pv">${p.assists}</div><div class="pl">Ass.</div></div>
-      </div>
-    </div>`;
+      </div></div>`;
   }).join('');
 }
-
-function filterSquad(cat, btn) {
-  document.querySelectorAll('#page-squad .fbtn').forEach(b => b.classList.remove('active'));
+function filterSquad(cat,btn){
+  document.querySelectorAll('#page-squad .fbtn').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
-  displayPlayers(cat === 'all' ? allPlayers : allPlayers.filter(p => p.cat === cat));
+  displayPlayers(cat==='all'?allPlayers:allPlayers.filter(p=>p.cat===cat));
 }
 
-function renderSchedule(matches) {
-  const sorted = [...matches].sort((a,b) => new Date(a.date)-new Date(b.date));
-  const groups = {};
-  sorted.forEach(m => {
-    const k = m.competition;
-    if (!groups[k]) groups[k] = [];
-    groups[k].push(m);
-  });
-  let html = '';
-  for (const [comp, list] of Object.entries(groups)) {
-    html += `<div class="sched-round">${comp}</div>`;
-    list.forEach(m => {
-      const dif_home = m.home === 'Djurgårdens IF';
-      html += `<div class="match-row">
-        <span class="mr-date">${fmtDate(m.date)}</span>
-        <span class="mr-teams">${dif_home?'<strong>'+m.home+'</strong>':m.home} – ${!dif_home?'<strong>'+m.away+'</strong>':m.away}</span>
-        <span class="mr-result ${resultClass(m)}">${resultText(m)}</span>
-      </div>`;
-    });
-  }
-  document.getElementById('schedule-widget').innerHTML = html;
-}
-
-function showPage(id) {
+// ── NAV ────────────────────────────────────────────────────────────
+function showPage(id){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
   document.getElementById('page-'+id).classList.add('active');
-  const order = ['news','matches','squad','schedule'];
-  document.querySelectorAll('.nav-tab')[order.indexOf(id)].classList.add('active');
+  ['news','matches','squad'].forEach((n,i)=>{if(n===id)document.querySelectorAll('.nav-tab')[i].classList.add('active')});
 }
 
-async function loadData() {
-  try {
-    const r = await fetch(`data.json?v=${Date.now()}`);
-    DATA = await r.json();
-    renderNews(DATA.news);
-    renderNextMatch(DATA.matches);
-    renderMatches(DATA.matches);
-    renderPlayers(DATA.players);
-    renderSchedule(DATA.matches);
-  } catch(e) {
-    console.error('Kunde inte ladda data.json', e);
+// ── INIT ───────────────────────────────────────────────────────────
+const FIVE_H=5*60*1000;
+async function init(){
+  await loadData();
+  const last=localStorage.getItem('dif_sync');
+  const stale=!last||(Date.now()-new Date(last).getTime())>FIVE_H;
+  if(stale){
+    await syncAll();
+  } else {
+    const t=new Date(last).toLocaleTimeString('sv-SE',{hour:'2-digit',minute:'2-digit'});
+    document.getElementById('last-sync-label').textContent='Uppdaterad '+t;
+    document.getElementById('rss-dot').classList.remove('pulsing');
+    document.getElementById('rss-status').textContent='Klicka Synka för att hämta nya nyheter';
+    // fetch anyway in background for freshness
+    syncAll();
   }
+  setInterval(syncAll, FIVE_H);
 }
-
-loadData();
+init();
 </script>
 </body>
 </html>
