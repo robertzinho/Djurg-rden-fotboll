@@ -347,35 +347,39 @@ if(localStorage.getItem('dif_cache_ver') !== CACHE_VER) {
 // ── STATE ────────────────────────────────────────────────────
 
 // ── TEAM LOGOS ────────────────────────────────────────────────
+// Klubbloggor – verifierade URLs
 const TEAM_LOGOS = {
-  'Djurgårdens IF':    'https://upload.wikimedia.org/wikipedia/en/thumb/1/16/Djurg%C3%A5rdens_IF_logo.svg/200px-Djurg%C3%A5rdens_IF_logo.svg.png',
-  'Djurgarden':        'https://upload.wikimedia.org/wikipedia/en/thumb/1/16/Djurg%C3%A5rdens_IF_logo.svg/200px-Djurg%C3%A5rdens_IF_logo.svg.png',
-  'Djurgaarden':       'https://upload.wikimedia.org/wikipedia/en/thumb/1/16/Djurg%C3%A5rdens_IF_logo.svg/200px-Djurg%C3%A5rdens_IF_logo.svg.png',
-  'AIK':               'https://upload.wikimedia.org/wikipedia/en/thumb/2/22/AIK_logo.svg/200px-AIK_logo.svg.png',
-  'Hammarby IF':       'https://upload.wikimedia.org/wikipedia/en/thumb/c/cd/Hammarby_Fotboll_logo.svg/200px-Hammarby_Fotboll_logo.svg.png',
-  'Malmö FF':          'https://upload.wikimedia.org/wikipedia/en/thumb/b/b4/Malm%C3%B6_FF_logo.svg/200px-Malm%C3%B6_FF_logo.svg.png',
-  'IF Elfsborg':       'https://upload.wikimedia.org/wikipedia/en/thumb/0/0c/IF_Elfsborg_logo.svg/200px-IF_Elfsborg_logo.svg.png',
-  'BK Häcken':         'https://upload.wikimedia.org/wikipedia/en/thumb/4/47/BK_H%C3%A4cken_logo.svg/200px-BK_H%C3%A4cken_logo.svg.png',
-  'IFK Göteborg':      'https://upload.wikimedia.org/wikipedia/en/thumb/8/81/IFK_G%C3%B6teborg.svg/200px-IFK_G%C3%B6teborg.svg.png',
-  'Kalmar FF':         'https://upload.wikimedia.org/wikipedia/en/thumb/c/c5/Kalmar_FF_logo.svg/200px-Kalmar_FF_logo.svg.png',
-  'IK Sirius':         'https://upload.wikimedia.org/wikipedia/en/thumb/9/9d/IK_Sirius_FK_logo.svg/200px-IK_Sirius_FK_logo.svg.png',
-  'GAIS':              'https://upload.wikimedia.org/wikipedia/en/thumb/8/80/GAIS_logo.svg/200px-GAIS_logo.svg.png',
-  'Halmstads BK':      'https://upload.wikimedia.org/wikipedia/en/thumb/5/52/Halmstads_BK_logo.svg/200px-Halmstads_BK_logo.svg.png',
-  'Mjällby AIF':       'https://upload.wikimedia.org/wikipedia/en/thumb/6/67/Mj%C3%A4llby_AIF_logo.svg/200px-Mj%C3%A4llby_AIF_logo.svg.png',
-  'Örgryte IS':        'https://upload.wikimedia.org/wikipedia/en/thumb/1/10/%C3%96rgryte_IS_logo.svg/200px-%C3%96rgryte_IS_logo.svg.png',
-  'Degerfors IF':      'https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Degerfors_IF_logo.svg/200px-Degerfors_IF_logo.svg.png',
-  'IF Brommapojkarna': 'https://upload.wikimedia.org/wikipedia/en/thumb/4/46/IF_Brommapojkarna_logo.svg/200px-IF_Brommapojkarna_logo.svg.png',
-  'Västerås SK':       'https://upload.wikimedia.org/wikipedia/en/thumb/9/98/V%C3%A4ster%C3%A5s_SK_Fotboll_logo.svg/200px-V%C3%A4ster%C3%A5s_SK_Fotboll_logo.svg.png',
-  'IFK Skövde':        'https://upload.wikimedia.org/wikipedia/en/thumb/c/c3/IFK_Sk%C3%B6vde_FK.svg/200px-IFK_Sk%C3%B6vde_FK.svg.png',
-  'HJK Helsinki':      'https://upload.wikimedia.org/wikipedia/en/thumb/c/c3/HJK_Helsinki_logo.svg/200px-HJK_Helsinki_logo.svg.png',
-  'Falkenbergs FF':    'https://upload.wikimedia.org/wikipedia/en/thumb/3/3b/Falkenbergs_FF_logo.svg/200px-Falkenbergs_FF_logo.svg.png',
-  'Sirius':            'https://upload.wikimedia.org/wikipedia/en/thumb/9/9d/IK_Sirius_FK_logo.svg/200px-IK_Sirius_FK_logo.svg.png',
-  'Häcken':            'https://upload.wikimedia.org/wikipedia/en/thumb/4/47/BK_H%C3%A4cken_logo.svg/200px-BK_H%C3%A4cken_logo.svg.png',
-  'Malmo FF':          'https://upload.wikimedia.org/wikipedia/en/thumb/b/b4/Malm%C3%B6_FF_logo.svg/200px-Malm%C3%B6_FF_logo.svg.png',
-  'Elfsborg':          'https://upload.wikimedia.org/wikipedia/en/thumb/0/0c/IF_Elfsborg_logo.svg/200px-IF_Elfsborg_logo.svg.png',
-  'Brommapojkarna':    'https://upload.wikimedia.org/wikipedia/en/thumb/4/46/IF_Brommapojkarna_logo.svg/200px-IF_Brommapojkarna_logo.svg.png',
-  'Halmstad':          'https://upload.wikimedia.org/wikipedia/en/thumb/5/52/Halmstads_BK_logo.svg/200px-Halmstads_BK_logo.svg.png',
-  'Mjallby':           'https://upload.wikimedia.org/wikipedia/en/thumb/6/67/Mj%C3%A4llby_AIF_logo.svg/200px-Mj%C3%A4llby_AIF_logo.svg.png',
+  // Verifierade TheSportsDB-badges
+  'Djurgårdens IF':    'https://r2.thesportsdb.com/images/media/team/badge/nxiwwo1717762932.png',
+  'Djurgarden':        'https://r2.thesportsdb.com/images/media/team/badge/nxiwwo1717762932.png',
+  'Djurgaarden':       'https://r2.thesportsdb.com/images/media/team/badge/nxiwwo1717762932.png',
+  'AIK':               'https://r2.thesportsdb.com/images/media/team/badge/p7r6ou1542132891.png',
+  // Officiella klubbloggor via favicon-tjänst (64px, alltid tillgänglig)
+  'Hammarby IF':       'https://www.google.com/s2/favicons?domain=hammarbyfotboll.se&sz=128',
+  'Malmö FF':          'https://www.google.com/s2/favicons?domain=mff.se&sz=128',
+  'Malmo FF':          'https://www.google.com/s2/favicons?domain=mff.se&sz=128',
+  'IF Elfsborg':       'https://www.google.com/s2/favicons?domain=elfsborg.se&sz=128',
+  'Elfsborg':          'https://www.google.com/s2/favicons?domain=elfsborg.se&sz=128',
+  'BK Häcken':         'https://www.google.com/s2/favicons?domain=bkhacken.se&sz=128',
+  'Häcken':            'https://www.google.com/s2/favicons?domain=bkhacken.se&sz=128',
+  'Hacken':            'https://www.google.com/s2/favicons?domain=bkhacken.se&sz=128',
+  'IFK Göteborg':      'https://www.google.com/s2/favicons?domain=ifkgoteborg.se&sz=128',
+  'Kalmar FF':         'https://www.google.com/s2/favicons?domain=kalmarff.se&sz=128',
+  'IK Sirius':         'https://www.google.com/s2/favicons?domain=iksirius.se&sz=128',
+  'Sirius':            'https://www.google.com/s2/favicons?domain=iksirius.se&sz=128',
+  'GAIS':              'https://www.google.com/s2/favicons?domain=gais.se&sz=128',
+  'Halmstads BK':      'https://www.google.com/s2/favicons?domain=halmstadsbk.se&sz=128',
+  'Halmstad':          'https://www.google.com/s2/favicons?domain=halmstadsbk.se&sz=128',
+  'Mjällby AIF':       'https://www.google.com/s2/favicons?domain=mjallbyaif.se&sz=128',
+  'Mjallby':           'https://www.google.com/s2/favicons?domain=mjallbyaif.se&sz=128',
+  'Örgryte IS':        'https://www.google.com/s2/favicons?domain=orgryteis.se&sz=128',
+  'Degerfors IF':      'https://www.google.com/s2/favicons?domain=degerforsif.se&sz=128',
+  'IF Brommapojkarna': 'https://www.google.com/s2/favicons?domain=brommapojkarna.se&sz=128',
+  'Brommapojkarna':    'https://www.google.com/s2/favicons?domain=brommapojkarna.se&sz=128',
+  'Västerås SK':       'https://www.google.com/s2/favicons?domain=vasterassk.se&sz=128',
+  'Falkenbergs FF':    'https://www.google.com/s2/favicons?domain=falkenbergsff.se&sz=128',
+  'HJK Helsinki':      'https://www.google.com/s2/favicons?domain=hjk.fi&sz=128',
+  'IFK Skövde':        'https://www.google.com/s2/favicons?domain=ifkskovde.se&sz=128',
 };
 
 function teamLogo(name) {
@@ -425,21 +429,31 @@ async function apiFetch(url){
 
 async function getLastMatches(){
   const c = cGet('last'); if(c&&c.length) return c;
+  let live = [];
   try {
     const j = await apiFetch(`${TSDB}/eventslast.php?id=${TEAM_ID}`);
-    const v = (j.results||[]).map(normalizeMatch).filter(Boolean);
-    if(v.length){ cSet('last',v); return v; }
+    live = (j.results||[]).map(normalizeMatch).filter(Boolean);
   } catch(e){ console.warn('TheSportsDB last:', e.message); }
-  return FALLBACK_LAST;
+  // Merge: use live results, fill gaps from fallback (avoid date duplicates)
+  const liveDates = new Set(live.map(m=>m.date));
+  const extra = FALLBACK_LAST.filter(m=>!liveDates.has(m.date));
+  const merged = [...live, ...extra].sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,6);
+  if(merged.length) cSet('last', merged);
+  return merged.length ? merged : FALLBACK_LAST;
 }
 async function getNextMatches(){
   const c = cGet('next'); if(c&&c.length) return c;
+  let live = [];
   try {
     const j = await apiFetch(`${TSDB}/eventsnext.php?id=${TEAM_ID}`);
-    const v = (j.events||[]).map(normalizeMatch).filter(Boolean);
-    if(v.length){ cSet('next',v); return v; }
+    live = (j.events||[]).map(normalizeMatch).filter(Boolean);
   } catch(e){ console.warn('TheSportsDB next:', e.message); }
-  return FALLBACK_NEXT;
+  // Merge: use live, fill from fallback for dates not covered
+  const liveDates = new Set(live.map(m=>m.date));
+  const extra = FALLBACK_NEXT.filter(m=>!liveDates.has(m.date));
+  const merged = [...live, ...extra].sort((a,b)=>new Date(a.date)-new Date(b.date)).slice(0,8);
+  if(merged.length) cSet('next', merged);
+  return merged.length ? merged : FALLBACK_NEXT;
 }
 async function getStandings(){
   const c = cGet('standings'); if(c && c.length) return c;
