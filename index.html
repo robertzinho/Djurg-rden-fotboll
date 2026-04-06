@@ -120,29 +120,30 @@ img{display:block;max-width:100%}
 .mc-upcoming .mc-soon{font-size:10px;color:var(--accent);margin-top:2px;font-weight:600}
 
 /* NEWS */
-.news-feat{display:block;margin:0 12px 8px;background:var(--surface);border-radius:var(--r);border:1px solid var(--border);overflow:hidden;transition:transform .15s,box-shadow .15s}
-.news-feat:active{transform:scale(.99)}
-.news-accent{height:2px}
-.news-feat-body{padding:14px}
-/* Source row */
-.news-src-row{display:flex;align-items:center;gap:6px;margin-bottom:8px}
-.news-src-ico{width:18px;height:18px;border-radius:50%;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:var(--bg4)}
-.news-src-ico img{width:18px;height:18px;object-fit:cover;border-radius:50%}
-.news-src-name{font-size:11px;color:var(--text3);font-weight:700;text-transform:uppercase;letter-spacing:.5px}
-.news-src-dot{width:3px;height:3px;border-radius:50%;background:var(--bg4);flex-shrink:0}
-.news-src-ago{font-size:11px;color:var(--text3)}
-/* Featured card */
-.news-feat h3{font-size:15px;font-weight:700;color:var(--text);line-height:1.45;margin:0;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
-.news-feat p{font-size:13px;color:var(--text2);line-height:1.6;margin-top:6px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-/* List items */
 .news-list-wrap{margin:0 12px 12px;background:var(--surface);border-radius:var(--r);border:1px solid var(--border);overflow:hidden}
-.news-item{display:flex;align-items:center;gap:12px;padding:13px 14px;border-bottom:1px solid var(--border);transition:background .12s;position:relative}
+/* Uniform news item */
+.news-item{display:flex;align-items:flex-start;gap:12px;padding:14px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .12s;user-select:none}
 .news-item:last-child{border-bottom:none}
-.news-item:active{background:var(--bg3)}
-.news-item-ico{width:32px;height:32px;border-radius:8px;overflow:hidden;flex-shrink:0;background:var(--bg4);display:flex;align-items:center;justify-content:center}
-.news-item-ico img{width:32px;height:32px;object-fit:cover}
+.news-item:hover{background:var(--bg3)}
+.news-item-ico{width:36px;height:36px;border-radius:8px;overflow:hidden;flex-shrink:0;background:var(--bg4);display:flex;align-items:center;justify-content:center;margin-top:1px}
+.news-item-ico img{width:36px;height:36px;object-fit:cover}
 .news-item-body{flex:1;min-width:0}
-.news-item h4{font-size:13px;font-weight:600;color:var(--text);line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.news-item-meta{display:flex;align-items:center;gap:5px;margin-bottom:4px}
+.news-src-name{font-size:10px;color:var(--text3);font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.news-src-dot{width:3px;height:3px;border-radius:50%;background:var(--text3);flex-shrink:0}
+.news-src-ago{font-size:10px;color:var(--text3)}
+.news-item h4{font-size:14px;font-weight:600;color:var(--text);line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin:0}
+.news-chevron{color:var(--text3);font-size:18px;flex-shrink:0;transition:transform .2s;line-height:1;margin-top:10px}
+/* Expanded drawer */
+.news-drawer{display:none;padding:0 14px 14px 62px;border-bottom:1px solid var(--border)}
+.news-drawer.open{display:block}
+.news-drawer p{font-size:13px;color:var(--text2);line-height:1.65;margin-bottom:12px}
+.news-read-more{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--dif);background:rgba(0,91,154,.1);padding:7px 14px;border-radius:20px;text-decoration:none;transition:background .15s}
+.news-read-more:hover{background:rgba(0,91,154,.2)}
+.news-item.expanded .news-chevron{transform:rotate(90deg)}
+.news-item.expanded{background:var(--bg3)}
+/* Source color bar */
+.news-src-bar{width:3px;border-radius:2px;flex-shrink:0;align-self:stretch;min-height:36px;margin:-14px 0 -14px -14px}
 .news-item-meta{display:flex;align-items:center;gap:5px;margin-bottom:4px}
 .news-item-src{font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.4px}
 .news-item-age{font-size:10px;color:var(--text3)}
@@ -161,6 +162,7 @@ img{display:block;max-width:100%}
 .pos-pill{width:22px;height:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;background:var(--bg4);color:var(--text3)}
 .pos-top{background:rgba(245,158,11,.15);color:var(--accent)}
 .pos-down{background:rgba(239,68,68,.12);color:#f87171}
+.pos-playoff{background:rgba(251,146,60,.1);color:#fb923c}
 .team-cell{display:flex;align-items:center;gap:6px}
 .team-cell img{width:18px;height:18px;border-radius:2px;object-fit:contain;flex-shrink:0}
 .tbl-legend{display:flex;gap:14px;padding:10px 12px;border-top:1px solid var(--border);background:var(--bg3)}
@@ -268,7 +270,6 @@ img{display:block;max-width:100%}
       <div class="section-hd">
         <span class="section-title">Nyheter</span>
       </div>
-      <div id="home-news-feat"></div>
       <div class="news-list-wrap"><div id="home-news-list"></div></div>
     </div>
     <div class="side-col">
@@ -650,7 +651,7 @@ function renderStandings(table, limit=999){
   const rows = table.slice(0,limit).map((t,i)=>{
     const pos = +t.intRank||i+1;
     const isDif = /djurgård/i.test(t.strTeam||'');
-    const pc = pos<=3?'pos-top':pos>=15?'pos-down':'';
+    const pc = pos<=3?'pos-top':pos>=15?'pos-down':pos>=13?'pos-playoff':'';
     return `<tr class="${isDif?'row-dif':''}">
       <td><span class="pos-pill ${pc}">${pos}</span></td>
       <td><div class="team-cell">${t.strTeamBadge?`<img src="${t.strTeamBadge}" loading="lazy" onerror="this.style.display='none'">`:''}
@@ -728,7 +729,6 @@ async function loadHome(){
       <div class="rc-score">${m.ds !== null ? m.ds+'–'+m.os : '–'}</div>
       <div class="rc-date">${fd(m.date)}</div>
     </div>`).join(''));
-  set('home-news-feat','<div style="margin:0 12px 8px;background:var(--surface);border-radius:var(--r);border:1px solid var(--border);padding:14px"><div class="sk sk-text" style="width:40%;margin-bottom:10px"></div><div class="sk sk-text" style="width:90%;margin-bottom:6px"></div><div class="sk sk-text" style="width:70%"></div></div>');
   set('home-news-list','<div style="padding:14px 16px;border-bottom:1px solid var(--border)"><div class="sk sk-text" style="width:80%"></div></div><div style="padding:14px 16px"><div class="sk sk-text" style="width:65%"></div></div>');
   set('home-table','<div style="padding:1rem 16px"><div class="sk sk-text" style="width:50%;margin-bottom:10px"></div><div class="sk sk-text" style="width:70%;margin-bottom:8px"></div><div class="sk sk-text" style="width:60%"></div></div>');
 
@@ -749,12 +749,11 @@ async function loadHome(){
   try {
     const news = await getNews();
     S.news = news;
-    set('home-news-feat', news.slice(0,2).map(renderNewsFeat).join('') || '<div class="empty">Inga nyheter – försök ladda om</div>');
-    set('home-news-list', news.slice(2,8).map(renderNewsItem).join('') || '<div style="padding:1rem 16px;color:var(--text3);font-size:13px">Inga fler nyheter</div>');
+    set('home-news-feat', '');
+    set('home-news-list', news.length ? news.slice(0,10).map((n,i)=>renderNewsItem(n,i)).join('') : '<div style="padding:1rem 16px;color:var(--text3);font-size:13px">Inga nyheter</div>');
   } catch(e){ 
     console.warn('News:', e.message);
-    set('home-news-feat','<div class="empty">Nyheter ej tillgängliga</div>');
-    set('home-news-list','');
+    set('home-news-list','<div style="padding:1rem 16px;color:var(--text3);font-size:13px">Nyheter ej tillgängliga</div>');
   }
 
   try {
