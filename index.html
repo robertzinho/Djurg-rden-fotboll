@@ -83,23 +83,45 @@ img{display:block;max-width:100%}
 .see-all{font-size:12px;color:var(--dif);font-weight:600;padding:4px 10px;background:rgba(0,91,154,.12);border-radius:20px}
 
 /* RESULTS SCROLL */
-.results-row{display:flex;gap:8px;padding:0 12px 12px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+/* ── RESULTS ROW (horizontal scroll) ─────────────────────────── */
+.results-row{display:flex;gap:0;padding:0 12px 14px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;flex-direction:column}
 .results-row::-webkit-scrollbar{display:none}
-.result-chip{flex-shrink:0;width:88px;background:var(--surface);border-radius:var(--r2);padding:10px 8px;border:1px solid var(--border);text-align:center;border-top:3px solid var(--border2)}
-.result-chip.win{border-top-color:var(--green)}
-.result-chip.loss{border-top-color:var(--red)}
-.result-chip.draw{border-top-color:var(--gray)}
-.rc-opp{font-size:11px;color:var(--text2);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.rc-score{font-size:20px;font-weight:800;color:var(--text);margin:4px 0;letter-spacing:-.5px}
-.rc-date{font-size:10px;color:var(--text3)}
+
+/* Each result as a horizontal row like FotMob/screenshot */
+.result-chip{display:flex;align-items:center;gap:0;padding:10px 0;border-bottom:1px solid var(--border);position:relative;cursor:default}
+.result-chip:last-child{border-bottom:none}
+
+/* Result indicator on left */
+.rc-indicator{width:36px;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.rc-ind-dot{width:8px;height:8px;border-radius:50%}
+.result-chip.win .rc-ind-dot{background:var(--green)}
+.result-chip.loss .rc-ind-dot{background:#f87171}
+.result-chip.draw .rc-ind-dot{background:var(--text3)}
+
+/* Teams + score row */
+.rc-body{flex:1;display:flex;align-items:center;gap:8px;min-width:0}
+.rc-team-side{flex:1;display:flex;align-items:center;gap:7px;min-width:0}
+.rc-team-side.right{flex-direction:row-reverse;justify-content:flex-start}
+.rc-logo{width:24px;height:24px;flex-shrink:0;object-fit:contain}
+.rc-logo-ini{width:24px;height:24px;border-radius:4px;background:var(--bg4);display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:800;color:var(--text3);flex-shrink:0}
+.rc-opp{font-size:13px;color:var(--text2);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rc-dif{font-size:13px;font-weight:700;color:var(--text)}
+
+/* Score in center */
+.rc-score-wrap{display:flex;flex-direction:column;align-items:center;flex-shrink:0;width:52px}
+.rc-score{font-size:15px;font-weight:800;letter-spacing:-.5px;color:var(--text)}
+.result-chip.win .rc-score{color:var(--green)}
+.result-chip.loss .rc-score{color:#f87171}
+.rc-comp{font-size:9px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:.3px;margin-top:2px}
+
+/* Date on right */
+.rc-date{width:46px;flex-shrink:0;font-size:10px;color:var(--text3);text-align:right;padding-right:4px;line-height:1.3}
 
 /* MATCH CARD */
-.match-card{background:var(--surface);border-radius:var(--r);margin:0 12px 8px;border:1px solid var(--border);overflow:hidden;position:relative}
-.match-card-bar{height:3px;background:var(--border)}
-.match-card-bar.win{background:var(--green)}
-.match-card-bar.loss{background:var(--red)}
-.match-card-bar.draw{background:var(--gray)}
-.mc-top{display:flex;align-items:center;gap:8px;padding:10px 12px 8px}
+.match-card{background:var(--surface);border-radius:0;margin:0;border:none;border-bottom:1px solid var(--border);overflow:hidden;position:relative}
+.match-card:last-child{border-bottom:none}
+.match-card-bar{display:none}
+.mc-top{display:flex;align-items:center;gap:8px;padding:9px 14px 6px}
 .mc-comp{flex:1;font-size:11px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:.3px}
 .mc-date{font-size:11px;color:var(--text3)}
 .badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;letter-spacing:.3px}
@@ -108,12 +130,12 @@ img{display:block;max-width:100%}
 .badge-ns{background:rgba(0,91,154,.15);color:#60a5fa}
 .live-dot{width:6px;height:6px;border-radius:50%;background:#f87171;animation:pulse 1s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-.mc-teams{display:flex;align-items:center;gap:6px;padding:4px 12px 12px}
+.mc-teams{display:flex;align-items:center;gap:6px;padding:4px 14px 12px}
 .mc-team{flex:1;display:flex;align-items:center;gap:8px;min-width:0}
 .mc-team-r{flex-direction:row-reverse}
-.mc-logo{width:28px;height:28px;border-radius:4px;background:transparent;display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0}
-.mc-logo img{width:28px;height:28px;object-fit:contain;filter:drop-shadow(0 1px 2px rgba(0,0,0,.3))}
-.mc-logo-ini{font-size:8px;font-weight:800;color:var(--text3);background:var(--bg3);width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:4px}
+.mc-logo{width:30px;height:30px;border-radius:4px;background:transparent;display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0}
+.mc-logo img{width:30px;height:30px;object-fit:contain;filter:drop-shadow(0 1px 3px rgba(0,0,0,.3))}
+.mc-logo-ini{font-size:9px;font-weight:800;color:var(--text3);background:var(--bg3);width:30px;height:30px;display:flex;align-items:center;justify-content:center;border-radius:4px}
 .mc-name{font-size:13px;color:var(--text2);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .mc-name.dif{color:var(--text);font-weight:700}
 .mc-score{min-width:60px;text-align:center;flex-shrink:0}
@@ -287,7 +309,9 @@ img{display:block;max-width:100%}
         <span class="section-title">Senaste resultat</span>
         <button class="see-all" onclick="nav('matches',null)">Se alla</button>
       </div>
-      <div class="results-row" id="home-results"></div>
+      <div style="margin:0 12px;background:var(--surface);border-radius:var(--r);border:1px solid var(--border);overflow:hidden">
+        <div class="results-row" id="home-results"></div>
+      </div>
       <div class="section-hd">
         <span class="section-title">Nyheter</span>
       </div>
@@ -309,7 +333,9 @@ img{display:block;max-width:100%}
     <button class="tab-btn active" id="tab-up" onclick="switchMatchTab('upcoming',this)">Kommande</button>
     <button class="tab-btn" id="tab-res" onclick="switchMatchTab('results',this)">Resultat</button>
   </div>
-  <div style="padding-top:10px" id="matches-list"></div>
+  <div style="padding-top:10px">
+    <div style="margin:0 12px;background:var(--surface);border-radius:var(--r);border:1px solid var(--border);overflow:hidden" id="matches-list"></div>
+  </div>
 </div>
 
 <!-- SQUAD -->
@@ -617,6 +643,38 @@ function stripHTML(s){
     .replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&nbsp;/g,' ').trim();
 }
 
+function renderResultChips(matches){
+  if(!matches.length) return '<div style="padding:1rem;color:var(--text3);font-size:13px;text-align:center">–</div>';
+  return matches.map(m=>{
+    const logo = teamLogo(m.opponent);
+    const logoEl = logo
+      ? `<img class="rc-logo" src="${logo}" alt="${m.opponent}" loading="lazy" onerror="this.outerHTML='<span class=rc-logo-ini>${ini(m.opponent)}</span>'">`
+      : `<span class="rc-logo-ini">${ini(m.opponent)}</span>`;
+    const compShort = m.competition==='Allsvenskan'?'ALL':m.competition==='Svenska Cupen'?'CUP':'VÄN';
+    return `
+    <div class="result-chip ${m.result}">
+      <div class="rc-indicator"><div class="rc-ind-dot"></div></div>
+      <div class="rc-body">
+        <div class="rc-team-side">
+          ${logoEl}
+          <span class="${m.isHome?'rc-dif':'rc-opp'}">${m.isHome?'Djurgården':m.opponent}</span>
+        </div>
+        <div class="rc-score-wrap">
+          <span class="rc-score">${m.ds}–${m.os}</span>
+          <span class="rc-comp">${compShort}</span>
+        </div>
+        <div class="rc-team-side right">
+          <span class="${!m.isHome?'rc-dif':'rc-opp'}">${m.isHome?m.opponent:'Djurgården'}</span>
+          ${m.isHome
+            ? (teamLogo(m.opponent)?`<img class="rc-logo" src="${teamLogo(m.opponent)}" alt="${m.opponent}" loading="lazy" onerror="this.style.display='none'">`:logoEl)
+            : (teamLogo('Djurgårdens IF')?`<img class="rc-logo" src="${teamLogo('Djurgårdens IF')}" alt="DIF" loading="lazy">`:'')}
+        </div>
+      </div>
+      <div class="rc-date">${fd(m.date)}</div>
+    </div>`;
+  }).join('');
+}
+
 function renderHero(m){
   const d = new Date(m.date);
   const ds = d.toLocaleDateString('sv-SE',{weekday:'short',day:'numeric',month:'short'});
@@ -868,12 +926,7 @@ async function loadHome(){
   S.last = S.last.length ? S.last : FALLBACK_LAST;
   S.next = S.next.length ? S.next : FALLBACK_NEXT;
   set('home-hero', renderHero(S.next[0]));
-  set('home-results', S.last.slice(0,5).map(m=>`
-    <div class="result-chip ${m.result}">
-      <div class="rc-opp">${m.opponent}</div>
-      <div class="rc-score">${m.ds !== null ? m.ds+'–'+m.os : '–'}</div>
-      <div class="rc-date">${fd(m.date)}</div>
-    </div>`).join(''));
+  set('home-results', renderResultChips(S.last.slice(0,5)));
   set('home-news-list','<div style="padding:14px 16px;border-bottom:1px solid var(--border)"><div class="sk sk-text" style="width:80%"></div></div><div style="padding:14px 16px"><div class="sk sk-text" style="width:65%"></div></div>');
   set('home-table','<div style="padding:1rem 16px"><div class="sk sk-text" style="width:50%;margin-bottom:10px"></div><div class="sk sk-text" style="width:70%;margin-bottom:8px"></div><div class="sk sk-text" style="width:60%"></div></div>');
 
@@ -881,12 +934,7 @@ async function loadHome(){
   try {
     const [last, next] = await Promise.all([getLastMatches(), getNextMatches()]);
     if(last.length){ S.last = last;
-      set('home-results', last.slice(0,5).map(m=>`
-        <div class="result-chip ${m.result}">
-          <div class="rc-opp">${m.opponent}</div>
-          <div class="rc-score">${m.ds}–${m.os}</div>
-          <div class="rc-date">${fd(m.date)}</div>
-        </div>`).join(''));
+      set('home-results', renderResultChips(last.slice(0,5)));
     }
     if(next.length){ S.next = next; set('home-hero', renderHero(next[0])); }
   } catch(e){ console.warn('Matches:', e.message); }
