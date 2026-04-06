@@ -1,823 +1,1308 @@
-<!DOCTYPE html>
-<html lang="sv" data-theme="dark">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#0a0e1a">
-<title>Djurgårdens IF</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-<style>
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-:root{
-  --blue:#1a56db;--dif:#005B9A;--accent:#f59e0b;--green:#10b981;--red:#ef4444;--gray:#6b7280;
-  --bg:#0a0e1a;--bg2:#111827;--bg3:#1f2937;--bg4:#374151;
-  --surface:#151c2c;--surface2:#1a2236;
-  --border:#1f2937;--border2:#2d3748;
-  --text:#f9fafb;--text2:#9ca3af;--text3:#6b7280;
-  --nav:60px;--safe:env(safe-area-inset-bottom,0px);
-  --r:12px;--r2:8px;--r3:6px;
-  --shadow:0 4px 24px rgba(0,0,0,.5);
-}
-[data-theme=light]{
-  --bg:#f3f4f6;--bg2:#fff;--bg3:#f9fafb;--bg4:#e5e7eb;
-  --surface:#fff;--surface2:#f9fafb;
-  --border:#e5e7eb;--border2:#d1d5db;
-  --text:#111827;--text2:#4b5563;--text3:#9ca3af;
-  --shadow:0 2px 12px rgba(0,0,0,.08);
-}
-html{font-size:15px;-webkit-text-size-adjust:100%}
-body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100dvh;padding-bottom:calc(var(--nav) + var(--safe));overflow-x:hidden;-webkit-font-smoothing:antialiased}
-a{text-decoration:none;color:inherit}
-button{cursor:pointer;font-family:inherit;border:none;background:none;color:inherit}
-img{display:block;max-width:100%}
+From: <Saved by Blink>
+Snapshot-Content-Location: file:///Users/robertjohansson/Downloads/index.html
+Subject: =?utf-8?Q?Djurg=C3=A5rdens=20IF?=
+Date: Mon, 6 Apr 2026 09:10:04 +0200
+MIME-Version: 1.0
+Content-Type: multipart/related;
+	type="text/html";
+	boundary="----MultipartBoundary--6kM5aChqnkpyRkrfLJXo2FBLuhGXW90ZcuYxScNLrP----"
 
-/* TOPBAR */
-.topbar{position:sticky;top:0;z-index:200;height:52px;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 16px;backdrop-filter:blur(12px)}
-.topbar-logo{display:flex;align-items:center;gap:10px}
-.logo-badge{width:32px;height:32px;background:#fff;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 0 0 2px rgba(245,158,11,.5)}
-.logo-badge b{font-size:9px;font-weight:800;color:#0a2447;line-height:1}
-.logo-badge small{font-size:6px;color:#6b7280;letter-spacing:.5px}
-.topbar-name{font-size:16px;font-weight:800;letter-spacing:-.3px}
-.topbar-right{display:flex;gap:8px}
-.icon-btn{width:34px;height:34px;border-radius:50%;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:15px;color:var(--text2);transition:background .15s}
-.icon-btn:active{background:var(--bg4)}
 
-/* BOTTOM NAV */
-.bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:200;height:calc(var(--nav) + var(--safe));padding-bottom:var(--safe);background:var(--bg2);border-top:1px solid var(--border);display:flex;align-items:stretch}
-.nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--text3);font-size:10px;font-weight:600;letter-spacing:.2px;transition:color .15s;padding:8px 0;position:relative}
-.nav-btn svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.nav-btn.active{color:var(--dif)}
-.nav-btn.active::after{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:32px;height:2px;background:var(--dif);border-radius:0 0 4px 4px}
+------MultipartBoundary--6kM5aChqnkpyRkrfLJXo2FBLuhGXW90ZcuYxScNLrP----
+Content-Type: text/html
+Content-ID: <frame-873CC436B42C4F1E934CE4C5B0D19C52@mhtml.blink>
+Content-Transfer-Encoding: quoted-printable
+Content-Location: file:///Users/robertjohansson/Downloads/index.html
 
-/* PAGES */
-.page{display:none;min-height:60vh}
-.page.active{display:block}
+<!DOCTYPE html><html lang=3D"sv" data-theme=3D"dark"><head><meta http-equiv=
+=3D"Content-Type" content=3D"text/html; charset=3DUTF-8"><link rel=3D"style=
+sheet" type=3D"text/css" href=3D"cid:css-1eb6a871-57b8-4dd3-ab49-6a454758e8=
+0d@mhtml.blink" />
 
-/* ── HOME ── */
-.hero-card{margin:12px;border-radius:var(--r);background:linear-gradient(145deg,#0a1628 0%,#0d1f3c 40%,#0a2a4a 100%);border:1px solid rgba(0,91,154,.35);overflow:hidden;position:relative}
-.hero-card::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% -20%,rgba(0,91,154,.25) 0%,transparent 60%);pointer-events:none}
-.hero-badge{background:var(--accent);padding:5px 14px;font-size:10px;font-weight:700;color:#000;letter-spacing:.8px;text-transform:uppercase;display:flex;justify-content:space-between}
-.hero-inner{padding:16px;position:relative;z-index:1}
-.hero-comp{font-size:11px;color:#7090b0;font-weight:600;margin-bottom:14px;text-transform:uppercase;letter-spacing:.5px}
-.hero-teams{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:14px}
-.hero-team{flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center}
-.hero-team-logo{width:56px;height:56px;border-radius:8px;background:transparent;display:flex;align-items:center;justify-content:center;overflow:hidden}
-.hero-team-logo img{width:56px;height:56px;object-fit:contain;filter:drop-shadow(0 2px 6px rgba(0,0,0,.4))}
-.hero-team-ini{font-size:14px;font-weight:800;color:#fff}
-.hero-team-name{font-size:13px;font-weight:700;color:#fff;line-height:1.2}
-.hero-vs{font-size:22px;font-weight:900;color:var(--accent);flex-shrink:0}
-.hero-info{display:flex;gap:8px;flex-wrap:wrap}
-.hero-chip{font-size:11px;color:#7090b0;background:rgba(255,255,255,.06);padding:4px 10px;border-radius:20px}
+<meta name=3D"viewport" content=3D"width=3Ddevice-width, initial-scale=3D1.=
+0, viewport-fit=3Dcover">
+<meta name=3D"theme-color" content=3D"#0a0e1a">
+<title>Djurg=C3=A5rdens IF</title>
+<link href=3D"https://fonts.googleapis.com/css2?family=3DInter:wght@400;500=
+;600;700;800;900&amp;display=3Dswap" rel=3D"stylesheet">
 
-/* SECTION */
-.section-hd{display:flex;align-items:center;justify-content:space-between;padding:16px 16px 10px}
-.section-title{font-size:13px;font-weight:700;color:var(--text);text-transform:uppercase;letter-spacing:.5px;display:flex;align-items:center;gap:6px}
-.section-title::before{content:'';width:3px;height:14px;background:var(--accent);border-radius:2px;display:block}
-.see-all{font-size:12px;color:var(--dif);font-weight:600;padding:4px 10px;background:rgba(0,91,154,.12);border-radius:20px}
-
-/* RESULTS SCROLL */
-.results-row{display:flex;gap:8px;padding:0 12px 12px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
-.results-row::-webkit-scrollbar{display:none}
-.result-chip{flex-shrink:0;width:88px;background:var(--surface);border-radius:var(--r2);padding:10px 8px;border:1px solid var(--border);text-align:center;border-top:3px solid var(--border2)}
-.result-chip.win{border-top-color:var(--green)}
-.result-chip.loss{border-top-color:var(--red)}
-.result-chip.draw{border-top-color:var(--gray)}
-.rc-opp{font-size:11px;color:var(--text2);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.rc-score{font-size:20px;font-weight:800;color:var(--text);margin:4px 0;letter-spacing:-.5px}
-.rc-date{font-size:10px;color:var(--text3)}
-
-/* MATCH CARD */
-.match-card{background:var(--surface);border-radius:var(--r);margin:0 12px 8px;border:1px solid var(--border);overflow:hidden;position:relative}
-.match-card-bar{height:3px;background:var(--border)}
-.match-card-bar.win{background:var(--green)}
-.match-card-bar.loss{background:var(--red)}
-.match-card-bar.draw{background:var(--gray)}
-.mc-top{display:flex;align-items:center;gap:8px;padding:10px 12px 8px}
-.mc-comp{flex:1;font-size:11px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:.3px}
-.mc-date{font-size:11px;color:var(--text3)}
-.badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;letter-spacing:.3px}
-.badge-ft{background:var(--bg3);color:var(--text3)}
-.badge-live{background:rgba(239,68,68,.15);color:#f87171;display:flex;align-items:center;gap:4px}
-.badge-ns{background:rgba(0,91,154,.15);color:#60a5fa}
-.live-dot{width:6px;height:6px;border-radius:50%;background:#f87171;animation:pulse 1s infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-.mc-teams{display:flex;align-items:center;gap:6px;padding:4px 12px 12px}
-.mc-team{flex:1;display:flex;align-items:center;gap:8px;min-width:0}
-.mc-team-r{flex-direction:row-reverse}
-.mc-logo{width:28px;height:28px;border-radius:4px;background:transparent;display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0}
-.mc-logo img{width:28px;height:28px;object-fit:contain;filter:drop-shadow(0 1px 2px rgba(0,0,0,.3))}
-.mc-logo-ini{font-size:8px;font-weight:800;color:var(--text3);background:var(--bg3);width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:4px}
-.mc-name{font-size:13px;color:var(--text2);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.mc-name.dif{color:var(--text);font-weight:700}
-.mc-score{min-width:60px;text-align:center;flex-shrink:0}
-.mc-score-val{font-size:22px;font-weight:800;letter-spacing:-1px}
-.mc-score-val.win{color:var(--green)}
-.mc-score-val.loss{color:var(--red)}
-.mc-score-val.draw{color:var(--text2)}
-.mc-time{font-size:18px;font-weight:700;color:var(--text)}
-.mc-upcoming{text-align:center}
-.mc-upcoming .mc-time{display:block;font-size:17px;font-weight:700}
-.mc-upcoming .mc-soon{font-size:10px;color:var(--accent);margin-top:2px;font-weight:600}
-
-/* NEWS */
-.news-feat{display:block;margin:0 12px 8px;background:var(--surface);border-radius:var(--r);border:1px solid var(--border);overflow:hidden;transition:transform .15s,box-shadow .15s}
-.news-feat:active{transform:scale(.99)}
-.news-accent{height:2px}
-.news-feat-body{padding:14px}
-/* Source row */
-.news-src-row{display:flex;align-items:center;gap:6px;margin-bottom:8px}
-.news-src-ico{width:18px;height:18px;border-radius:50%;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:var(--bg4)}
-.news-src-ico img{width:18px;height:18px;object-fit:cover;border-radius:50%}
-.news-src-name{font-size:11px;color:var(--text3);font-weight:700;text-transform:uppercase;letter-spacing:.5px}
-.news-src-dot{width:3px;height:3px;border-radius:50%;background:var(--bg4);flex-shrink:0}
-.news-src-ago{font-size:11px;color:var(--text3)}
-/* Featured card */
-.news-feat h3{font-size:15px;font-weight:700;color:var(--text);line-height:1.45;margin:0;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
-.news-feat p{font-size:13px;color:var(--text2);line-height:1.6;margin-top:6px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-/* List items */
-.news-list-wrap{margin:0 12px 12px;background:var(--surface);border-radius:var(--r);border:1px solid var(--border);overflow:hidden}
-.news-item{display:flex;align-items:center;gap:12px;padding:13px 14px;border-bottom:1px solid var(--border);transition:background .12s;position:relative}
-.news-item:last-child{border-bottom:none}
-.news-item:active{background:var(--bg3)}
-.news-item-ico{width:32px;height:32px;border-radius:8px;overflow:hidden;flex-shrink:0;background:var(--bg4);display:flex;align-items:center;justify-content:center}
-.news-item-ico img{width:32px;height:32px;object-fit:cover}
-.news-item-body{flex:1;min-width:0}
-.news-item h4{font-size:13px;font-weight:600;color:var(--text);line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.news-item-meta{display:flex;align-items:center;gap:5px;margin-bottom:4px}
-.news-item-src{font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.4px}
-.news-item-age{font-size:10px;color:var(--text3)}
-.news-chevron{color:var(--text3);font-size:16px;flex-shrink:0;opacity:.5}
-
-/* STANDINGS */
-.table-wrap{margin:0 12px;background:var(--surface);border-radius:var(--r);border:1px solid var(--border);overflow:hidden}
-.standings-tbl{width:100%;border-collapse:collapse;font-size:13px}
-.standings-tbl th{padding:9px 8px;font-size:10px;font-weight:700;color:var(--text3);border-bottom:1px solid var(--border);text-align:center;text-transform:uppercase;letter-spacing:.4px;background:var(--bg3)}
-.standings-tbl th:nth-child(2){text-align:left;padding-left:4px}
-.standings-tbl td{padding:10px 8px;border-bottom:1px solid var(--border);color:var(--text2);text-align:center}
-.standings-tbl td:nth-child(2){text-align:left;padding-left:4px}
-.standings-tbl tr:last-child td{border-bottom:none}
-.standings-tbl tr:hover td{background:var(--bg3)}
-.standings-tbl tr.row-dif td{background:rgba(0,91,154,.1);color:var(--text);font-weight:700}
-.pos-pill{width:22px;height:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;background:var(--bg4);color:var(--text3)}
-.pos-top{background:rgba(245,158,11,.15);color:var(--accent)}
-.pos-down{background:rgba(239,68,68,.12);color:#f87171}
-.team-cell{display:flex;align-items:center;gap:6px}
-.team-cell img{width:18px;height:18px;border-radius:2px;object-fit:contain;flex-shrink:0}
-.tbl-legend{display:flex;gap:14px;padding:10px 12px;border-top:1px solid var(--border);background:var(--bg3)}
-.tbl-leg-item{font-size:11px;color:var(--text3);padding-left:10px;position:relative}
-.tbl-leg-item::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:3px;height:12px;border-radius:2px}
-.leg-eu::before{background:var(--accent)}
-.leg-down::before{background:#f87171}
-.hx{display:none}
-@media(min-width:480px){.hx{display:table-cell}}
-
-/* SQUAD */
-.squad-filters{display:flex;gap:6px;padding:0 12px 12px;overflow-x:auto;scrollbar-width:none}
-.squad-filters::-webkit-scrollbar{display:none}
-.sq-chip{padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;border:1px solid var(--border);background:transparent;color:var(--text2);white-space:nowrap;transition:all .15s}
-.sq-chip.active{background:var(--dif);color:#fff;border-color:var(--dif)}
-.pos-group-label{font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.8px;padding:10px 16px 6px;background:var(--bg3);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-.player-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:10px 12px}
-@media(min-width:400px){.player-grid{grid-template-columns:repeat(4,1fr)}}
-@media(min-width:600px){.player-grid{grid-template-columns:repeat(5,1fr)}}
-.player-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:12px 8px 10px;text-align:center;position:relative;transition:transform .15s}
-.player-card:active{transform:scale(.97)}
-.fav-btn{position:absolute;top:6px;right:8px;font-size:14px;color:var(--text3);transition:color .15s}
-.fav-btn.on{color:var(--accent)}
-.pl-img{width:46px;height:46px;border-radius:50%;margin:0 auto 7px;background:var(--bg3);display:flex;align-items:center;justify-content:center;overflow:hidden;border:2px solid var(--border2)}
-.pl-img img{width:100%;height:100%;object-fit:cover}
-.pl-ini{font-size:14px;font-weight:800;color:var(--text3)}
-.pl-num{font-size:10px;font-weight:700;color:var(--text3);margin-bottom:2px}
-.pl-name{font-size:11px;font-weight:700;color:var(--text);line-height:1.3}
-.pl-pos{font-size:10px;font-weight:600;margin-top:2px}
-.pl-nat{font-size:10px;color:var(--text3);margin-top:1px}
-
-/* SKELETON */
-.sk{background:linear-gradient(90deg,var(--bg3) 25%,var(--bg4) 50%,var(--bg3) 75%);background-size:200% 100%;animation:shimmer 1.4s infinite;border-radius:4px}
-@keyframes shimmer{to{background-position:-200% 0}}
-.sk-text{height:12px;border-radius:3px}
-.sk-block{border-radius:var(--r2)}
-.sk-circle{border-radius:50%}
-
-/* MATCH TAB BAR */
-.tab-bar{display:flex;gap:6px;padding:12px 12px 0;overflow-x:auto;scrollbar-width:none}
-.tab-bar::-webkit-scrollbar{display:none}
-.tab-btn{padding:7px 16px;border-radius:20px;font-size:12px;font-weight:600;border:1px solid var(--border);background:transparent;color:var(--text2);white-space:nowrap;transition:all .15s}
-.tab-btn.active{background:var(--dif);color:#fff;border-color:var(--dif)}
-
-/* EMPTY / ERROR */
-.empty{text-align:center;padding:2.5rem 1rem;color:var(--text3);font-size:13px}
-
-/* DESKTOP */
-@media(min-width:760px){
-  body{padding-bottom:0}
-  .bottom-nav{display:none}
-  .desktop-nav{display:flex !important;background:var(--bg2);border-bottom:1px solid var(--border);padding:0 20px}
-  .desktop-nav .nav-btn{flex:none;flex-direction:row;gap:6px;padding:12px 16px;font-size:13px;border-bottom:2px solid transparent;margin-bottom:-1px;color:var(--text2)}
-  .desktop-nav .nav-btn.active{color:var(--dif);border-bottom-color:var(--dif)}
-  .desktop-nav .nav-btn::after{display:none}
-  .desktop-nav .nav-btn svg{width:16px;height:16px}
-  .page-wrap{max-width:1060px;margin:0 auto;display:grid;grid-template-columns:1fr 320px;gap:20px;padding:20px 20px}
-  .main-col,.side-col{}
-  .hero-card,.match-card,.news-feat,.news-list-wrap,.table-wrap{margin-left:0;margin-right:0}
-  .player-grid{grid-template-columns:repeat(5,1fr)}
-}
-</style>
 </head>
 <body>
 
 <!-- TOPBAR -->
-<header class="topbar">
-  <div class="topbar-logo">
-    <div class="logo-badge"><b>DIF</b><small>1891</small></div>
-    <span class="topbar-name">Djurgårdens IF</span>
+<header class=3D"topbar">
+  <div class=3D"topbar-logo">
+    <div class=3D"logo-badge"><b>DIF</b><small>1891</small></div>
+    <span class=3D"topbar-name">Djurg=C3=A5rdens IF</span>
   </div>
-  <div class="topbar-right">
-    <button class="icon-btn" id="dark-btn" onclick="toggleTheme()" aria-label="Byt tema">☀️</button>
+  <div class=3D"topbar-right">
+    <button class=3D"icon-btn" id=3D"dark-btn" aria-label=3D"Byt tema">=E2=
+=98=80=EF=B8=8F</button>
   </div>
 </header>
 
 <!-- DESKTOP NAV -->
-<nav class="desktop-nav" style="display:none">
-  <button class="nav-btn active" onclick="nav('home',this)">
-    <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Hem
+<nav class=3D"desktop-nav" style=3D"display:none">
+  <button class=3D"nav-btn active">
+    <svg viewBox=3D"0 0 24 24"><path d=3D"M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 =
+2 0 01-2-2z"></path><polyline points=3D"9 22 9 12 15 12 15 22"></polyline><=
+/svg>Hem
   </button>
-  <button class="nav-btn" onclick="nav('matches',this)">
-    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 000 20M2 12h20"/></svg>Matcher
+  <button class=3D"nav-btn">
+    <svg viewBox=3D"0 0 24 24"><circle cx=3D"12" cy=3D"12" r=3D"10"></circl=
+e><path d=3D"M12 2a14.5 14.5 0 000 20M2 12h20"></path></svg>Matcher
   </button>
-  <button class="nav-btn" onclick="nav('squad',this)">
-    <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>Trupp
+  <button class=3D"nav-btn">
+    <svg viewBox=3D"0 0 24 24"><path d=3D"M17 21v-2a4 4 0 00-4-4H5a4 4 0 00=
+-4 4v2"></path><circle cx=3D"9" cy=3D"7" r=3D"4"></circle><path d=3D"M23 21=
+v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"></path></svg>Trupp
   </button>
-  <button class="nav-btn" onclick="nav('standings',this)">
-    <svg viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>Tabell
+  <button class=3D"nav-btn">
+    <svg viewBox=3D"0 0 24 24"><path d=3D"M8 6h13M8 12h13M8 18h13M3 6h.01M3=
+ 12h.01M3 18h.01"></path></svg>Tabell
   </button>
 </nav>
 
 <main>
 
 <!-- HOME -->
-<div id="pg-home" class="page active">
-  <div class="page-wrap">
-    <div class="main-col">
-      <div id="home-hero"></div>
-      <div class="section-hd">
-        <span class="section-title">Senaste resultat</span>
-        <button class="see-all" onclick="nav('matches',null)">Se alla</button>
+<div id=3D"pg-home" class=3D"page active">
+  <div class=3D"page-wrap">
+    <div class=3D"main-col">
+      <div id=3D"home-hero">
+  <div class=3D"hero-card">
+    <div class=3D"hero-badge"><span>N=C3=84STA MATCH</span><span class=3D"h=
+ero-comp">Allsvenskan</span></div>
+    <div class=3D"hero-inner">
+      <div class=3D"hero-teams">
+        <div class=3D"hero-team">
+          <div class=3D"hero-team-logo">
+            <span class=3D"hero-team-ini">G</span>
+          </div>
+          <span class=3D"hero-team-name">GAIS</span>
+        </div>
+        <span class=3D"hero-vs">VS</span>
+        <div class=3D"hero-team">
+          <div class=3D"hero-team-logo">
+            <span class=3D"hero-team-ini">DI</span>
+          </div>
+          <span class=3D"hero-team-name">Djurg=C3=A5rdens IF</span>
+        </div>
       </div>
-      <div class="results-row" id="home-results"></div>
-      <div class="section-hd">
-        <span class="section-title">Nyheter</span>
+      <div class=3D"hero-info">
+        <span class=3D"hero-chip">=F0=9F=93=85 m=C3=A5ndag 6 april</span>
+        <span class=3D"hero-chip">=F0=9F=95=90 16:30</span>
+        <span class=3D"hero-chip">=F0=9F=93=8D Kristianstads Fotbollsarena<=
+/span>
       </div>
-      <div id="home-news-feat"></div>
-      <div class="news-list-wrap"><div id="home-news-list"></div></div>
     </div>
-    <div class="side-col">
-      <div class="section-hd">
-        <span class="section-title">Tabell</span>
-        <button class="see-all" onclick="nav('standings',null)">Fullständig</button>
+  </div></div>
+      <div class=3D"section-hd">
+        <span class=3D"section-title">Senaste resultat</span>
+        <button class=3D"see-all">Se alla</button>
       </div>
-      <div class="table-wrap"><div id="home-table"></div></div>
+      <div class=3D"results-row" id=3D"home-results">
+        <div class=3D"result-chip win">
+          <div class=3D"rc-opp">HJK Helsinki</div>
+          <div class=3D"rc-score">4=E2=80=932</div>
+          <div class=3D"rc-date">27 mars</div>
+        </div></div>
+      <div class=3D"section-hd">
+        <span class=3D"section-title">Nyheter</span>
+      </div>
+      <div id=3D"home-news-feat"><a class=3D"news-feat" href=3D"https://new=
+s.google.com/rss/articles/CBMiqgFBVV95cUxONUlyUmRJcVdDenpENjVGa0lkU1ZqcWdtc=
+01aNm9BOGhxMGk5UDZ3M1NzSjlPa1oySlVBZ1VLTElyeURiZjZTOTh2cDFMYlI3N1NqdmpUUDFI=
+MUpueHhlcDJTWm9pUHdGdzFsaC0yTjJNLVhBcFVWb3ZBWkZBNS1sLXZRZXh0cEdOMENBbXlMTEJ=
+WbUhBTk15N2pnQ01NdVhHaTQ0MDJaMDF2dw?oc=3D5" target=3D"_blank" rel=3D"noopen=
+er">
+    <div class=3D"news-accent" style=3D"background:#DDAA00"></div>
+    <div class=3D"news-feat-body">
+      <div class=3D"news-src-row"><img src=3D"https://www.google.com/s2/fav=
+icons?domain=3Daftonbladet.se&amp;sz=3D64" alt=3D""><span class=3D"news-src=
+-name">Aftonbladet</span><span class=3D"news-src-ago">42m</span></div>
+      <h3>Ska bli ledande i Norden =E2=80=93 p=C3=A5 alla plan: =E2=80=9D3=
+=E2=80=935 =C3=A5r=E2=80=9D - Aftonbladet</h3>
+      <p>&lt;a href=3D"https://news.google.com/rss/articles/CBMiqgFBVV95cUx=
+ONUlyUmRJcVdDenpENjVGa0lkU1ZqcWdtc01aNm9BOGhxMGk5UDZ3M1N=E2=80=A6</p>
+    </div>
+  </a><a class=3D"news-feat" href=3D"https://news.google.com/rss/articles/C=
+BMid0FVX3lxTE1scGtiQWxxU2pLQ2RKRGhZMlNxMEZNWWJEc1FhRk45RFM0dFNWN3Z2NVBpZk1R=
+alZob3c4Q09TaVFVTmF1dGRIOUE2ZXRUS1JfVUxlRkZMX2R6bVo3MFViLTgxdzVWUlVYWktCcmZ=
+RODZkVXdFUlJ3?oc=3D5" target=3D"_blank" rel=3D"noopener">
+    <div class=3D"news-accent" style=3D"background:#1a4f8a"></div>
+    <div class=3D"news-feat-body">
+      <div class=3D"news-src-row"><img src=3D"https://www.google.com/s2/fav=
+icons?domain=3Dsvenskafans.com&amp;sz=3D64" alt=3D""><span class=3D"news-sr=
+c-name">SvenskaFans</span><span class=3D"news-src-ago">4h</span></div>
+      <h3>Inf=C3=B6r GAIS - Djurg=C3=A5rdens IF - SvenskaFans.com</h3>
+      <p>&lt;a href=3D"https://news.google.com/rss/articles/CBMid0FVX3lxTE1=
+scGtiQWxxU2pLQ2RKRGhZMlNxMEZNWWJEc1FhRk45RFM0dFNWN3Z2NVB=E2=80=A6</p>
+    </div>
+  </a></div>
+      <div class=3D"news-list-wrap"><div id=3D"home-news-list"><a class=3D"=
+news-item" href=3D"https://news.google.com/rss/articles/CBMilAFBVV95cUxNREd=
+BNWdmZXdXVEpHak1GVDdOeHVid3JSSnFjTkotbnZoQW9xaHRVblp3SXFVQVFCamNiUFNodEYzOT=
+NBS1BJbkxETE9iT0o1MjRPNkRTdlQweFk3ZEdjV09ncnVrc2dPekZmczI5SHg0NzZuY3dzNWJtQ=
+U9PaGdkU3A1YWh5MFdTMHpvaXEyRG1XTGNU?oc=3D5" target=3D"_blank" rel=3D"noopen=
+er">
+    <div class=3D"news-item-body">
+      <div class=3D"news-src-row"><img src=3D"https://www.google.com/s2/fav=
+icons?domain=3Dfotbollskanalen.se&amp;sz=3D64" alt=3D"" width=3D"14" height=
+=3D"14" style=3D"border-radius:2px;background:#fff;padding:1px;object-fit:c=
+ontain;flex-shrink:0"><span class=3D"news-src-name">Fotbollskanalen</span><=
+span class=3D"news-src-ago">9h</span></div>
+      <h4>Gais besked - Beckman missar premi=C3=A4ren - Allsvenskan - Fotbo=
+llskanalen</h4>
+    </div>
+    <span class=3D"news-chevron">=E2=80=BA</span>
+  </a><a class=3D"news-item" href=3D"https://news.google.com/rss/articles/C=
+BMib0FVX3lxTFBwQVJleERJalFOZ0Z1bGNxajVWMDdLTzVuNUp5R1FoT3JJb1FVWnZsUWh4NFB5=
+LXV2c3VleDZlYVlFZWlhUDFVckFxZnJJQWdKeHZVb2R4a1Z5VTlfUFNGbTJfZ0RLQVBRLUVrSzc=
+5cw?oc=3D5" target=3D"_blank" rel=3D"noopener">
+    <div class=3D"news-item-body">
+      <div class=3D"news-src-row"><img src=3D"https://www.google.com/s2/fav=
+icons?domain=3Dgais.se&amp;sz=3D64" alt=3D"" width=3D"14" height=3D"14" sty=
+le=3D"border-radius:2px;background:#fff;padding:1px;object-fit:contain;flex=
+-shrink:0"><span class=3D"news-src-name">GAIS</span><span class=3D"news-src=
+-ago">14h</span></div>
+      <h4>Truppen till GAIS - Djurg=C3=A5rden 6/4 - GAIS</h4>
+    </div>
+    <span class=3D"news-chevron">=E2=80=BA</span>
+  </a><a class=3D"news-item" href=3D"https://news.google.com/rss/articles/C=
+BMijAFBVV95cUxPUElkSVY0dTVlemw4cVdjeTQyMHJjOHlCXzFJOTktWTNyTkprb2stOXlnbzFF=
+VEtramxaNzg5TEtpdDJlamt4LVd3V2tsM3l4aldReUk0SmNnQVZ4RFZCOW5OWnhDU2VJR2w2N1R=
+PUjRoV1dKSXI3MFdVcC1hTW5tUEY0TUxwYlRNVEsyYw?oc=3D5" target=3D"_blank" rel=
+=3D"noopener">
+    <div class=3D"news-item-body">
+      <div class=3D"news-src-row"><img src=3D"https://www.google.com/s2/fav=
+icons?domain=3Dfotbolldirekt.se&amp;sz=3D64" alt=3D"" width=3D"14" height=
+=3D"14" style=3D"border-radius:2px;background:#fff;padding:1px;object-fit:c=
+ontain;flex-shrink:0"><span class=3D"news-src-name">Fotbolldirekt</span><sp=
+an class=3D"news-src-ago">14h</span></div>
+      <h4>Beskedet: Adam St=C3=A5hl missar Djurg=C3=A5rdens premi=C3=A4r - =
+FotbollDirekt</h4>
+    </div>
+    <span class=3D"news-chevron">=E2=80=BA</span>
+  </a><a class=3D"news-item" href=3D"https://news.google.com/rss/articles/C=
+BMikwFBVV95cUxOUU45bU1PTzhuWFJLQV9DNklvN2s4elVuWGFWR2h6U1V1Nm1YRHBqbUcySGk1=
+R1pDbjUzeHM1RUllQ3NCcGdIanRJRmY5VjBVck9keTBNNGdoUTM0Z1JGbWlLTHNUMldiTEptSjh=
+qdER0MDdYRzlBelFKd21DWjFqeXJXUTFnd1FPQy1PVGRvMGlYaEE?oc=3D5" target=3D"_bla=
+nk" rel=3D"noopener">
+    <div class=3D"news-item-body">
+      <div class=3D"news-src-row"><img src=3D"https://www.google.com/s2/fav=
+icons?domain=3Dfotbollskanalen.se&amp;sz=3D64" alt=3D"" width=3D"14" height=
+=3D"14" style=3D"border-radius:2px;background:#fff;padding:1px;object-fit:c=
+ontain;flex-shrink:0"><span class=3D"news-src-name">Fotbollskanalen</span><=
+span class=3D"news-src-ago">15h</span></div>
+      <h4>St=C3=A5hl utanf=C3=B6r Djurg=C3=A5rdens trupp: "Tufft" - Fotboll=
+skanalen</h4>
+    </div>
+    <span class=3D"news-chevron">=E2=80=BA</span>
+  </a><a class=3D"news-item" href=3D"https://news.google.com/rss/articles/C=
+BMigAFBVV95cUxNclhmRkV4RDMybFZjaHM1MlEyUkdzazlXVHZYVTN6dmtGNGdxY201WTJrQmRa=
+NHlfMDRHQlRMUlFocnpCdG9tYVoyS1dPMG5FQ0JHR0NScXlwUUtzeUpzSlFDYWczbzF0WE9MUDY=
+0Q2FmbWRGNk0wZEN4SHdCOXZDaw?oc=3D5" target=3D"_blank" rel=3D"noopener">
+    <div class=3D"news-item-body">
+      <div class=3D"news-src-row"><img src=3D"https://www.google.com/s2/fav=
+icons?domain=3Dsvenskafans.com&amp;sz=3D64" alt=3D"" width=3D"14" height=3D=
+"14" style=3D"border-radius:2px;background:#fff;padding:1px;object-fit:cont=
+ain;flex-shrink:0"><span class=3D"news-src-name">SvenskaFans</span><span cl=
+ass=3D"news-src-ago">1d</span></div>
+      <h4>60-talet: En gyllene DIF-dynasti - SvenskaFans.com</h4>
+    </div>
+    <span class=3D"news-chevron">=E2=80=BA</span>
+  </a><a class=3D"news-item" href=3D"https://news.google.com/rss/articles/C=
+BMiqwFBVV95cUxPdkJpMmYyQlJaeEJqUG05RDZIWm9lc2ZmTkN0MEhiLUpNMlpOWTQ2TXhRZjM3=
+djNxY1Jnb0ZBUDNBcmZyOFE5MHF3TTVPc0NCdDNrS3c4THpMYk9QM0l0SFgtOXRRNFNrQVBQeXd=
+uYXJvQm9WWWVtVF84Wm5PdkVPbThueHZpaWpCYVdxMW5wc1VXWmd1dnJxR0xRTDZTMV8yRGlCSn=
+JXa0RoejA?oc=3D5" target=3D"_blank" rel=3D"noopener">
+    <div class=3D"news-item-body">
+      <div class=3D"news-src-row"><img src=3D"https://www.google.com/s2/fav=
+icons?domain=3Ddif.se&amp;sz=3D64" alt=3D"" width=3D"14" height=3D"14" styl=
+e=3D"border-radius:2px;background:#fff;padding:1px;object-fit:contain;flex-=
+shrink:0"><span class=3D"news-src-name">DIF.se</span><span class=3D"news-sr=
+c-ago">1d</span></div>
+      <h4>Djurg=C3=A5rdens damer inleder f=C3=B6reningsutvecklande samarbet=
+e med IFK Liding=C3=B6 FK - dif.se</h4>
+    </div>
+    <span class=3D"news-chevron">=E2=80=BA</span>
+  </a></div></div>
+    </div>
+    <div class=3D"side-col">
+      <div class=3D"section-hd">
+        <span class=3D"section-title">Tabell</span>
+        <button class=3D"see-all">Fullst=C3=A4ndig</button>
+      </div>
+      <div class=3D"table-wrap"><div id=3D"home-table"><table class=3D"stan=
+dings-tbl">
+    <thead><tr><th>#</th><th>Lag</th><th>M</th><th class=3D"hx">V</th><th c=
+lass=3D"hx">O</th><th class=3D"hx">F</th><th>P</th></tr></thead>
+    <tbody><tr class=3D"">
+      <td><span class=3D"pos-pill pos-top">1</span></td>
+      <td><div class=3D"team-cell">
+        <span>Sirius</span></div></td>
+      <td>1</td>
+      <td class=3D"hx">1</td>
+      <td class=3D"hx">0</td>
+      <td class=3D"hx">0</td>
+      <td><strong>3</strong></td>
+    </tr><tr class=3D"">
+      <td><span class=3D"pos-pill pos-top">2</span></td>
+      <td><div class=3D"team-cell">
+        <span>Hammarby</span></div></td>
+      <td>1</td>
+      <td class=3D"hx">1</td>
+      <td class=3D"hx">0</td>
+      <td class=3D"hx">0</td>
+      <td><strong>3</strong></td>
+    </tr><tr class=3D"">
+      <td><span class=3D"pos-pill pos-top">3</span></td>
+      <td><div class=3D"team-cell">
+        <span>AIK</span></div></td>
+      <td>1</td>
+      <td class=3D"hx">1</td>
+      <td class=3D"hx">0</td>
+      <td class=3D"hx">0</td>
+      <td><strong>3</strong></td>
+    </tr><tr class=3D"">
+      <td><span class=3D"pos-pill ">4</span></td>
+      <td><div class=3D"team-cell">
+        <span>V=C3=A4ster=C3=A5s</span></div></td>
+      <td>1</td>
+      <td class=3D"hx">1</td>
+      <td class=3D"hx">0</td>
+      <td class=3D"hx">0</td>
+      <td><strong>3</strong></td>
+    </tr><tr class=3D"">
+      <td><span class=3D"pos-pill ">5</span></td>
+      <td><div class=3D"team-cell">
+        <span>=C3=96rgryte</span></div></td>
+      <td>1</td>
+      <td class=3D"hx">0</td>
+      <td class=3D"hx">1</td>
+      <td class=3D"hx">0</td>
+      <td><strong>1</strong></td>
+    </tr></tbody>
+  </table>
+  <div class=3D"tbl-legend">
+    <span class=3D"tbl-leg-item leg-eu">Europaplats</span>
+    <span class=3D"tbl-leg-item leg-down">Nedflyttning</span>
+  </div></div></div>
     </div>
   </div>
 </div>
 
 <!-- MATCHES -->
-<div id="pg-matches" class="page">
-  <div class="tab-bar">
-    <button class="tab-btn active" id="tab-up" onclick="switchMatchTab('upcoming',this)">Kommande</button>
-    <button class="tab-btn" id="tab-res" onclick="switchMatchTab('results',this)">Resultat</button>
+<div id=3D"pg-matches" class=3D"page">
+  <div class=3D"tab-bar">
+    <button class=3D"tab-btn active" id=3D"tab-up">Kommande</button>
+    <button class=3D"tab-btn" id=3D"tab-res">Resultat</button>
   </div>
-  <div style="padding-top:10px" id="matches-list"></div>
+  <div style=3D"padding-top:10px" id=3D"matches-list"></div>
 </div>
 
 <!-- SQUAD -->
-<div id="pg-squad" class="page">
-  <div style="padding-top:10px">
-    <div class="squad-filters" id="squad-filters">
-      <button class="sq-chip active" onclick="filterSquad('all',this)">Alla</button>
-      <button class="sq-chip" onclick="filterSquad('Goalkeeper',this)">Målvakter</button>
-      <button class="sq-chip" onclick="filterSquad('Defender',this)">Backar</button>
-      <button class="sq-chip" onclick="filterSquad('Midfielder',this)">Mittfält</button>
-      <button class="sq-chip" onclick="filterSquad('Forward',this)">Forwards</button>
+<div id=3D"pg-squad" class=3D"page">
+  <div style=3D"padding-top:10px">
+    <div class=3D"squad-filters" id=3D"squad-filters">
+      <button class=3D"sq-chip active">Alla</button>
+      <button class=3D"sq-chip">M=C3=A5lvakter</button>
+      <button class=3D"sq-chip">Backar</button>
+      <button class=3D"sq-chip">Mittf=C3=A4lt</button>
+      <button class=3D"sq-chip">Forwards</button>
     </div>
-    <div id="squad-grid"></div>
+    <div id=3D"squad-grid"></div>
   </div>
 </div>
 
 <!-- STANDINGS -->
-<div id="pg-standings" class="page">
-  <div style="padding:12px 0 0">
-    <div class="section-hd"><span class="section-title">Allsvenskan 2026</span></div>
-    <div class="table-wrap"><div id="standings-full"></div></div>
+<div id=3D"pg-standings" class=3D"page">
+  <div style=3D"padding:12px 0 0">
+    <div class=3D"section-hd"><span class=3D"section-title">Allsvenskan 202=
+6</span></div>
+    <div class=3D"table-wrap"><div id=3D"standings-full"></div></div>
   </div>
 </div>
 
 </main>
 
 <!-- BOTTOM NAV -->
-<nav class="bottom-nav">
-  <button class="nav-btn active" id="bn-home" onclick="nav('home',this)">
-    <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Hem
+<nav class=3D"bottom-nav">
+  <button class=3D"nav-btn active" id=3D"bn-home">
+    <svg viewBox=3D"0 0 24 24"><path d=3D"M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 =
+2 0 01-2-2z"></path><polyline points=3D"9 22 9 12 15 12 15 22"></polyline><=
+/svg>Hem
   </button>
-  <button class="nav-btn" id="bn-matches" onclick="nav('matches',this)">
-    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 000 20M2 12h20"/></svg>Matcher
+  <button class=3D"nav-btn" id=3D"bn-matches">
+    <svg viewBox=3D"0 0 24 24"><circle cx=3D"12" cy=3D"12" r=3D"10"></circl=
+e><path d=3D"M12 2a14.5 14.5 0 000 20M2 12h20"></path></svg>Matcher
   </button>
-  <button class="nav-btn" id="bn-squad" onclick="nav('squad',this)">
-    <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>Trupp
+  <button class=3D"nav-btn" id=3D"bn-squad">
+    <svg viewBox=3D"0 0 24 24"><path d=3D"M17 21v-2a4 4 0 00-4-4H5a4 4 0 00=
+-4 4v2"></path><circle cx=3D"9" cy=3D"7" r=3D"4"></circle><path d=3D"M23 21=
+v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"></path></svg>Trupp
   </button>
-  <button class="nav-btn" id="bn-standings" onclick="nav('standings',this)">
-    <svg viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>Tabell
+  <button class=3D"nav-btn" id=3D"bn-standings">
+    <svg viewBox=3D"0 0 24 24"><path d=3D"M8 6h13M8 12h13M8 18h13M3 6h.01M3=
+ 12h.01M3 18h.01"></path></svg>Tabell
   </button>
 </nav>
 
-<script>
-// ── CONFIG ──────────────────────────────────────────────────
-const TEAM_ID    = '134162';
-const TSDB       = 'https://www.thesportsdb.com/api/v1/json/3';
-const WORKER     = 'https://dif-proxy.r-robertjohansson.workers.dev';
-const CACHE_TTL  = 8 * 60 * 1000;
-const CACHE_VER  = 'v5'; // bump this to clear all caches
 
-// Clear stale cache on version mismatch
-if(localStorage.getItem('dif_cache_ver') !== CACHE_VER) {
-  ['last','next','standings','news','squad'].forEach(k => localStorage.removeItem('c_'+k));
-  localStorage.setItem('dif_cache_ver', CACHE_VER);
+
+
+</body></html>
+------MultipartBoundary--6kM5aChqnkpyRkrfLJXo2FBLuhGXW90ZcuYxScNLrP----
+Content-Type: image/png
+Content-Transfer-Encoding: base64
+Content-Location: https://www.google.com/s2/favicons?domain=dif.se&sz=64
+
+iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAMAAACdt4HsAAAAV1BMVEVHcEz+6woEabDNuHTPtXHP
+tXHPtXHPtXHQsG/PtXHhISfiFyPXu2viCB//7gDdTDvUlmAAaLDZdE+YnojkzU3z4CkAZLNBeaRq
+iZgAY7QAYbUAZrIAZbMvksXhAAAACnRSTlMA////2bGHLPlb7hrXOAAAAu1JREFUWIXtl+tyozAM
+hYvFxYAvYCAJoe//nCsJcw1OoJ39tXtmmrbTfgfpWFbTr6//+tvKIc5+TmepBFSc/4zOY4TbqFMA
+MjnlkcVpnrHyNCFatZGJjOlaRXUk/qf0w2ODHNZSbWdMRDKTx6JjgxRalKKXDmGPe48OnHUVyjlb
+wXGwCUQjhh8rmA1asLosNQpfHRxHEkMUEPFlMam0kB4bKPOGP2EgAwYj7xYHC8mhAQQMiNcVVIvD
+JQPTyoJ4cBodSn3RwBiFfMG8c9hIddWA+ZIMHIAt8DPGecGA+YIdAFMoK4nnKQMGL6dgJh6F97LC
+/nGQCpzqcwbIr5KXVD3WUqhGqFODZCKqeZ4ebJ/HSTW3e8hgN8rIa7ueP/SzqumHhzq+C8naAK9f
+pQnSI45HYZl/1t8hgxQ6s+E5/NGhqsiEnl+LW6OOr3MOrdnwPjpN5dM4jzwaBBZKNhvQ+tBjdN4B
+K0D+cRNC1DUEVto8STPvwycHTXwvyOCujsdgOYaF5/Cp/EI7z4tbKMMpRf/8aQK0pQki/sm86EMZ
++hCYpwHQ5XR8Vi/PF/UAMsDzMOP6cfj7WLe0FL8jE+Tv38IbhCOgUepo/TI/ts5zQPxt4p9NMAKa
+BEXrG/nKUnh4fbl/mJ8v6v5NB9gD2Gn+NA9Pwets4cXwrgM6B2I0O5QwfXMfZl48w2dAysYJ5h1K
+FfCXYsXXQoXGcIrRrlYYt7Pmxfe7CFcl8C3Cdbbna/E2QlLsSyhgXOcbnm7y8TJ6LaG0zNcbXnwu
+YE6h4PW34/tPCYwlSH+NcH3W2+ffPxzBqJSboOf3W76+QeCtyU6UI62//fOfnxOcmzjih3MN+CZe
+eTyBcw2QEsD1v6VxjwTeWh1Kjgt4HWDz9hbulcGyQqYJOBvA4rAsAYF/za7xvJyWNdY/lLz8rh8d
+/CKmNXid9w54FsOA/HUclUnVDMMgrua3cogV3B9w6fx2SkCpK/Pzqlz+5p8u0i/xf0N/AKDKORSf
+dpT1AAAAAElFTkSuQmCC
+
+------MultipartBoundary--6kM5aChqnkpyRkrfLJXo2FBLuhGXW90ZcuYxScNLrP----
+Content-Type: image/png
+Content-Transfer-Encoding: base64
+Content-Location: https://www.google.com/s2/favicons?domain=fotbolldirekt.se&sz=64
+
+iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAMAAACdt4HsAAAANlBMVEVHcEz/pAD/pQD/pQD/pAD/
+pQD/pQD/pQD/pQD/pQD/owD/////+e3/3qj/79H/zoD/sCP/vlBBPjAcAAAACnRSTlMASg//I61m
+hurOWT3e7gAAAktJREFUWIWlV9m2gyAMlKJFkEX//2dLVCBBUCrpwz1wnXGyYRiGio1MTHLm3mY5
+CTbWnisbE5JnJgVrRY9XdOBo0fERcxm+e/NM8b2B7xTfe/UV8cSRGxFPr38SIVrgYKIcvakVz/n0
+6cMXGf7Ce4bX/gfL4vD9F885ycXYlD9qM66Hhvq5mrw6oHIr7Jec+M+BRDGHXJ4ZUE5TW+wKT6vV
+Lmnz2DtMUAGGm4XYid82z5DvHhJGUgLacHfFgzDK4FIgBEmBXghDeJNyi2fQCO+ihj0RTEUCYDDB
+wlOeABjCtscnLxTDRawPeZccgiqbUnkskQ8SE5gIS2kDhI6qFURah396H0ZeJEh2S8DHgfURMNTH
+rwgEOkheEUyoEWkWMgKu6DKYHFIjWagD9Obzz1EHSJlBaeTzkAAb1LKNFouFG4LndJ0IPAPpBdQ0
+WxYZvEYEvm81IkABzSOL11iBWzddUrA6chDBGhHMCe8x29ky1rgYRd/LGEHXM0qj3XvmOAF51kwJ
+AXiUBZkVkqsVEq8W0qtSTgpEfzM1tnPNhbF2oDQqkPmR9i8BHGkME9SykJ2J8T2MHusl/E4AFeb7
+y8DPN4wJEZH0w7JkJRsJLEc1bvgWIyrIp00X8Z7Akh5BrwkjwimhjPddTvGozcOY8zkkFOGwv5p0
+zFhz+bY2TUilCUOhKal3xOkfsl6MeSobuXsHzf5Rt3/Y7h73IQ61UspMlS8cQ/+VBy5djyLU3aWr
+QcTDtQ9E3F88y9HLKSqOtF19d+u7fJ86Gq//P0XaRYEcDr5HAAAAAElFTkSuQmCC
+
+------MultipartBoundary--6kM5aChqnkpyRkrfLJXo2FBLuhGXW90ZcuYxScNLrP----
+Content-Type: image/png
+Content-Transfer-Encoding: base64
+Content-Location: https://www.google.com/s2/favicons?domain=gais.se&sz=64
+
+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
+lB8AAAAASUVORK5CYII=
+
+------MultipartBoundary--6kM5aChqnkpyRkrfLJXo2FBLuhGXW90ZcuYxScNLrP----
+Content-Type: image/png
+Content-Transfer-Encoding: base64
+Content-Location: https://www.google.com/s2/favicons?domain=fotbollskanalen.se&sz=64
+
+iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAWlBMVEUYqWX////w+fVxyqD6/fzB
+6NZWwI5ryJ2Q1rUirWy35M8nr2/d8+nu+fTS7uG65dF+z6k0s3ij3cFNvYlHu4TI6tqM1LKm3sQ+
+t37a8ebH6tpawpFjxZez48wsXGXcAAAA80lEQVQ4jc1S2xaDIAyjWJwX1HmZuqn//5sLsCHqdnzc
+8iI2pU1Dhfgv5FGlmbW61h/pumF6Q3VHPi4sJaX9cLTnL7jOQ2yObWKSki3fgi9H3y1DxqZGivpV
+GgQa1BuD/wT3Q14I1MiCAmgA3XUhXyjSXNrQC7NLn/2Y2hZddQ5EF9eI49wA7Tp09Qk3ImOeCmNC
+kvRnTWQkGqtuClhM8O6CQULtJZT7hIdtMYFqphgY9y2cyB4aVzM2It2Yy0YjRupXo6wrSut1cmNU
+4HV/YvX5Y50+t1sYWuYc1aaBjwvjV46/rRxuXuXbSW4+7/XJ2v8OT/kdCVW/AGMaAAAAAElFTkSu
+QmCC
+
+------MultipartBoundary--6kM5aChqnkpyRkrfLJXo2FBLuhGXW90ZcuYxScNLrP----
+Content-Type: image/png
+Content-Transfer-Encoding: base64
+Content-Location: https://www.google.com/s2/favicons?domain=svenskafans.com&sz=64
+
+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
+
+------MultipartBoundary--6kM5aChqnkpyRkrfLJXo2FBLuhGXW90ZcuYxScNLrP----
+Content-Type: image/png
+Content-Transfer-Encoding: base64
+Content-Location: https://www.google.com/s2/favicons?domain=aftonbladet.se&sz=64
+
+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
+
+------MultipartBoundary--6kM5aChqnkpyRkrfLJXo2FBLuhGXW90ZcuYxScNLrP----
+Content-Type: text/css
+Content-Transfer-Encoding: quoted-printable
+Content-Location: https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap
+
+@charset "utf-8";
+
+@font-face { font-family: Inter; font-style: normal; font-weight: 400; font=
+-display: swap; src: url("https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3i=
+LTeHuS_nVMrMxCp50SjIa2JL7W0Q5n-wU.woff2") format("woff2"); unicode-range: U=
++460-52F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F; }
+
+@font-face { font-family: Inter; font-style: normal; font-weight: 400; font=
+-display: swap; src: url("https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3i=
+LTeHuS_nVMrMxCp50SjIa0ZL7W0Q5n-wU.woff2") format("woff2"); unicode-range: U=
++301, U+400-45F, U+490-491, U+4B0-4B1, U+2116; }
+
+@font-face { font-family: Inter; font-style: normal; font-weight: 400; font=
+-display: swap; src: url("https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3i=
+LTeHuS_nVMrMxCp50SjIa2ZL7W0Q5n-wU.woff2") format("woff2"); unicode-range: U=
++1F00-1FFF; }
+
+@font-face { font-family: Inter; font-style: normal; font-weight: 400; font=
+-display: swap; src: url("https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3i=
+LTeHuS_nVMrMxCp50SjIa1pL7W0Q5n-wU.woff2") format("woff2"); unicode-range: U=
++370-377, U+37A-37F, U+384-38A, U+38C, U+38E-3A1, U+3A3-3FF; }
+
+@font-face { font-family: Inter; font-style: normal; font-weight: 400; font=
+-display: swap; src: url("https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3i=
+LTeHuS_nVMrMxCp50SjIa2pL7W0Q5n-wU.woff2") format("woff2"); unicode-range: U=
++102-103, U+110-111, U+128-129, U+168-169, U+1A0-1A1, U+1AF-1B0, U+300-301,=
+ U+303-304, U+308-309, U+323, U+329, U+1EA0-1EF9, U+20AB; }
+
+@font-face { font-family: Inter; font-style: normal; font-weight: 400; font=
+-display: swap; src: url("https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3i=
+LTeHuS_nVMrMxCp50SjIa25L7W0Q5n-wU.woff2") format("woff2"); unicode-range: U=
++100-2BA, U+2BD-2C5, U+2C7-2CC, U+2CE-2D7, U+2DD-2FF, U+304, U+308, U+329, =
+U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+=
+2113, U+2C60-2C7F, U+A720-A7FF; }
+
+@font-face { font-family: Inter; font-style: normal; font-weight: 400; font=
+-display: swap; src: url("https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3i=
+LTeHuS_nVMrMxCp50SjIa1ZL7W0Q5nw.woff2") format("woff2"); unicode-range: U+0=
+-FF, U+131, U+152-153, U+2BB-2BC, U+2C6, U+2DA, U+2DC, U+304, U+308, U+329,=
+ U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFF=
+D; }
+
+@font-face { font-family: Inter; font-style: normal; font-weight: 500; font=
+-display: swap; src: url("https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3i=
+LTeHuS_nVMrMxCp50SjIa2JL7W0Q5n-wU.woff2") format("woff2"); unicode-range: U=
++460-52F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F; }
+
+@font-face { font-family: Inter; font-style: normal; font-weight: 500; font=
+-display: swap; src: url("https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3i=
+LTeHuS_nVMrMxCp50SjIa0ZL7W0Q5n-wU.woff2") format("woff2"); unicode-range: U=
++301, U+400-45F, U+490-491, U+4B0-4B1, U+2116; }
+
+@font-face { font-family: Inter; font-style: normal; font-weight: 500; font=
+-display: swap; src: url("https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3i=
+LTeHuS_nVMrMxCp50SjIa2ZL7W0Q5n-wU.woff2") format("woff2"); unicode-range: U=
++1F00-1FFF; }
+
+@font-face { font-family: Inter; font-style: normal; font-weight: 500; font=
+-display: swap; src: url("https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3i=
+LTeHuS_nVMrMxCp50SjIa1pL7W0Q5n-wU.woff2") format("woff2"); unicode-range: U=
++370-377, U+37A-37F, U+384-38A, U+38C, U+38E-3A1, U+3A3-3FF; }
+
+@font-face { font-family: Inter; font-style: normal; font-weight: 500; font=
+-display: swap; src: url("https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3i=
+LTeHuS_nVMrMxCp50SjIa2pL7W0Q5n-wU.woff2") format("woff2"); unicode-range: U=
++102-103, U+110-111, U+128-129, U+168-169, U+1A0-1A1, U+1AF-1B0, U+300-301,=
+ U+303-304, U+308-309, U+323, U+329, U+1EA0-1EF9, U+20AB; }
+
+@font-face { font-family: Inter; font-style: normal; font-weight: 500; font=
+-display: swap; src: url("https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3i=
+LTeHuS_nVMrMxCp50SjIa25L7W0Q5n-wU.woff2") format("woff2"); unicode-range: U=
++100-2BA, U+2BD-2C5, U+2C7-2CC, U+2CE-2D7, U+2DD-2FF, U+304, U+308, U+329, =
+U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+=
+2113, U+2C60-2C7F, U+A720-A7FF; }
+
+@font-face { font-family: Inter; font-style: normal; font-weight: 500; font=
+-display: swap; src: url("https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3i=
+LTeHuS_nVMrMxCp50SjIa1ZL7W0Q5nw.woff2") format("woff2"); unicode-range: U+0=
+-FF, U+131, U+152-153, U+2BB-2BC, U+2C6, U+2DA, U+2DC, U+304, U+308, U+329,=
+ U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFF=
+D; }
+
+@font-face { font-family: Inter; font-style: normal; font-weight: 600; font=
+-display: swap; src: url("https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3i=
+LTeHuS_nVMrMxCp50SjIa2JL7W0Q5n-wU.woff2") format("woff2"); unicode-range: U=
++460-52F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F; }
+
+@font-face { font-family: Inter; font-style: normal; font-weight: 600; font=
+-display: swap; src: url("https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3i=
+LTeHuS_nVMrMxCp50SjIa0ZL7W0Q5n-wU.woff2") format("woff2"); unicode-range: U=
++301, U+400-45F, U+490-491, U+4B0-4B1, U+2116; }
+
+@font-face { font-family: Inter; font-style: normal; font-weight: 600; font=
+-display: swap; src: url("https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3i=
+LTeHuS_nVMrMxCp50SjIa2ZL7W0Q5n-wU.woff2") format("woff2"); unicode-range: U=
++1F00-1FFF; }
+
+@font-face { font-family: Inter; font-style: normal; font-weight: 600; font=
+-display: swap; src: url("https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3i=
+LTeHuS_nVMrMxCp50SjIa1pL7W0Q5n-wU.woff2") format("woff2"); unicode-range: U=
++370-377, U+37A-37F, U+384-38A, U+38C, U+38E-3A1, U+3A3-3FF; }
+
+@font-face { font-family: Inter; font-style: normal; font-weight: 600; font=
+-display: swap; src: url("https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3i=
+LTeHuS_nVMrMxCp50SjIa2pL7W0Q5n-wU.woff2") format("woff2"); unicode-range: U=
++102-103, U+110-111, U+128-129, U+168-169, U+1A0-1A1, U+1AF-1B0, U+300-301,=
+ U+303-304, U+308-309, U+323, U+329, U+1EA0-1EF9, U+20AB; }
+
+@font-face { font-family: Inter; font-style: normal; font-weight: 600; font=
+-display: swap; src: url("https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3i=
+LTeHuS_nVMrMxCp50SjIa25L7W0Q5n-wU.woff2") format("woff2"); unicode-range: U=
++100-2BA, U+2BD-2C5, U+2C7-2CC, U+2CE-2D7, U+2DD-2FF, U+304, U+308, U+329, =
+U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+=
+2113, U+2C60-2C7F, U+A720-A7FF; }
+
+@font-face { font-family: Inter; font-style: normal; font-weight: 600; font=
+-display: swap; src: url("https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3i=
+LTeHuS_nVMrMxCp50SjIa1ZL7W0Q5nw.woff2") format("woff2"); unicode-range: U+0=
+-FF, U+131, U+152-153, U+2BB-2BC, U+2C6, U+2DA, U+2DC, U+304, U+308, U+329,=
+ U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFF=
+D; }
+
+@font-face { font-family: Inter; font-style: normal; font-weight: 700; font=
+-display: swap; src: url("https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3i=
+LTeHuS_nVMrMxCp50SjIa2JL7W0Q5n-wU.woff2") format("woff2"); unicode-range: U=
++460-52F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F; }
+
+@font-face { font-family: Inter; font-style: normal; font-weight: 700; font=
+-display: swap; src: url("https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3i=
+LTeHuS_nVMrMxCp50SjIa0ZL7W0Q5n-wU.woff2") format("woff2"); unicode-range: U=
++301, U+400-45F, U+490-491, U+4B0-4B1, U+2116; }
+
+@font-face { font-family: Inter; font-style: normal; font-weight: 700; font=
+-display: swap; src: url("https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3i=
+LTeHuS_nVMrMxCp50SjIa2ZL7W0Q5n-wU.woff2") format("woff2"); unicode-range: U=
++1F00-1FFF; }
+
+@font-face { font-family: Inter; font-style: normal; font-weight: 700; font=
+-display: swap; src: url("https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3i=
+LTeHuS_nVMrMxCp50SjIa1pL7W0Q5n-wU.woff2") format("woff2"); unicode-range: U=
++370-377, U+37A-37F, U+384-38A, U+38C, U+38E-3A1, U+3A3-3FF; }
+
+@font-face { font-family: Inter; font-style: normal; font-weight: 700; font=
+-display: swap; src: url("https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3i=
+LTeHuS_nVMrMxCp50SjIa2pL7W0Q5n-wU.woff2") format("woff2"); unicode-range: U=
++102-103, U+110-111, U+128-129, U+168-169, U+1A0-1A1, U+1AF-1B0, U+300-301,=
+ U+303-304, U+308-309, U+323, U+329, U+1EA0-1EF9, U+20AB; }
+
+@font-face { font-family: Inter; font-style: normal; font-weight: 700; font=
+-display: swap; src: url("https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3i=
+LTeHuS_nVMrMxCp50SjIa25L7W0Q5n-wU.woff2") format("woff2"); unicode-range: U=
++100-2BA, U+2BD-2C5, U+2C7-2CC, U+2CE-2D7, U+2DD-2FF, U+304, U+308, U+329, =
+U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+=
+2113, U+2C60-2C7F, U+A720-A7FF; }
+
+@font-face { font-family: Inter; font-style: normal; font-weight: 700; font=
+-display: swap; src: url("https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3i=
+LTeHuS_nVMrMxCp50SjIa1ZL7W0Q5nw.woff2") format("woff2"); unicode-range: U+0=
+-FF, U+131, U+152-153, U+2BB-2BC, U+2C6, U+2DA, U+2DC, U+304, U+308, U+329,=
+ U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFF=
+D; }
+
+@font-face { font-family: Inter; font-style: normal; font-weight: 800; font=
+-display: swap; src: url("https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3i=
+LTeHuS_nVMrMxCp50SjIa2JL7W0Q5n-wU.woff2") format("woff2"); unicode-range: U=
++460-52F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F; }
+
+@font-face { font-family: Inter; font-style: normal; font-weight: 800; font=
+-display: swap; src: url("https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3i=
+LTeHuS_nVMrMxCp50SjIa0ZL7W0Q5n-wU.woff2") format("woff2"); unicode-range: U=
++301, U+400-45F, U+490-491, U+4B0-4B1, U+2116; }
+
+@font-face { font-family: Inter; font-style: normal; font-weight: 800; font=
+-display: swap; src: url("https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3i=
+LTeHuS_nVMrMxCp50SjIa2ZL7W0Q5n-wU.woff2") format("woff2"); unicode-range: U=
++1F00-1FFF; }
+
+@font-face { font-family: Inter; font-style: normal; font-weight: 800; font=
+-display: swap; src: url("https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3i=
+LTeHuS_nVMrMxCp50SjIa1pL7W0Q5n-wU.woff2") format("woff2"); unicode-range: U=
++370-377, U+37A-37F, U+384-38A, U+38C, U+38E-3A1, U+3A3-3FF; }
+
+@font-face { font-family: Inter; font-style: normal; font-weight: 800; font=
+-display: swap; src: url("https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3i=
+LTeHuS_nVMrMxCp50SjIa2pL7W0Q5n-wU.woff2") format("woff2"); unicode-range: U=
++102-103, U+110-111, U+128-129, U+168-169, U+1A0-1A1, U+1AF-1B0, U+300-301,=
+ U+303-304, U+308-309, U+323, U+329, U+1EA0-1EF9, U+20AB; }
+
+@font-face { font-family: Inter; font-style: normal; font-weight: 800; font=
+-display: swap; src: url("https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3i=
+LTeHuS_nVMrMxCp50SjIa25L7W0Q5n-wU.woff2") format("woff2"); unicode-range: U=
++100-2BA, U+2BD-2C5, U+2C7-2CC, U+2CE-2D7, U+2DD-2FF, U+304, U+308, U+329, =
+U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+=
+2113, U+2C60-2C7F, U+A720-A7FF; }
+
+@font-face { font-family: Inter; font-style: normal; font-weight: 800; font=
+-display: swap; src: url("https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3i=
+LTeHuS_nVMrMxCp50SjIa1ZL7W0Q5nw.woff2") format("woff2"); unicode-range: U+0=
+-FF, U+131, U+152-153, U+2BB-2BC, U+2C6, U+2DA, U+2DC, U+304, U+308, U+329,=
+ U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFF=
+D; }
+
+@font-face { font-family: Inter; font-style: normal; font-weight: 900; font=
+-display: swap; src: url("https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3i=
+LTeHuS_nVMrMxCp50SjIa2JL7W0Q5n-wU.woff2") format("woff2"); unicode-range: U=
++460-52F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F; }
+
+@font-face { font-family: Inter; font-style: normal; font-weight: 900; font=
+-display: swap; src: url("https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3i=
+LTeHuS_nVMrMxCp50SjIa0ZL7W0Q5n-wU.woff2") format("woff2"); unicode-range: U=
++301, U+400-45F, U+490-491, U+4B0-4B1, U+2116; }
+
+@font-face { font-family: Inter; font-style: normal; font-weight: 900; font=
+-display: swap; src: url("https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3i=
+LTeHuS_nVMrMxCp50SjIa2ZL7W0Q5n-wU.woff2") format("woff2"); unicode-range: U=
++1F00-1FFF; }
+
+@font-face { font-family: Inter; font-style: normal; font-weight: 900; font=
+-display: swap; src: url("https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3i=
+LTeHuS_nVMrMxCp50SjIa1pL7W0Q5n-wU.woff2") format("woff2"); unicode-range: U=
++370-377, U+37A-37F, U+384-38A, U+38C, U+38E-3A1, U+3A3-3FF; }
+
+@font-face { font-family: Inter; font-style: normal; font-weight: 900; font=
+-display: swap; src: url("https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3i=
+LTeHuS_nVMrMxCp50SjIa2pL7W0Q5n-wU.woff2") format("woff2"); unicode-range: U=
++102-103, U+110-111, U+128-129, U+168-169, U+1A0-1A1, U+1AF-1B0, U+300-301,=
+ U+303-304, U+308-309, U+323, U+329, U+1EA0-1EF9, U+20AB; }
+
+@font-face { font-family: Inter; font-style: normal; font-weight: 900; font=
+-display: swap; src: url("https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3i=
+LTeHuS_nVMrMxCp50SjIa25L7W0Q5n-wU.woff2") format("woff2"); unicode-range: U=
++100-2BA, U+2BD-2C5, U+2C7-2CC, U+2CE-2D7, U+2DD-2FF, U+304, U+308, U+329, =
+U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+=
+2113, U+2C60-2C7F, U+A720-A7FF; }
+
+@font-face { font-family: Inter; font-style: normal; font-weight: 900; font=
+-display: swap; src: url("https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3i=
+LTeHuS_nVMrMxCp50SjIa1ZL7W0Q5nw.woff2") format("woff2"); unicode-range: U+0=
+-FF, U+131, U+152-153, U+2BB-2BC, U+2C6, U+2DA, U+2DC, U+304, U+308, U+329,=
+ U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFF=
+D; }
+------MultipartBoundary--6kM5aChqnkpyRkrfLJXo2FBLuhGXW90ZcuYxScNLrP----
+Content-Type: text/css
+Content-Transfer-Encoding: quoted-printable
+Content-Location: cid:css-1eb6a871-57b8-4dd3-ab49-6a454758e80d@mhtml.blink
+
+@charset "utf-8";
+
+* { box-sizing: border-box; margin: 0px; padding: 0px; -webkit-tap-highligh=
+t-color: transparent; }
+
+:root { --blue: #1a56db; --dif: #005B9A; --accent: #f59e0b; --green: #10b98=
+1; --red: #ef4444; --gray: #6b7280; --bg: #0a0e1a; --bg2: #111827; --bg3: #=
+1f2937; --bg4: #374151; --surface: #151c2c; --surface2: #1a2236; --border: =
+#1f2937; --border2: #2d3748; --text: #f9fafb; --text2: #9ca3af; --text3: #6=
+b7280; --nav: 60px; --safe: env(safe-area-inset-bottom,0px); --r: 12px; --r=
+2: 8px; --r3: 6px; --shadow: 0 4px 24px rgba(0,0,0,.5); }
+
+[data-theme=3D"light"] { --bg: #f3f4f6; --bg2: #fff; --bg3: #f9fafb; --bg4:=
+ #e5e7eb; --surface: #fff; --surface2: #f9fafb; --border: #e5e7eb; --border=
+2: #d1d5db; --text: #111827; --text2: #4b5563; --text3: #9ca3af; --shadow: =
+0 2px 12px rgba(0,0,0,.08); }
+
+html { font-size: 15px; text-size-adjust: 100%; }
+
+body { font-family: Inter, system-ui, sans-serif; background: var(--bg); co=
+lor: var(--text); min-height: 100dvh; padding-bottom: calc(var(--nav) + var=
+(--safe)); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+
+a { text-decoration: none; color: inherit; }
+
+button { cursor: pointer; font-family: inherit; border: none; background: n=
+one; color: inherit; }
+
+img { display: block; max-width: 100%; }
+
+.topbar { position: sticky; top: 0px; z-index: 200; height: 52px; backgroun=
+d: var(--bg2); border-bottom: 1px solid var(--border); display: flex; align=
+-items: center; justify-content: space-between; padding: 0px 16px; backdrop=
+-filter: blur(12px); }
+
+.topbar-logo { display: flex; align-items: center; gap: 10px; }
+
+.logo-badge { width: 32px; height: 32px; background: rgb(255, 255, 255); bo=
+rder-radius: 50%; display: flex; flex-direction: column; align-items: cente=
+r; justify-content: center; flex-shrink: 0; box-shadow: rgba(245, 158, 11, =
+0.5) 0px 0px 0px 2px; }
+
+.logo-badge b { font-size: 9px; font-weight: 800; color: rgb(10, 36, 71); l=
+ine-height: 1; }
+
+.logo-badge small { font-size: 6px; color: rgb(107, 114, 128); letter-spaci=
+ng: 0.5px; }
+
+.topbar-name { font-size: 16px; font-weight: 800; letter-spacing: -0.3px; }
+
+.topbar-right { display: flex; gap: 8px; }
+
+.icon-btn { width: 34px; height: 34px; border-radius: 50%; background: var(=
+--bg3); display: flex; align-items: center; justify-content: center; font-s=
+ize: 15px; color: var(--text2); transition: background 0.15s; }
+
+.icon-btn:active { background: var(--bg4); }
+
+.bottom-nav { position: fixed; bottom: 0px; left: 0px; right: 0px; z-index:=
+ 200; height: calc(var(--nav) + var(--safe)); padding-bottom: var(--safe); =
+background: var(--bg2); border-top: 1px solid var(--border); display: flex;=
+ align-items: stretch; }
+
+.nav-btn { flex: 1 1 0%; display: flex; flex-direction: column; align-items=
+: center; justify-content: center; gap: 3px; color: var(--text3); font-size=
+: 10px; font-weight: 600; letter-spacing: 0.2px; transition: color 0.15s; p=
+adding: 8px 0px; position: relative; }
+
+.nav-btn svg { width: 22px; height: 22px; stroke: currentcolor; fill: none;=
+ stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+.nav-btn.active { color: var(--dif); }
+
+.nav-btn.active::after { content: ""; position: absolute; top: 0px; left: 5=
+0%; transform: translateX(-50%); width: 32px; height: 2px; background: var(=
+--dif); border-radius: 0px 0px 4px 4px; }
+
+.page { display: none; min-height: 60vh; }
+
+.page.active { display: block; }
+
+.hero-card { margin: 12px; border-radius: var(--r); background: linear-grad=
+ient(145deg, rgb(10, 22, 40) 0%, rgb(13, 31, 60) 40%, rgb(10, 42, 74) 100%)=
+; border: 1px solid rgba(0, 91, 154, 0.35); overflow: hidden; position: rel=
+ative; }
+
+.hero-card::before { content: ""; position: absolute; inset: 0px; backgroun=
+d: radial-gradient(at 50% -20%, rgba(0, 91, 154, 0.25) 0%, transparent 60%)=
+; pointer-events: none; }
+
+.hero-badge { background: var(--accent); padding: 5px 14px; font-size: 10px=
+; font-weight: 700; color: rgb(0, 0, 0); letter-spacing: 0.8px; text-transf=
+orm: uppercase; display: flex; justify-content: space-between; }
+
+.hero-inner { padding: 16px; position: relative; z-index: 1; }
+
+.hero-comp { font-size: 11px; color: rgb(112, 144, 176); font-weight: 600; =
+margin-bottom: 14px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+.hero-teams { display: flex; align-items: center; justify-content: space-be=
+tween; gap: 8px; margin-bottom: 14px; }
+
+.hero-team { flex: 1 1 0%; display: flex; flex-direction: column; align-ite=
+ms: center; gap: 8px; text-align: center; }
+
+.hero-team-logo { width: 56px; height: 56px; border-radius: 8px; background=
+: transparent; display: flex; align-items: center; justify-content: center;=
+ overflow: hidden; }
+
+.hero-team-logo img { width: 56px; height: 56px; object-fit: contain; filte=
+r: drop-shadow(rgba(0, 0, 0, 0.4) 0px 2px 6px); }
+
+.hero-team-ini { font-size: 14px; font-weight: 800; color: rgb(255, 255, 25=
+5); }
+
+.hero-team-name { font-size: 13px; font-weight: 700; color: rgb(255, 255, 2=
+55); line-height: 1.2; }
+
+.hero-vs { font-size: 22px; font-weight: 900; color: var(--accent); flex-sh=
+rink: 0; }
+
+.hero-info { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.hero-chip { font-size: 11px; color: rgb(112, 144, 176); background: rgba(2=
+55, 255, 255, 0.06); padding: 4px 10px; border-radius: 20px; }
+
+.section-hd { display: flex; align-items: center; justify-content: space-be=
+tween; padding: 16px 16px 10px; }
+
+.section-title { font-size: 13px; font-weight: 700; color: var(--text); tex=
+t-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: =
+center; gap: 6px; }
+
+.section-title::before { content: ""; width: 3px; height: 14px; background:=
+ var(--accent); border-radius: 2px; display: block; }
+
+.see-all { font-size: 12px; color: var(--dif); font-weight: 600; padding: 4=
+px 10px; background: rgba(0, 91, 154, 0.12); border-radius: 20px; }
+
+.results-row { display: flex; gap: 8px; padding: 0px 12px 12px; overflow-x:=
+ auto; scrollbar-width: none; }
+
+.results-row::-webkit-scrollbar { display: none; }
+
+.result-chip { flex-shrink: 0; width: 88px; background: var(--surface); bor=
+der-radius: var(--r2); padding: 10px 8px; border-right-color: ; border-righ=
+t-style: ; border-right-width: ; border-bottom-color: ; border-bottom-style=
+: ; border-bottom-width: ; border-left-color: ; border-left-style: ; border=
+-left-width: ; border-image-source: ; border-image-slice: ; border-image-wi=
+dth: ; border-image-outset: ; border-image-repeat: ; text-align: center; bo=
+rder-top: 3px solid var(--border2); }
+
+.result-chip.win { border-top-color: var(--green); }
+
+.result-chip.loss { border-top-color: var(--red); }
+
+.result-chip.draw { border-top-color: var(--gray); }
+
+.rc-opp { font-size: 11px; color: var(--text2); font-weight: 600; white-spa=
+ce: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.rc-score { font-size: 20px; font-weight: 800; color: var(--text); margin: =
+4px 0px; letter-spacing: -0.5px; }
+
+.rc-date { font-size: 10px; color: var(--text3); }
+
+.match-card { background: var(--surface); border-radius: var(--r); margin: =
+0px 12px 8px; border: 1px solid var(--border); overflow: hidden; position: =
+relative; }
+
+.match-card-bar { height: 3px; background: var(--border); }
+
+.match-card-bar.win { background: var(--green); }
+
+.match-card-bar.loss { background: var(--red); }
+
+.match-card-bar.draw { background: var(--gray); }
+
+.mc-top { display: flex; align-items: center; gap: 8px; padding: 10px 12px =
+8px; }
+
+.mc-comp { flex: 1 1 0%; font-size: 11px; color: var(--text3); font-weight:=
+ 600; text-transform: uppercase; letter-spacing: 0.3px; }
+
+.mc-date { font-size: 11px; color: var(--text3); }
+
+.badge { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius=
+: 4px; letter-spacing: 0.3px; }
+
+.badge-ft { background: var(--bg3); color: var(--text3); }
+
+.badge-live { background: rgba(239, 68, 68, 0.15); color: rgb(248, 113, 113=
+); display: flex; align-items: center; gap: 4px; }
+
+.badge-ns { background: rgba(0, 91, 154, 0.15); color: rgb(96, 165, 250); }
+
+.live-dot { width: 6px; height: 6px; border-radius: 50%; background: rgb(24=
+8, 113, 113); animation: 1s ease 0s infinite normal none running pulse; }
+
+@keyframes pulse {=20
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
 }
 
-// ── STATE ────────────────────────────────────────────────────
-let S = {
-  dark: localStorage.getItem('dif_theme') !== 'light',
-  tab: 'home',
-  matchTab: 'upcoming',
-  squadFilter: 'all',
-  last: [], next: [], standings: [], squad: [], news: [],
-  favs: JSON.parse(localStorage.getItem('dif_favs')||'[]'),
-  loaded: {},
-};
+.mc-teams { display: flex; align-items: center; gap: 6px; padding: 4px 12px=
+ 12px; }
 
-// ── THEME ────────────────────────────────────────────────────
-function applyTheme(){
-  document.documentElement.setAttribute('data-theme', S.dark?'dark':'light');
-  const b = document.getElementById('dark-btn');
-  if(b) b.textContent = S.dark ? '☀️' : '🌙';
-}
-function toggleTheme(){
-  S.dark = !S.dark;
-  localStorage.setItem('dif_theme', S.dark?'dark':'light');
-  applyTheme();
-}
-applyTheme();
+.mc-team { flex: 1 1 0%; display: flex; align-items: center; gap: 8px; min-=
+width: 0px; }
 
-// ── CACHE ────────────────────────────────────────────────────
-function cGet(k){ try{ const d=JSON.parse(localStorage.getItem('c_'+k)||'null'); if(!d||Date.now()-d.t>=CACHE_TTL) return null; if(Array.isArray(d.v)&&!d.v.length) return null; return d.v; }catch(e){return null} }
-function cSet(k,v){ try{ if(Array.isArray(v)&&!v.length) return; localStorage.setItem('c_'+k,JSON.stringify({v,t:Date.now()})); }catch(e){} }
-function cClear(k){ try{ localStorage.removeItem('c_'+k); }catch(e){} }
+.mc-team-r { flex-direction: row-reverse; }
 
-// ── FETCH ────────────────────────────────────────────────────
-async function apiFetch(url){
-  const r = await fetch(url);
-  if(!r.ok) throw new Error('HTTP '+r.status);
-  return r.json();
-}
+.mc-logo { width: 28px; height: 28px; border-radius: 4px; background: trans=
+parent; display: flex; align-items: center; justify-content: center; overfl=
+ow: hidden; flex-shrink: 0; }
 
-async function getLastMatches(){
-  const c = cGet('last'); if(c&&c.length) return c;
-  try {
-    const j = await apiFetch(`${TSDB}/eventslast.php?id=${TEAM_ID}`);
-    const v = (j.results||[]).map(normalizeMatch).filter(Boolean);
-    if(v.length){ cSet('last',v); return v; }
-  } catch(e){ console.warn('TheSportsDB last:', e.message); }
-  return FALLBACK_LAST;
-}
-async function getNextMatches(){
-  const c = cGet('next'); if(c&&c.length) return c;
-  try {
-    const j = await apiFetch(`${TSDB}/eventsnext.php?id=${TEAM_ID}`);
-    const v = (j.events||[]).map(normalizeMatch).filter(Boolean);
-    if(v.length){ cSet('next',v); return v; }
-  } catch(e){ console.warn('TheSportsDB next:', e.message); }
-  return FALLBACK_NEXT;
-}
-async function getStandings(){
-  const c = cGet('standings'); if(c && c.length) return c;
-  const j = await apiFetch(`${WORKER}/standings`);
-  const v = j.table||[];
-  if(v.length) cSet('standings',v);
-  return v;
-}
-async function getSquad(){
-  const c = cGet('squad'); if(c) return c;
-  try{
-    const j = await apiFetch(`${TSDB}/lookup_all_players.php?id=${TEAM_ID}`);
-    if(j.player?.length){
-      const v = j.player.map(p=>({id:p.idPlayer,name:p.strPlayer,pos:p.strPosition||'',nat:p.strNationality||'',num:p.strNumber||'?',img:p.strThumb||p.strCutout||''}));
-      cSet('squad',v); return v;
-    }
-  }catch(e){}
-  return FALLBACK_SQUAD;
-}
-async function getNews(){
-  const c = cGet('news'); if(c && c.length) return c;
-  const j = await apiFetch(`${WORKER}/news`);
-  const v = j.items||[];
-  if(v.length) cSet('news',v);
-  return v;
+.mc-logo img { width: 28px; height: 28px; object-fit: contain; filter: drop=
+-shadow(rgba(0, 0, 0, 0.3) 0px 1px 2px); }
+
+.mc-logo-ini { font-size: 8px; font-weight: 800; color: var(--text3); backg=
+round: var(--bg3); width: 28px; height: 28px; display: flex; align-items: c=
+enter; justify-content: center; border-radius: 4px; }
+
+.mc-name { font-size: 13px; color: var(--text2); font-weight: 500; white-sp=
+ace: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.mc-name.dif { color: var(--text); font-weight: 700; }
+
+.mc-score { min-width: 60px; text-align: center; flex-shrink: 0; }
+
+.mc-score-val { font-size: 22px; font-weight: 800; letter-spacing: -1px; }
+
+.mc-score-val.win { color: var(--green); }
+
+.mc-score-val.loss { color: var(--red); }
+
+.mc-score-val.draw { color: var(--text2); }
+
+.mc-time { font-size: 18px; font-weight: 700; color: var(--text); }
+
+.mc-upcoming { text-align: center; }
+
+.mc-upcoming .mc-time { display: block; font-size: 17px; font-weight: 700; =
 }
 
-function normalizeMatch(e){
-  const DIF_NAMES = ['Djurgårdens IF','Djurgarden','Djurgaarden','DIF','Djurgårdens IF Fotboll'];
-  const isHome = e.idHomeTeam===TEAM_ID || DIF_NAMES.some(n=>e.strHomeTeam===n);
-  const isDIF = isHome || DIF_NAMES.some(n=>e.strAwayTeam===n);
-  if(!isDIF) return null; // skip non-DIF matches
-  const hs = e.intHomeScore!=null?+e.intHomeScore:null;
-  const as = e.intAwayScore!=null?+e.intAwayScore:null;
-  const ds = isHome?hs:as, os = isHome?as:hs;
-  let result='upcoming';
-  if(ds!=null&&os!=null){ result = ds>os?'win':ds<os?'loss':'draw'; }
-  const status = e.strStatus==='Match Finished'||hs!=null?'FT':'NS';
-  return {
-    id:e.idEvent, date:e.dateEvent, time:(e.strTime||'').slice(0,5),
-    home:e.strHomeTeam, away:e.strAwayTeam,
-    hl:e.strHomeTeamBadge||teamLogo(e.strHomeTeam)||'',
-    al:e.strAwayTeamBadge||teamLogo(e.strAwayTeam)||'',
-    hs, as, ds, os, isHome,
-    opponent:isHome?e.strAwayTeam:e.strHomeTeam,
-    oppLogo:isHome?e.strAwayTeamBadge:e.strHomeTeamBadge,
-    competition:e.strLeague||'', venue:e.strVenue||'',
-    status, result,
-  };
+.mc-upcoming .mc-soon { font-size: 10px; color: var(--accent); margin-top: =
+2px; font-weight: 600; }
+
+.news-feat { display: block; margin: 0px 12px 8px; background: var(--surfac=
+e); border-radius: var(--r); border: 1px solid var(--border); overflow: hid=
+den; transition: transform 0.15s, box-shadow 0.15s; }
+
+.news-feat:active { transform: scale(0.99); }
+
+.news-accent { height: 2px; }
+
+.news-feat-body { padding: 14px; }
+
+.news-src-row { display: flex; align-items: center; gap: 6px; margin-bottom=
+: 8px; }
+
+.news-src-ico { width: 18px; height: 18px; border-radius: 50%; overflow: hi=
+dden; flex-shrink: 0; display: flex; align-items: center; justify-content: =
+center; background: var(--bg4); }
+
+.news-src-ico img { width: 18px; height: 18px; object-fit: cover; border-ra=
+dius: 50%; }
+
+.news-src-name { font-size: 11px; color: var(--text3); font-weight: 700; te=
+xt-transform: uppercase; letter-spacing: 0.5px; }
+
+.news-src-dot { width: 3px; height: 3px; border-radius: 50%; background: va=
+r(--bg4); flex-shrink: 0; }
+
+.news-src-ago { font-size: 11px; color: var(--text3); }
+
+.news-feat h3 { font-size: 15px; font-weight: 700; color: var(--text); line=
+-height: 1.45; margin: 0px; display: -webkit-box; -webkit-line-clamp: 3; -w=
+ebkit-box-orient: vertical; overflow: hidden; }
+
+.news-feat p { font-size: 13px; color: var(--text2); line-height: 1.6; marg=
+in-top: 6px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orien=
+t: vertical; overflow: hidden; }
+
+.news-list-wrap { margin: 0px 12px 12px; background: var(--surface); border=
+-radius: var(--r); border: 1px solid var(--border); overflow: hidden; }
+
+.news-item { display: flex; align-items: center; gap: 12px; padding: 13px 1=
+4px; border-bottom: 1px solid var(--border); transition: background 0.12s; =
+position: relative; }
+
+.news-item:last-child { border-bottom: none; }
+
+.news-item:active { background: var(--bg3); }
+
+.news-item-ico { width: 32px; height: 32px; border-radius: 8px; overflow: h=
+idden; flex-shrink: 0; background: var(--bg4); display: flex; align-items: =
+center; justify-content: center; }
+
+.news-item-ico img { width: 32px; height: 32px; object-fit: cover; }
+
+.news-item-body { flex: 1 1 0%; min-width: 0px; }
+
+.news-item h4 { font-size: 13px; font-weight: 600; color: var(--text); line=
+-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orie=
+nt: vertical; overflow: hidden; }
+
+.news-item-meta { display: flex; align-items: center; gap: 5px; margin-bott=
+om: 4px; }
+
+.news-item-src { font-size: 10px; font-weight: 700; color: var(--text3); te=
+xt-transform: uppercase; letter-spacing: 0.4px; }
+
+.news-item-age { font-size: 10px; color: var(--text3); }
+
+.news-chevron { color: var(--text3); font-size: 16px; flex-shrink: 0; opaci=
+ty: 0.5; }
+
+.table-wrap { margin: 0px 12px; background: var(--surface); border-radius: =
+var(--r); border: 1px solid var(--border); overflow: hidden; }
+
+.standings-tbl { width: 100%; border-collapse: collapse; font-size: 13px; }
+
+.standings-tbl th { padding: 9px 8px; font-size: 10px; font-weight: 700; co=
+lor: var(--text3); border-bottom: 1px solid var(--border); text-align: cent=
+er; text-transform: uppercase; letter-spacing: 0.4px; background: var(--bg3=
+); }
+
+.standings-tbl th:nth-child(2) { text-align: left; padding-left: 4px; }
+
+.standings-tbl td { padding: 10px 8px; border-bottom: 1px solid var(--borde=
+r); color: var(--text2); text-align: center; }
+
+.standings-tbl td:nth-child(2) { text-align: left; padding-left: 4px; }
+
+.standings-tbl tr:last-child td { border-bottom: none; }
+
+.standings-tbl tr:hover td { background: var(--bg3); }
+
+.standings-tbl tr.row-dif td { background: rgba(0, 91, 154, 0.1); color: va=
+r(--text); font-weight: 700; }
+
+.pos-pill { width: 22px; height: 22px; border-radius: 50%; display: inline-=
+flex; align-items: center; justify-content: center; font-size: 11px; font-w=
+eight: 700; background: var(--bg4); color: var(--text3); }
+
+.pos-top { background: rgba(245, 158, 11, 0.15); color: var(--accent); }
+
+.pos-down { background: rgba(239, 68, 68, 0.12); color: rgb(248, 113, 113);=
+ }
+
+.team-cell { display: flex; align-items: center; gap: 6px; }
+
+.team-cell img { width: 18px; height: 18px; border-radius: 2px; object-fit:=
+ contain; flex-shrink: 0; }
+
+.tbl-legend { display: flex; gap: 14px; padding: 10px 12px; border-top: 1px=
+ solid var(--border); background: var(--bg3); }
+
+.tbl-leg-item { font-size: 11px; color: var(--text3); padding-left: 10px; p=
+osition: relative; }
+
+.tbl-leg-item::before { content: ""; position: absolute; left: 0px; top: 50=
+%; transform: translateY(-50%); width: 3px; height: 12px; border-radius: 2p=
+x; }
+
+.leg-eu::before { background: var(--accent); }
+
+.leg-down::before { background: rgb(248, 113, 113); }
+
+.hx { display: none; }
+
+@media (min-width: 480px) {
+  .hx { display: table-cell; }
 }
 
-// ── NAV ──────────────────────────────────────────────────────
-function nav(tab, el){
-  S.tab = tab;
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.getElementById('pg-'+tab)?.classList.add('active');
-  // Update all nav buttons
-  document.querySelectorAll('.nav-btn').forEach(b=>{
-    const match = b.getAttribute('onclick')?.includes("'"+tab+"'");
-    b.classList.toggle('active', !!match);
-  });
-  window.scrollTo({top:0,behavior:'smooth'});
-  if(tab==='home') loadHome();
-  if(tab==='matches') loadMatches();
-  if(tab==='squad') loadSquad();
-  if(tab==='standings') loadStandings();
+.squad-filters { display: flex; gap: 6px; padding: 0px 12px 12px; overflow-=
+x: auto; scrollbar-width: none; }
+
+.squad-filters::-webkit-scrollbar { display: none; }
+
+.sq-chip { padding: 6px 14px; border-radius: 20px; font-size: 12px; font-we=
+ight: 600; border: 1px solid var(--border); background: transparent; color:=
+ var(--text2); white-space: nowrap; transition: 0.15s; }
+
+.sq-chip.active { background: var(--dif); color: rgb(255, 255, 255); border=
+-color: var(--dif); }
+
+.pos-group-label { font-size: 11px; font-weight: 700; color: var(--text3); =
+text-transform: uppercase; letter-spacing: 0.8px; padding: 10px 16px 6px; b=
+ackground: var(--bg3); border-top: 1px solid var(--border); border-bottom: =
+1px solid var(--border); }
+
+.player-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8=
+px; padding: 10px 12px; }
+
+@media (min-width: 400px) {
+  .player-grid { grid-template-columns: repeat(4, 1fr); }
 }
 
-// ── UTILS ────────────────────────────────────────────────────
-function fd(s){
-  if(!s) return '';
-  const d=new Date(s);
-  return d.toLocaleDateString('sv-SE',{day:'numeric',month:'short'});
-}
-function timeAgo(s){
-  const diff=Date.now()-new Date(s).getTime();
-  const m=Math.floor(diff/60000);
-  if(m<1) return 'Nu'; if(m<60) return m+'m';
-  const h=Math.floor(m/60);
-  if(h<24) return h+'h'; return Math.floor(h/24)+'d';
-}
-function ini(name){ return (name||'').split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase(); }
-function logoImg(url,name,sz=26){
-  if(url) return `<img src="${url}" width="${sz}" height="${sz}" loading="lazy" onerror="this.style.display='none'" alt="${name}">`;
-  return `<span class="mc-logo-ini">${ini(name)}</span>`;
-}
-function daysUntil(d){
-  const diff=new Date(d)-new Date(); const days=Math.ceil(diff/86400000);
-  if(days<=0) return 'Idag'; if(days===1) return 'Imorgon'; return 'Om '+days+'d';
+@media (min-width: 600px) {
+  .player-grid { grid-template-columns: repeat(5, 1fr); }
 }
 
-// ── SKELETON ─────────────────────────────────────────────────
-function skelMatchCard(){
-  return `<div class="match-card" style="padding:12px">
-    <div style="display:flex;gap:8px;align-items:center">
-      <div class="sk sk-circle" style="width:26px;height:26px;flex-shrink:0"></div>
-      <div class="sk sk-text" style="flex:1"></div>
-      <div class="sk sk-block" style="width:50px;height:22px"></div>
-      <div class="sk sk-text" style="flex:1"></div>
-      <div class="sk sk-circle" style="width:26px;height:26px;flex-shrink:0"></div>
-    </div>
-  </div>`;
+.player-card { background: var(--surface); border: 1px solid var(--border);=
+ border-radius: var(--r2); padding: 12px 8px 10px; text-align: center; posi=
+tion: relative; transition: transform 0.15s; }
+
+.player-card:active { transform: scale(0.97); }
+
+.fav-btn { position: absolute; top: 6px; right: 8px; font-size: 14px; color=
+: var(--text3); transition: color 0.15s; }
+
+.fav-btn.on { color: var(--accent); }
+
+.pl-img { width: 46px; height: 46px; border-radius: 50%; margin: 0px auto 7=
+px; background: var(--bg3); display: flex; align-items: center; justify-con=
+tent: center; overflow: hidden; border: 2px solid var(--border2); }
+
+.pl-img img { width: 100%; height: 100%; object-fit: cover; }
+
+.pl-ini { font-size: 14px; font-weight: 800; color: var(--text3); }
+
+.pl-num { font-size: 10px; font-weight: 700; color: var(--text3); margin-bo=
+ttom: 2px; }
+
+.pl-name { font-size: 11px; font-weight: 700; color: var(--text); line-heig=
+ht: 1.3; }
+
+.pl-pos { font-size: 10px; font-weight: 600; margin-top: 2px; }
+
+.pl-nat { font-size: 10px; color: var(--text3); margin-top: 1px; }
+
+.sk { background-image: ; background-position-x: ; background-position-y: ;=
+ background-repeat: ; background-attachment: ; background-origin: ; backgro=
+und-clip: ; background-color: ; background-size: 200% 100%; animation: 1.4s=
+ ease 0s infinite normal none running shimmer; border-radius: 4px; }
+
+@keyframes shimmer {=20
+  100% { background-position: -200% 0px; }
 }
 
-// ── RENDER HERO ───────────────────────────────────────────────
-function renderHero(m){
-  const d = new Date(m.date);
-  const ds = d.toLocaleDateString('sv-SE',{weekday:'long',day:'numeric',month:'long'});
-  return `
-  <div class="hero-card">
-    <div class="hero-badge"><span>NÄSTA MATCH</span><span class="hero-comp">${m.competition}</span></div>
-    <div class="hero-inner">
-      <div class="hero-teams">
-        <div class="hero-team">
-          <div class="hero-team-logo">
-            ${(m.hl||teamLogo(m.home))
-              ? `<img src="${m.hl||teamLogo(m.home)}" loading="lazy" alt="${m.home}"
-                  onerror="this.outerHTML='<span class=hero-team-ini>${ini(m.home)}</span>'">`
-              : `<span class="hero-team-ini">${ini(m.home)}</span>`}
-          </div>
-          <span class="hero-team-name">${m.home}</span>
-        </div>
-        <span class="hero-vs">VS</span>
-        <div class="hero-team">
-          <div class="hero-team-logo">
-            ${(m.al||teamLogo(m.away))
-              ? `<img src="${m.al||teamLogo(m.away)}" loading="lazy" alt="${m.away}"
-                  onerror="this.outerHTML='<span class=hero-team-ini>${ini(m.away)}</span>'">`
-              : `<span class="hero-team-ini">${ini(m.away)}</span>`}
-          </div>
-          <span class="hero-team-name">${m.away}</span>
-        </div>
-      </div>
-      <div class="hero-info">
-        <span class="hero-chip">📅 ${ds}</span>
-        <span class="hero-chip">🕐 ${m.time||'TBD'}</span>
-        ${m.venue?`<span class="hero-chip">📍 ${m.venue}</span>`:''}
-      </div>
-    </div>
-  </div>`;
+.sk-text { height: 12px; border-radius: 3px; }
+
+.sk-block { border-radius: var(--r2); }
+
+.sk-circle { border-radius: 50%; }
+
+.tab-bar { display: flex; gap: 6px; padding: 12px 12px 0px; overflow-x: aut=
+o; scrollbar-width: none; }
+
+.tab-bar::-webkit-scrollbar { display: none; }
+
+.tab-btn { padding: 7px 16px; border-radius: 20px; font-size: 12px; font-we=
+ight: 600; border: 1px solid var(--border); background: transparent; color:=
+ var(--text2); white-space: nowrap; transition: 0.15s; }
+
+.tab-btn.active { background: var(--dif); color: rgb(255, 255, 255); border=
+-color: var(--dif); }
+
+.empty { text-align: center; padding: 2.5rem 1rem; color: var(--text3); fon=
+t-size: 13px; }
+
+@media (min-width: 760px) {
+  body { padding-bottom: 0px; }
+  .bottom-nav { display: none; }
+  .desktop-nav { background: var(--bg2); border-bottom: 1px solid var(--bor=
+der); padding: 0px 20px; display: flex !important; }
+  .desktop-nav .nav-btn { flex: 0 0 auto; flex-direction: row; gap: 6px; pa=
+dding: 12px 16px; font-size: 13px; border-bottom: 2px solid transparent; ma=
+rgin-bottom: -1px; color: var(--text2); }
+  .desktop-nav .nav-btn.active { color: var(--dif); border-bottom-color: va=
+r(--dif); }
+  .desktop-nav .nav-btn::after { display: none; }
+  .desktop-nav .nav-btn svg { width: 16px; height: 16px; }
+  .page-wrap { max-width: 1060px; margin: 0px auto; display: grid; grid-tem=
+plate-columns: 1fr 320px; gap: 20px; padding: 20px; }
+  .main-col, .side-col { }
+  .hero-card, .match-card, .news-feat, .news-list-wrap, .table-wrap { margi=
+n-left: 0px; margin-right: 0px; }
+  .player-grid { grid-template-columns: repeat(5, 1fr); }
 }
-
-// ── RENDER MATCH CARD ─────────────────────────────────────────
-function renderMatchCard(m){
-  const badge = m.status==='FT'
-    ? `<span class="badge badge-ft">FT</span>`
-    : m.status==='LIVE'
-    ? `<span class="badge badge-live"><span class="live-dot"></span>LIVE</span>`
-    : `<span class="badge badge-ns">${m.time||'–'}</span>`;
-
-  const center = m.status==='FT'
-    ? `<div class="mc-score">
-        <span class="mc-score-val ${m.result}">${m.hs}–${m.as}</span>
-       </div>`
-    : `<div class="mc-upcoming">
-        <span class="mc-time">${m.time||'–'}</span>
-        <div class="mc-soon">${daysUntil(m.date)}</div>
-       </div>`;
-
-  const bar = m.status==='FT' ? `<div class="match-card-bar ${m.result}"></div>` : '<div class="match-card-bar"></div>';
-
-  return `
-  <div class="match-card">
-    ${bar}
-    <div class="mc-top">
-      <span class="mc-comp">${m.competition}</span>
-      ${badge}
-      <span class="mc-date">${fd(m.date)}</span>
-    </div>
-    <div class="mc-teams">
-      <div class="mc-team">
-        <div class="mc-logo">${logoImg(m.hl,m.home)}</div>
-        <span class="mc-name ${m.isHome?'dif':''}">${m.home}</span>
-      </div>
-      ${center}
-      <div class="mc-team mc-team-r">
-        <span class="mc-name ${!m.isHome?'dif':''}">${m.away}</span>
-        <div class="mc-logo">${logoImg(m.al,m.away)}</div>
-      </div>
-    </div>
-  </div>`;
-}
-
-// ── RENDER STANDINGS ──────────────────────────────────────────
-function renderStandings(table, limit=999){
-  if(!table?.length) return '<div class="empty">Tabell ej tillgänglig</div>';
-  const rows = table.slice(0,limit).map((t,i)=>{
-    const pos = +t.intRank||i+1;
-    const isDif = /djurgård/i.test(t.strTeam||'');
-    const pc = pos<=3?'pos-top':pos>=15?'pos-down':'';
-    return `<tr class="${isDif?'row-dif':''}">
-      <td><span class="pos-pill ${pc}">${pos}</span></td>
-      <td><div class="team-cell">${t.strTeamBadge?`<img src="${t.strTeamBadge}" loading="lazy" onerror="this.style.display='none'">`:''}
-        <span>${isDif?`<strong>${t.strTeam}</strong>`:t.strTeam}</span></div></td>
-      <td>${t.intPlayed||0}</td>
-      <td class="hx">${t.intWin||0}</td>
-      <td class="hx">${t.intDraw||0}</td>
-      <td class="hx">${t.intLoss||0}</td>
-      <td><strong>${t.intPoints||0}</strong></td>
-    </tr>`;
-  }).join('');
-  return `<table class="standings-tbl">
-    <thead><tr><th>#</th><th>Lag</th><th>M</th><th class="hx">V</th><th class="hx">O</th><th class="hx">F</th><th>P</th></tr></thead>
-    <tbody>${rows}</tbody>
-  </table>
-  <div class="tbl-legend">
-    <span class="tbl-leg-item leg-eu">Europaplats</span>
-    <span class="tbl-leg-item leg-down">Nedflyttning</span>
-  </div>`;
-}
-
-// ── RENDER NEWS ───────────────────────────────────────────────
-function renderNewsFeat(n){
-  const fav = n.fav?`<img src="${n.fav}" onerror="this.style.display='none'" alt="">`:'';
-  return `<a class="news-feat" href="${n.link||'#'}" target="_blank" rel="noopener">
-    <div class="news-accent" style="background:${n.scolor||'#005B9A'}"></div>
-    <div class="news-feat-body">
-      <div class="news-src-row">${fav}<span class="news-src-name">${n.sname||''}</span><span class="news-src-ago">${timeAgo(n.date)}</span></div>
-      <h3>${n.title}</h3>
-      ${n.summary?`<p>${n.summary.slice(0,120)}…</p>`:''}
-    </div>
-  </a>`;
-}
-function renderNewsItem(n){
-  const fav = n.fav?`<img src="${n.fav}" onerror="this.style.display='none'" alt="" width="14" height="14" style="border-radius:2px;background:#fff;padding:1px;object-fit:contain;flex-shrink:0">`:'';
-  return `<a class="news-item" href="${n.link||'#'}" target="_blank" rel="noopener">
-    <div class="news-item-body">
-      <div class="news-src-row">${fav}<span class="news-src-name">${n.sname||''}</span><span class="news-src-ago">${timeAgo(n.date)}</span></div>
-      <h4>${n.title}</h4>
-    </div>
-    <span class="news-chevron">›</span>
-  </a>`;
-}
-
-// ── RENDER PLAYER ─────────────────────────────────────────────
-const posColor = {Goalkeeper:'#f59e0b',Defender:'#3b82f6',Midfielder:'#8b5cf6',Forward:'#ef4444'};
-const posLabel = {Goalkeeper:'Målvakt',Defender:'Back',Midfielder:'Mittfältare',Forward:'Forward'};
-function renderPlayer(p){
-  const isFav = S.favs.includes(p.id);
-  const ini2 = ini(p.name);
-  const posKey = Object.keys(posColor).find(k=>p.pos?.includes(k))||'';
-  const col = posColor[posKey]||'#6b7280';
-  return `
-  <div class="player-card">
-    <button class="fav-btn ${isFav?'on':''}" onclick="toggleFav('${p.id}',this)" aria-label="Favorit">★</button>
-    <div class="pl-img" style="border-color:${col}">
-      ${p.img?`<img src="${p.img}" loading="lazy" onerror="this.parentElement.innerHTML='<span class=pl-ini>${ini2}</span>'" alt="${p.name}">`:`<span class="pl-ini">${ini2}</span>`}
-    </div>
-    <div class="pl-num">#${p.num}</div>
-    <div class="pl-name">${p.name}</div>
-    <div class="pl-pos" style="color:${col}">${posLabel[posKey]||p.pos||''}</div>
-    <div class="pl-nat">${p.nat}</div>
-  </div>`;
-}
-
-// ── LOAD PAGES ────────────────────────────────────────────────
-async function loadHome(){
-  // Show fallback content IMMEDIATELY – don't wait for APIs
-  S.last = S.last.length ? S.last : FALLBACK_LAST;
-  S.next = S.next.length ? S.next : FALLBACK_NEXT;
-  set('home-hero', renderHero(S.next[0]));
-  set('home-results', S.last.slice(0,5).map(m=>`
-    <div class="result-chip ${m.result}">
-      <div class="rc-opp">${m.opponent}</div>
-      <div class="rc-score">${m.ds !== null ? m.ds+'–'+m.os : '–'}</div>
-      <div class="rc-date">${fd(m.date)}</div>
-    </div>`).join(''));
-  set('home-news-feat','<div style="margin:0 12px 8px;background:var(--surface);border-radius:var(--r);border:1px solid var(--border);padding:14px"><div class="sk sk-text" style="width:40%;margin-bottom:10px"></div><div class="sk sk-text" style="width:90%;margin-bottom:6px"></div><div class="sk sk-text" style="width:70%"></div></div>');
-  set('home-news-list','<div style="padding:14px 16px;border-bottom:1px solid var(--border)"><div class="sk sk-text" style="width:80%"></div></div><div style="padding:14px 16px"><div class="sk sk-text" style="width:65%"></div></div>');
-  set('home-table','<div style="padding:1rem 16px"><div class="sk sk-text" style="width:50%;margin-bottom:10px"></div><div class="sk sk-text" style="width:70%;margin-bottom:8px"></div><div class="sk sk-text" style="width:60%"></div></div>');
-
-  // Then fetch live data in background – each independently
-  try {
-    const [last, next] = await Promise.all([getLastMatches(), getNextMatches()]);
-    if(last.length){ S.last = last;
-      set('home-results', last.slice(0,5).map(m=>`
-        <div class="result-chip ${m.result}">
-          <div class="rc-opp">${m.opponent}</div>
-          <div class="rc-score">${m.ds}–${m.os}</div>
-          <div class="rc-date">${fd(m.date)}</div>
-        </div>`).join(''));
-    }
-    if(next.length){ S.next = next; set('home-hero', renderHero(next[0])); }
-  } catch(e){ console.warn('Matches:', e.message); }
-
-  try {
-    const news = await getNews();
-    S.news = news;
-    set('home-news-feat', news.slice(0,2).map(renderNewsFeat).join('') || '<div class="empty">Inga nyheter – försök ladda om</div>');
-    set('home-news-list', news.slice(2,8).map(renderNewsItem).join('') || '<div style="padding:1rem 16px;color:var(--text3);font-size:13px">Inga fler nyheter</div>');
-  } catch(e){ 
-    console.warn('News:', e.message);
-    set('home-news-feat','<div class="empty">Nyheter ej tillgängliga</div>');
-    set('home-news-list','');
-  }
-
-  try {
-    const table = await getStandings();
-    S.standings = table;
-    set('home-table', renderStandings(table));
-  } catch(e){ console.warn('Standings:', e.message); }
-
-}
-
-async function loadMatches(){
-  // Show fallback immediately
-  if(!S.last.length) S.last = FALLBACK_LAST;
-  if(!S.next.length) S.next = FALLBACK_NEXT;
-  renderMatchesView();
-  // Then try to update with live data
-  try{
-    const [last,next] = await Promise.all([getLastMatches(), getNextMatches()]);
-    if(last.length) S.last=last;
-    if(next.length) S.next=next;
-    renderMatchesView();
-  }catch(e){ console.warn('loadMatches:', e.message); }
-}
-
-function renderMatchesView(){
-  const list = S.matchTab==='upcoming' ? S.next : S.last;
-  set('matches-list', list.length ? list.map(renderMatchCard).join('') : `<div class="empty">Inga ${S.matchTab==='upcoming'?'kommande':'spelade'} matcher</div>`);
-}
-
-function switchMatchTab(tab, el){
-  S.matchTab = tab;
-  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-  el.classList.add('active');
-  renderMatchesView();
-}
-
-async function loadSquad(){
-  if(S.squad.length){ renderSquadView(S.squad, S.squadFilter); return; }
-  set('squad-grid','<div class="player-grid">'+Array(8).fill('<div class="sk sk-block" style="height:130px;border-radius:var(--r2)"></div>').join('')+'</div>');
-  try{
-    S.squad = await getSquad();
-    renderSquadView(S.squad, S.squadFilter);
-  }catch(e){ set('squad-grid','<div class="empty">Kunde inte ladda truppen</div>'); }
-}
-
-function renderSquadView(players, filter){
-  S.squadFilter = filter;
-  document.querySelectorAll('.sq-chip').forEach(c=>c.classList.toggle('active', c.getAttribute('onclick')?.includes("'"+filter+"'")));
-  const filtered = filter==='all' ? players : players.filter(p=>p.pos?.includes(filter));
-  if(filter==='all'){
-    const groups = {Goalkeeper:[],Defender:[],Midfielder:[],Forward:[]};
-    filtered.forEach(p=>{ const k=Object.keys(groups).find(k=>p.pos?.includes(k)); if(k) groups[k].push(p); });
-    const labels = {Goalkeeper:'Målvakter',Defender:'Backar',Midfielder:'Mittfältare',Forward:'Forwards'};
-    set('squad-grid', Object.entries(groups).filter(([,v])=>v.length).map(([k,v])=>
-      `<div class="pos-group-label">${labels[k]} (${v.length})</div><div class="player-grid">${v.map(renderPlayer).join('')}</div>`
-    ).join(''));
-  } else {
-    set('squad-grid', `<div class="player-grid">${filtered.map(renderPlayer).join('')}</div>`);
-  }
-}
-
-function filterSquad(f,el){ renderSquadView(S.squad.length?S.squad:[], f); loadSquad(); }
-
-async function loadStandings(){
-  if(S.standings.length){ set('standings-full',renderStandings(S.standings)); }
-  else { set('standings-full','<div style="padding:1.5rem 1rem;text-align:center"><div class="sk sk-text" style="width:50%;margin:auto"></div></div>'); }
-  try{
-    const t = await getStandings();
-    if(t.length){ S.standings=t; set('standings-full', renderStandings(t)); }
-  }catch(e){ 
-    if(!S.standings.length) set('standings-full','<div class="empty">Kunde inte ladda tabell</div>');
-  }
-}
-
-function toggleFav(id, btn){
-  const idx = S.favs.indexOf(id);
-  if(idx===-1) S.favs.push(id); else S.favs.splice(idx,1);
-  localStorage.setItem('dif_favs', JSON.stringify(S.favs));
-  btn.classList.toggle('on', S.favs.includes(id));
-}
-
-function set(id,html){ const el=document.getElementById(id); if(el) el.innerHTML=html; }
-
-
-// ── FALLBACK MATCH DATA (riktiga 2026-matcher) ───────────────────────────────
-// Används om TheSportsDB API inte svarar korrekt
-const FALLBACK_LAST = [
-  { id:'l1', date:'2026-03-27', time:'18:00', home:'Djurgårdens IF', away:'HJK Helsinki',    hl:'', al:'', hs:4, as:2, ds:4, os:2, isHome:true,  opponent:'HJK Helsinki',    oppLogo:'', competition:'Club Friendly', venue:'3Arena', status:'FT', result:'win'  },
-  { id:'l2', date:'2026-03-15', time:'15:00', home:'Hammarby IF',    away:'Djurgårdens IF',  hl:'', al:'', hs:1, as:0, ds:0, os:1, isHome:false, opponent:'Hammarby IF',     oppLogo:'', competition:'Svenska Cupen', venue:'Stockholmsarenan', status:'FT', result:'loss' },
-  { id:'l3', date:'2026-03-08', time:'14:00', home:'Djurgårdens IF', away:'IF Brommapojkarna',hl:'',al:'', hs:2, as:0, ds:2, os:0, isHome:true,  opponent:'IF Brommapojkarna',oppLogo:'', competition:'Svenska Cupen', venue:'3Arena', status:'FT', result:'win'  },
-  { id:'l4', date:'2026-03-01', time:'14:00', home:'IFK Skövde',     away:'Djurgårdens IF',  hl:'', al:'', hs:0, as:8, ds:8, os:0, isHome:false, opponent:'IFK Skövde',      oppLogo:'', competition:'Svenska Cupen', venue:'Södermalms IP', status:'FT', result:'win'  },
-  { id:'l5', date:'2026-02-21', time:'14:00', home:'Djurgårdens IF', away:'Falkenbergs FF',  hl:'', al:'', hs:0, as:2, ds:0, os:2, isHome:true,  opponent:'Falkenbergs FF',  oppLogo:'', competition:'Svenska Cupen', venue:'3Arena', status:'FT', result:'loss' },
-];
-
-const FALLBACK_NEXT = [
-  { id:'n1', date:'2026-04-06', time:'16:30', home:'GAIS',           away:'Djurgårdens IF',  hl:'', al:'', hs:null, as:null, ds:null, os:null, isHome:false, opponent:'GAIS',       oppLogo:'', competition:'Allsvenskan', venue:'Kristianstads Fotbollsarena', status:'NS', result:'upcoming' },
-  { id:'n2', date:'2026-04-12', time:'12:00', home:'Djurgårdens IF', away:'Kalmar FF',        hl:'', al:'', hs:null, as:null, ds:null, os:null, isHome:true,  opponent:'Kalmar FF',  oppLogo:'', competition:'Allsvenskan', venue:'3Arena', status:'NS', result:'upcoming' },
-  { id:'n3', date:'2026-04-17', time:'17:00', home:'Djurgårdens IF', away:'Malmö FF',         hl:'', al:'', hs:null, as:null, ds:null, os:null, isHome:true,  opponent:'Malmö FF',   oppLogo:'', competition:'Allsvenskan', venue:'3Arena', status:'NS', result:'upcoming' },
-  { id:'n4', date:'2026-04-22', time:'17:00', home:'IF Elfsborg',    away:'Djurgårdens IF',   hl:'', al:'', hs:null, as:null, ds:null, os:null, isHome:false, opponent:'IF Elfsborg',oppLogo:'', competition:'Allsvenskan', venue:'Borås Arena', status:'NS', result:'upcoming' },
-  { id:'n5', date:'2026-04-26', time:'12:00', home:'Djurgårdens IF', away:'Hammarby IF',      hl:'', al:'', hs:null, as:null, ds:null, os:null, isHome:true,  opponent:'Hammarby IF',oppLogo:'', competition:'Allsvenskan', venue:'3Arena', status:'NS', result:'upcoming' },
-  { id:'n6', date:'2026-05-03', time:'15:00', home:'IK Sirius',      away:'Djurgårdens IF',   hl:'', al:'', hs:null, as:null, ds:null, os:null, isHome:false, opponent:'IK Sirius',  oppLogo:'', competition:'Allsvenskan', venue:'Studenternas IP', status:'NS', result:'upcoming' },
-  { id:'n7', date:'2026-05-10', time:'15:00', home:'Djurgårdens IF', away:'AIK',              hl:'', al:'', hs:null, as:null, ds:null, os:null, isHome:true,  opponent:'AIK',        oppLogo:'', competition:'Allsvenskan', venue:'3Arena', status:'NS', result:'upcoming' },
-];
-
-// ── FALLBACK SQUAD ────────────────────────────────────────────
-const FALLBACK_SQUAD = [
-  {id:'f1',name:'Jacob Rinne',pos:'Goalkeeper',nat:'Sweden',num:'1',img:''},
-  {id:'f2',name:'Oscar Jonsson',pos:'Goalkeeper',nat:'Sweden',num:'33',img:''},
-  {id:'f3',name:'Jacob Une Larsson',pos:'Defender',nat:'Sweden',num:'2',img:''},
-  {id:'f4',name:'Kristian Lien',pos:'Defender',nat:'Norway',num:'3',img:''},
-  {id:'f5',name:'Marcus Danielsson',pos:'Defender',nat:'Sweden',num:'5',img:''},
-  {id:'f6',name:'Jonathan Augustinsson',pos:'Defender',nat:'Sweden',num:'23',img:''},
-  {id:'f7',name:'Matias Siltanen',pos:'Midfielder',nat:'Finland',num:'6',img:''},
-  {id:'f8',name:'Mikael Anderson',pos:'Midfielder',nat:'Sweden',num:'8',img:''},
-  {id:'f9',name:'Ahmed Saeed',pos:'Midfielder',nat:'Sweden',num:'14',img:''},
-  {id:'f10',name:'Bo Hegland',pos:'Midfielder',nat:'Norway',num:'18',img:''},
-  {id:'f11',name:'Keita Kosugi',pos:'Midfielder',nat:'Japan',num:'22',img:''},
-  {id:'f12',name:'Jeppe Okkels',pos:'Forward',nat:'Denmark',num:'7',img:''},
-  {id:'f13',name:'Nino Žugelj',pos:'Forward',nat:'Slovenia',num:'9',img:''},
-  {id:'f14',name:'Adam Ståhl',pos:'Forward',nat:'Sweden',num:'11',img:''},
-  {id:'f15',name:'Zakaria Sawo',pos:'Forward',nat:'Sweden',num:'17',img:''},
-  {id:'f16',name:'Oskar Fallenius',pos:'Forward',nat:'Sweden',num:'21',img:''},
-];
-
-// ── INIT ──────────────────────────────────────────────────────
-loadHome();
-setInterval(()=>{ if(document.visibilityState==='visible'){ S.loaded.home=false; if(S.tab==='home') loadHome(); } }, 5*60*1000);
-</script>
-</body>
-</html>
+------MultipartBoundary--6kM5aChqnkpyRkrfLJXo2FBLuhGXW90ZcuYxScNLrP------
