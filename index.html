@@ -336,6 +336,13 @@ const TEAM_ID    = '134162';
 const TSDB       = 'https://www.thesportsdb.com/api/v1/json/3';
 const WORKER     = 'https://dif-proxy.r-robertjohansson.workers.dev';
 const CACHE_TTL  = 8 * 60 * 1000;
+const CACHE_VER  = 'v5'; // bump this to clear all caches
+
+// Clear stale cache on version mismatch
+if(localStorage.getItem('dif_cache_ver') !== CACHE_VER) {
+  ['last','next','standings','news','squad'].forEach(k => localStorage.removeItem('c_'+k));
+  localStorage.setItem('dif_cache_ver', CACHE_VER);
+}
 
 // ── STATE ────────────────────────────────────────────────────
 let S = {
@@ -362,8 +369,9 @@ function toggleTheme(){
 applyTheme();
 
 // ── CACHE ────────────────────────────────────────────────────
-function cGet(k){ try{ const d=JSON.parse(localStorage.getItem('c_'+k)||'null'); return d&&Date.now()-d.t<CACHE_TTL?d.v:null; }catch(e){return null} }
-function cSet(k,v){ try{ localStorage.setItem('c_'+k,JSON.stringify({v,t:Date.now()})); }catch(e){} }
+function cGet(k){ try{ const d=JSON.parse(localStorage.getItem('c_'+k)||'null'); if(!d||Date.now()-d.t>=CACHE_TTL) return null; if(Array.isArray(d.v)&&!d.v.length) return null; return d.v; }catch(e){return null} }
+function cSet(k,v){ try{ if(Array.isArray(v)&&!v.length) return; localStorage.setItem('c_'+k,JSON.stringify({v,t:Date.now()})); }catch(e){} }
+function cClear(k){ try{ localStorage.removeItem('c_'+k); }catch(e){} }
 
 // ── FETCH ────────────────────────────────────────────────────
 async function apiFetch(url){
@@ -378,7 +386,7 @@ async function getLastMatches(){
     const j = await apiFetch(`${TSDB}/eventslast.php?id=${TEAM_ID}`);
     const v = (j.results||[]).map(normalizeMatch).filter(Boolean);
     if(v.length){ cSet('last',v); return v; }
-  } catch(e){ console.warn('TheSportsDB last:', e); }
+  } catch(e){ console.warn('TheSportsDB last:', e.message); }
   return FALLBACK_LAST;
 }
 async function getNextMatches(){
@@ -387,14 +395,15 @@ async function getNextMatches(){
     const j = await apiFetch(`${TSDB}/eventsnext.php?id=${TEAM_ID}`);
     const v = (j.events||[]).map(normalizeMatch).filter(Boolean);
     if(v.length){ cSet('next',v); return v; }
-  } catch(e){ console.warn('TheSportsDB next:', e); }
+  } catch(e){ console.warn('TheSportsDB next:', e.message); }
   return FALLBACK_NEXT;
 }
 async function getStandings(){
-  const c = cGet('standings'); if(c) return c;
+  const c = cGet('standings'); if(c && c.length) return c;
   const j = await apiFetch(`${WORKER}/standings`);
   const v = j.table||[];
-  cSet('standings',v); return v;
+  if(v.length) cSet('standings',v);
+  return v;
 }
 async function getSquad(){
   const c = cGet('squad'); if(c) return c;
@@ -408,13 +417,11 @@ async function getSquad(){
   return FALLBACK_SQUAD;
 }
 async function getNews(){
-  const c = cGet('news'); if(c) return c;
-  try{
-    const j = await apiFetch(`${WORKER}/news`);
-    const v = j.items||[];
-    if(v.length){ cSet('news',v); return v; }
-  }catch(e){}
-  return [];
+  const c = cGet('news'); if(c && c.length) return c;
+  const j = await apiFetch(`${WORKER}/news`);
+  const v = j.items||[];
+  if(v.length) cSet('news',v);
+  return v;
 }
 
 function normalizeMatch(e){
@@ -647,67 +654,65 @@ function renderPlayer(p){
 
 // ── LOAD PAGES ────────────────────────────────────────────────
 async function loadHome(){
-  if(S.loaded.home) return;
+  // Show fallback content IMMEDIATELY – don't wait for APIs
+  S.last = S.last.length ? S.last : FALLBACK_LAST;
+  S.next = S.next.length ? S.next : FALLBACK_NEXT;
+  set('home-hero', renderHero(S.next[0]));
+  set('home-results', S.last.slice(0,5).map(m=>`
+    <div class="result-chip ${m.result}">
+      <div class="rc-opp">${m.opponent}</div>
+      <div class="rc-score">${m.ds !== null ? m.ds+'–'+m.os : '–'}</div>
+      <div class="rc-date">${fd(m.date)}</div>
+    </div>`).join(''));
+  set('home-news-feat','<div style="margin:0 12px 8px;background:var(--surface);border-radius:var(--r);border:1px solid var(--border);padding:14px"><div class="sk sk-text" style="width:40%;margin-bottom:10px"></div><div class="sk sk-text" style="width:90%;margin-bottom:6px"></div><div class="sk sk-text" style="width:70%"></div></div>');
+  set('home-news-list','<div style="padding:14px 16px;border-bottom:1px solid var(--border)"><div class="sk sk-text" style="width:80%"></div></div><div style="padding:14px 16px"><div class="sk sk-text" style="width:65%"></div></div>');
+  set('home-table','<div style="padding:1rem 16px"><div class="sk sk-text" style="width:50%;margin-bottom:10px"></div><div class="sk sk-text" style="width:70%;margin-bottom:8px"></div><div class="sk sk-text" style="width:60%"></div></div>');
 
-  // Skeletons
-  set('home-hero',`<div style="margin:12px;background:var(--surface);border-radius:var(--r);height:160px;display:flex;align-items:center;justify-content:center"><div class="sk" style="width:80%;height:14px;border-radius:4px"></div></div>`);
-  set('home-results','<div style="display:flex;gap:8px;padding:0 12px 12px">'+Array(4).fill('<div class="sk sk-block" style="width:88px;height:78px;flex-shrink:0"></div>').join('')+'</div>');
-  set('home-news-feat',skelMatchCard());
-  set('home-news-list','<div style="padding:1.5rem;text-align:center"><div class="sk sk-text" style="width:60%;margin:auto"></div></div>');
+  // Then fetch live data in background – each independently
+  try {
+    const [last, next] = await Promise.all([getLastMatches(), getNextMatches()]);
+    if(last.length){ S.last = last;
+      set('home-results', last.slice(0,5).map(m=>`
+        <div class="result-chip ${m.result}">
+          <div class="rc-opp">${m.opponent}</div>
+          <div class="rc-score">${m.ds}–${m.os}</div>
+          <div class="rc-date">${fd(m.date)}</div>
+        </div>`).join(''));
+    }
+    if(next.length){ S.next = next; set('home-hero', renderHero(next[0])); }
+  } catch(e){ console.warn('Matches:', e.message); }
 
-  try{
-    const [last, next, news, table] = await Promise.all([getLastMatches(), getNextMatches(), getNews(), getStandings()]);
-    S.last=last; S.next=next; S.news=news; S.standings=table;
-
-    // Hero
-    set('home-hero', next[0] ? renderHero(next[0]) : '<div class="empty">Inga kommande matcher</div>');
-
-    // Results scroll
-    set('home-results', last.slice(0,5).map(m=>`
-      <div class="result-chip ${m.result}">
-        <div class="rc-opp">${m.opponent}</div>
-        <div class="rc-score">${m.ds}–${m.os}</div>
-        <div class="rc-date">${fd(m.date)}</div>
-      </div>`).join('') || '<div class="empty">–</div>');
-
-    // News
-    set('home-news-feat', news.slice(0,2).map((n,i)=>renderNewsFeat(n)).join('') || '<div class="empty">Inga nyheter</div>');
-    set('home-news-list', news.slice(2,8).map(renderNewsItem).join('') || '<div class="empty" style="padding:1rem">–</div>');
-
-    // Sidebar table
-    set('home-table', renderStandings(table));
-
-    S.loaded.home = true;
-  }catch(e){
-    console.error(e);
-    // Use fallback match data
-    S.last = FALLBACK_LAST;
-    S.next = FALLBACK_NEXT;
-    set('home-hero', FALLBACK_NEXT[0] ? renderHero(FALLBACK_NEXT[0]) : '<div class="empty">Inga kommande matcher</div>');
-    set('home-results', FALLBACK_LAST.slice(0,5).map(m=>`
-      <div class="result-chip ${m.result}">
-        <div class="rc-opp">${m.opponent}</div>
-        <div class="rc-score">${m.ds}–${m.os}</div>
-        <div class="rc-date">${fd(m.date)}</div>
-      </div>`).join(''));
+  try {
+    const news = await getNews();
+    S.news = news;
+    set('home-news-feat', news.slice(0,2).map(renderNewsFeat).join('') || '<div class="empty">Inga nyheter – försök ladda om</div>');
+    set('home-news-list', news.slice(2,8).map(renderNewsItem).join('') || '<div style="padding:1rem 16px;color:var(--text3);font-size:13px">Inga fler nyheter</div>');
+  } catch(e){ 
+    console.warn('News:', e.message);
+    set('home-news-feat','<div class="empty">Nyheter ej tillgängliga</div>');
+    set('home-news-list','');
   }
+
+  try {
+    const table = await getStandings();
+    S.standings = table;
+    set('home-table', renderStandings(table));
+  } catch(e){ console.warn('Standings:', e.message); }
+
 }
 
 async function loadMatches(){
-  // Show skeleton only on first load
-  if(!S.last.length && !S.next.length){
-    set('matches-list', Array(4).fill(skelMatchCard()).join(''));
-  }
+  // Show fallback immediately
+  if(!S.last.length) S.last = FALLBACK_LAST;
+  if(!S.next.length) S.next = FALLBACK_NEXT;
+  renderMatchesView();
+  // Then try to update with live data
   try{
     const [last,next] = await Promise.all([getLastMatches(), getNextMatches()]);
-    S.last=last; S.next=next;
-  }catch(e){
-    console.warn('loadMatches error:', e);
-    // Use fallback if nothing loaded
-    if(!S.last.length) S.last = FALLBACK_LAST;
-    if(!S.next.length) S.next = FALLBACK_NEXT;
-  }
-  renderMatchesView();
+    if(last.length) S.last=last;
+    if(next.length) S.next=next;
+    renderMatchesView();
+  }catch(e){ console.warn('loadMatches:', e.message); }
 }
 
 function renderMatchesView(){
@@ -750,12 +755,14 @@ function renderSquadView(players, filter){
 function filterSquad(f,el){ renderSquadView(S.squad.length?S.squad:[], f); loadSquad(); }
 
 async function loadStandings(){
-  if(S.standings.length){ set('standings-full',renderStandings(S.standings)); return; }
-  set('standings-full','<div class="empty">Laddar...</div>');
+  if(S.standings.length){ set('standings-full',renderStandings(S.standings)); }
+  else { set('standings-full','<div style="padding:1.5rem 1rem;text-align:center"><div class="sk sk-text" style="width:50%;margin:auto"></div></div>'); }
   try{
-    S.standings = await getStandings();
-    set('standings-full', renderStandings(S.standings));
-  }catch(e){ set('standings-full','<div class="empty">Kunde inte ladda tabell</div>'); }
+    const t = await getStandings();
+    if(t.length){ S.standings=t; set('standings-full', renderStandings(t)); }
+  }catch(e){ 
+    if(!S.standings.length) set('standings-full','<div class="empty">Kunde inte ladda tabell</div>');
+  }
 }
 
 function toggleFav(id, btn){
