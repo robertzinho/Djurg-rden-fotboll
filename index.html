@@ -630,31 +630,31 @@ function stripHTML(s){
     .replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&nbsp;/g,' ').trim();
 }
 
+function mkLogo(name){
+  const url = teamLogo(name);
+  if(url) return `<img class="rc-logo" src="${url}" alt="${name}" loading="lazy" onerror="this.outerHTML='<span class=rc-logo-ini>${ini(name)}</span>'">`;
+  return `<span class="rc-logo-ini">${ini(name)}</span>`;
+}
+
 function renderResultChips(matches){
   if(!matches.length) return '<div style="padding:1rem;color:var(--text3);font-size:13px;text-align:center">–</div>';
   return matches.map(m=>{
-    const logo = teamLogo(m.opponent);
-    const logoEl = logo
-      ? `<img class="rc-logo" src="${logo}" alt="${m.opponent}" loading="lazy" onerror="this.outerHTML='<span class=rc-logo-ini>${ini(m.opponent)}</span>'">`
-      : `<span class="rc-logo-ini">${ini(m.opponent)}</span>`;
     const compShort = m.competition==='Allsvenskan'?'ALL':m.competition==='Svenska Cupen'?'CUP':'VÄN';
     return `
     <div class="result-chip ${m.result}">
       <div class="rc-indicator"><div class="rc-ind-dot"></div></div>
       <div class="rc-body">
         <div class="rc-team-side">
-          ${logoEl}
-          <span class="${m.isHome?'rc-dif':'rc-opp'}">${m.isHome?'Djurgården':m.opponent}</span>
+          ${mkLogo(m.home)}
+          <span class="${m.isHome?'rc-dif':'rc-opp'}">${m.home}</span>
         </div>
         <div class="rc-score-wrap">
           <span class="rc-score">${m.ds}–${m.os}</span>
           <span class="rc-comp">${compShort}</span>
         </div>
         <div class="rc-team-side right">
-          <span class="${!m.isHome?'rc-dif':'rc-opp'}">${m.isHome?m.opponent:'Djurgården'}</span>
-          ${m.isHome
-            ? (teamLogo(m.opponent)?`<img class="rc-logo" src="${teamLogo(m.opponent)}" alt="${m.opponent}" loading="lazy" onerror="this.style.display='none'">`:logoEl)
-            : (teamLogo('Djurgårdens IF')?`<img class="rc-logo" src="${teamLogo('Djurgårdens IF')}" alt="DIF" loading="lazy">`:'')}
+          <span class="${!m.isHome?'rc-dif':'rc-opp'}">${m.away}</span>
+          ${mkLogo(m.away)}
         </div>
       </div>
       <div class="rc-date">${fd(m.date)}</div>
