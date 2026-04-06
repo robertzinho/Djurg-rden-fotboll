@@ -545,6 +545,13 @@ function skelMatchCard(){
 }
 
 // ── RENDER HERO ───────────────────────────────────────────────
+
+function stripHTML(s){
+  return (s||'').replace(/<[^>]+>/g,' ').replace(/\s+/g,' ')
+    .replace(/&amp;/g,'&').replace(/&quot;/g,'"').replace(/&#39;/g,"'")
+    .replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&nbsp;/g,' ').trim();
+}
+
 function renderHero(m){
   const d = new Date(m.date);
   const ds = d.toLocaleDateString('sv-SE',{weekday:'long',day:'numeric',month:'long'});
@@ -658,7 +665,7 @@ function renderNewsFeat(n){
     <div class="news-accent" style="background:${n.scolor||'#005B9A'}"></div>
     <div class="news-feat-body">
       <div class="news-src-row">${fav}<span class="news-src-name">${n.sname||''}</span><span class="news-src-ago">${timeAgo(n.date)}</span></div>
-      <h3>${n.title}</h3>
+      <h3>${stripHTML(n.title)}</h3>
       ${n.summary?`<p>${n.summary.slice(0,120)}…</p>`:''}
     </div>
   </a>`;
@@ -668,7 +675,7 @@ function renderNewsItem(n){
   return `<a class="news-item" href="${n.link||'#'}" target="_blank" rel="noopener">
     <div class="news-item-body">
       <div class="news-src-row">${fav}<span class="news-src-name">${n.sname||''}</span><span class="news-src-ago">${timeAgo(n.date)}</span></div>
-      <h4>${n.title}</h4>
+      <h4>${stripHTML(n.title)}</h4>
     </div>
     <span class="news-chevron">›</span>
   </a>`;
