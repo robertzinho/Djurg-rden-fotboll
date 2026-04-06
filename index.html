@@ -18,13 +18,7 @@
   --r:12px;--r2:8px;--r3:6px;
   --shadow:0 4px 24px rgba(0,0,0,.5);
 }
-[data-theme=light]{
-  --bg:#f3f4f6;--bg2:#fff;--bg3:#f9fafb;--bg4:#e5e7eb;
-  --surface:#fff;--surface2:#f9fafb;
-  --border:#e5e7eb;--border2:#d1d5db;
-  --text:#111827;--text2:#4b5563;--text3:#9ca3af;
-  --shadow:0 2px 12px rgba(0,0,0,.08);
-}
+
 html{font-size:15px;-webkit-text-size-adjust:100%}
 body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100dvh;padding-bottom:calc(var(--nav) + var(--safe));overflow-x:hidden;-webkit-font-smoothing:antialiased}
 a{text-decoration:none;color:inherit}
@@ -127,6 +121,9 @@ img{display:block;max-width:100%}
 .badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;letter-spacing:.3px}
 .badge-ft{background:var(--bg3);color:var(--text3)}
 .badge-live{background:rgba(239,68,68,.15);color:#f87171;display:flex;align-items:center;gap:4px}
+/* Hero live overlay */
+.hero-live-banner{background:#ef4444;color:#fff;font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;padding:6px 14px;display:flex;align-items:center;justify-content:center;gap:7px}
+.hero-live-score{font-family:monospace;font-size:15px;font-weight:900;letter-spacing:-0.5px;background:rgba(0,0,0,.2);padding:1px 8px;border-radius:4px}
 .badge-ns{background:rgba(0,91,154,.15);color:#60a5fa}
 .live-dot{width:6px;height:6px;border-radius:50%;background:#f87171;animation:pulse 1s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
@@ -278,7 +275,6 @@ img{display:block;max-width:100%}
     <span class="topbar-name">Djurgårdens IF</span>
   </div>
   <div class="topbar-right">
-    <button class="icon-btn" id="dark-btn" onclick="toggleTheme()" aria-label="Byt tema">☀️</button>
   </div>
 </header>
 
@@ -441,7 +437,7 @@ function teamLogo(name) {
 }
 
 let S = {
-  dark: localStorage.getItem('dif_theme') !== 'light',
+
   tab: 'home',
   matchTab: 'upcoming',
   squadFilter: 'all',
@@ -450,18 +446,7 @@ let S = {
   loaded: {},
 };
 
-// ── THEME ────────────────────────────────────────────────────
-function applyTheme(){
-  document.documentElement.setAttribute('data-theme', S.dark?'dark':'light');
-  const b = document.getElementById('dark-btn');
-  if(b) b.textContent = S.dark ? '☀️' : '🌙';
-}
-function toggleTheme(){
-  S.dark = !S.dark;
-  localStorage.setItem('dif_theme', S.dark?'dark':'light');
-  applyTheme();
-}
-applyTheme();
+
 
 // ── CACHE ────────────────────────────────────────────────────
 function cGet(k){ try{ const d=JSON.parse(localStorage.getItem('c_'+k)||'null'); if(!d||Date.now()-d.t>=CACHE_TTL) return null; if(Array.isArray(d.v)&&!d.v.length) return null; return d.v; }catch(e){return null} }
@@ -568,7 +553,9 @@ function normalizeMatch(e){
   const ds = isHome?hs:as, os = isHome?as:hs;
   let result='upcoming';
   if(ds!=null&&os!=null){ result = ds>os?'win':ds<os?'loss':'draw'; }
-  const status = e.strStatus==='Match Finished'||hs!=null?'FT':'NS';
+  const liveStatuses = ['In Progress','HT','Live','1H','2H','ET','PEN'];
+  const isLive = liveStatuses.some(s=>e.strStatus?.includes(s));
+  const status = e.strStatus==='Match Finished'?'FT':isLive?'LIVE':'NS';
   return {
     id:e.idEvent, date:e.dateEvent, time:(e.strTime||'').slice(0,5),
     home:e.strHomeTeam, away:e.strAwayTeam,
@@ -686,11 +673,17 @@ function renderHero(m){
   const awayPic = awayLogo
     ? `<img src="${awayLogo}" loading="lazy" alt="${m.away}" onerror="this.outerHTML='<span class=hero-team-ini>${ini(m.away)}</span>'">`
     : `<span class="hero-team-ini">${ini(m.away)}</span>`;
+  const isLive = m.status === 'LIVE';
+  const headerLabel = isLive ? 'Pågår nu' : 'Nästa match';
   return `
   <div class="hero-card">
+    ${isLive ? `<div class="hero-live-banner">
+      <span class="live-dot"></span>LIVE
+      <span class="hero-live-score">${m.hs}–${m.as}</span>
+    </div>` : ''}
     <div class="hero-split">
-      <div class="hero-home">
-        <span class="hero-label">Nästa match</span>
+      <div class="hero-home" ${isLive?'style="border-bottom:2px solid #ef4444"':''}>
+        <span class="hero-label" ${isLive?'style="background:#ef4444"':''}>${headerLabel}</span>
         <div class="hero-team-logo">${homePic}</div>
         <span class="hero-team-name">${m.home}</span>
       </div>
@@ -699,16 +692,17 @@ function renderHero(m){
         <div class="hero-team-logo">${awayPic}</div>
         <span class="hero-team-name">${m.away}</span>
       </div>
-      <div class="hero-center">VS</div>
+      <div class="hero-center" ${isLive?'style="background:#ef4444;border-color:#ef4444;color:#fff;font-size:11px"':''}>${isLive?`${m.hs}–${m.as}`:'VS'}</div>
     </div>
     <div class="hero-meta">
       <div class="hero-meta-item">
         <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
         ${ds}
       </div>
-      <div class="hero-meta-item">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        ${m.time||'TBD'}
+      <div class="hero-meta-item" ${isLive?'style="color:#f87171;font-weight:700"':''}>
+        ${isLive
+          ? `<span class="live-dot"></span>Pågår`
+          : `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>${m.time||'TBD'}`}
       </div>
       ${m.venue?`<div class="hero-meta-item">
         <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
@@ -727,8 +721,11 @@ function renderMatchCard(m){
     : `<span class="badge badge-ns">${m.time||'–'}</span>`;
 
   const center = m.status==='FT'
+    ? `<div class="mc-score"><span class="mc-score-val ${m.result}">${m.hs}–${m.as}</span></div>`
+    : m.status==='LIVE'
     ? `<div class="mc-score">
-        <span class="mc-score-val ${m.result}">${m.hs}–${m.as}</span>
+        <span class="mc-score-val" style="color:#f87171">${m.hs}–${m.as}</span>
+        <div style="font-size:9px;color:#f87171;font-weight:800;letter-spacing:.8px;margin-top:2px;display:flex;align-items:center;gap:3px"><span class="live-dot" style="width:5px;height:5px"></span>LIVE</div>
        </div>`
     : `<div class="mc-upcoming">
         <span class="mc-time">${m.time||'–'}</span>
