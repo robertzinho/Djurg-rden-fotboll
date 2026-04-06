@@ -54,20 +54,27 @@ img{display:block;max-width:100%}
 .page.active{display:block}
 
 /* ── HOME ── */
-.hero-card{margin:12px;border-radius:var(--r);background:linear-gradient(145deg,#0a1628 0%,#0d1f3c 40%,#0a2a4a 100%);border:1px solid rgba(0,91,154,.35);overflow:hidden;position:relative}
-.hero-card::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% -20%,rgba(0,91,154,.25) 0%,transparent 60%);pointer-events:none}
-.hero-badge{background:var(--accent);padding:5px 14px;font-size:10px;font-weight:700;color:#000;letter-spacing:.8px;text-transform:uppercase;display:flex;justify-content:space-between}
-.hero-inner{padding:16px;position:relative;z-index:1}
-.hero-comp{font-size:11px;color:#7090b0;font-weight:600;margin-bottom:14px;text-transform:uppercase;letter-spacing:.5px}
-.hero-teams{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:14px}
-.hero-team{flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center}
-.hero-team-logo{width:56px;height:56px;border-radius:8px;background:transparent;display:flex;align-items:center;justify-content:center;overflow:hidden}
-.hero-team-logo img{width:56px;height:56px;object-fit:contain;filter:drop-shadow(0 2px 6px rgba(0,0,0,.4))}
-.hero-team-ini{font-size:14px;font-weight:800;color:#fff}
-.hero-team-name{font-size:13px;font-weight:700;color:#fff;line-height:1.2}
-.hero-vs{font-size:22px;font-weight:900;color:var(--accent);flex-shrink:0}
-.hero-info{display:flex;gap:8px;flex-wrap:wrap}
-.hero-chip{font-size:11px;color:#7090b0;background:rgba(255,255,255,.06);padding:4px 10px;border-radius:20px}
+.hero-card{margin:12px;border-radius:var(--r);overflow:hidden;position:relative;background:var(--bg2);border:1px solid var(--border)}
+/* Top strip: DIF blue left, opponent right */
+.hero-split{display:grid;grid-template-columns:1fr 1fr;min-height:130px}
+.hero-home{background:linear-gradient(135deg,#001e38 0%,#003060 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:20px 12px;position:relative}
+.hero-away{background:var(--bg3);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:20px 12px;position:relative}
+/* Center VS badge */
+.hero-center{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:10;background:var(--bg2);border:2px solid var(--border);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;color:var(--text2);letter-spacing:.5px}
+.hero-team-logo{width:60px;height:60px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.hero-team-logo img{width:60px;height:60px;object-fit:contain;filter:drop-shadow(0 2px 8px rgba(0,0,0,.5))}
+.hero-team-ini{font-size:18px;font-weight:900;color:rgba(255,255,255,.5)}
+.hero-team-name{font-size:13px;font-weight:700;color:#fff;text-align:center;line-height:1.2}
+/* DIF highlight */
+.hero-home::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--dif)}
+/* Bottom meta bar */
+.hero-meta{display:flex;align-items:center;justify-content:center;gap:0;border-top:1px solid var(--border)}
+.hero-meta-item{flex:1;display:flex;align-items:center;justify-content:center;gap:5px;padding:9px 8px;font-size:11px;color:var(--text2);font-weight:500;border-right:1px solid var(--border)}
+.hero-meta-item:last-child{border-right:none}
+.hero-meta-item svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;flex-shrink:0;opacity:.6}
+/* Label pill */
+.hero-label{position:absolute;top:10px;left:10px;background:var(--dif);color:#fff;font-size:9px;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:3px 8px;border-radius:4px}
+.hero-comp-pill{position:absolute;top:10px;right:10px;background:rgba(255,255,255,.08);color:var(--text3);font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:3px 8px;border-radius:4px}
 
 /* SECTION */
 .section-hd{display:flex;align-items:center;justify-content:space-between;padding:16px 16px 10px}
@@ -126,6 +133,11 @@ img{display:block;max-width:100%}
 .news-date-group{padding:10px 16px 6px;background:var(--bg3);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
 .news-date-label{font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.6px}
 .news-date-count{font-size:10px;color:var(--text3);background:var(--bg4);padding:2px 7px;border-radius:10px;font-weight:600}
+.news-show-more{width:100%;padding:12px;border:none;background:transparent;color:var(--dif);font-size:13px;font-weight:600;font-family:inherit;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;border-top:1px solid var(--border);transition:background .15s}
+.news-show-more:hover{background:var(--bg3)}
+.news-show-more svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.5;transition:transform .2s}
+.news-show-more.loading svg{animation:spin .7s linear infinite}
+.news-hidden{display:none}
 
 /* Timeline item */
 .news-item{display:flex;align-items:flex-start;gap:0;cursor:pointer;user-select:none;position:relative;border-bottom:1px solid var(--border)}
@@ -493,11 +505,31 @@ async function getSquad(){
   return FALLBACK_SQUAD;
 }
 async function getNews(){
-  const c = cGet('news'); if(c && c.length) return c;
-  const j = await apiFetch(`${WORKER}/news`);
-  const v = j.items||[];
-  if(v.length) cSet('news',v);
-  return v;
+  // Load historical archive from localStorage (persists across sessions)
+  let archive = [];
+  try {
+    archive = JSON.parse(localStorage.getItem('dif_news_archive')||'[]');
+  } catch(e){}
+
+  // Fetch fresh articles
+  let fresh = [];
+  try {
+    const j = await apiFetch(`${WORKER}/news`);
+    fresh = (j.items||[]).filter(n=>n&&n.title);
+  } catch(e){ console.warn('getNews failed:', e.message); }
+
+  if(!fresh.length && archive.length) return archive;
+  if(!fresh.length) return [];
+
+  // Merge fresh into archive – deduplicate by title, keep newest 100
+  const seen = new Set(fresh.map(n=>n.title.slice(0,50).toLowerCase()));
+  const older = archive.filter(n=>!seen.has(n.title.slice(0,50).toLowerCase()));
+  const merged = [...fresh, ...older]
+    .sort((a,b)=>new Date(b.date||0)-new Date(a.date||0))
+    .slice(0,100);
+
+  try { localStorage.setItem('dif_news_archive', JSON.stringify(merged)); } catch(e){}
+  return merged;
 }
 
 function normalizeMatch(e){
@@ -587,37 +619,43 @@ function stripHTML(s){
 
 function renderHero(m){
   const d = new Date(m.date);
-  const ds = d.toLocaleDateString('sv-SE',{weekday:'long',day:'numeric',month:'long'});
+  const ds = d.toLocaleDateString('sv-SE',{weekday:'short',day:'numeric',month:'short'});
+  const homeLogo = m.hl||teamLogo(m.home);
+  const awayLogo = m.al||teamLogo(m.away);
+  const homePic = homeLogo
+    ? `<img src="${homeLogo}" loading="lazy" alt="${m.home}" onerror="this.outerHTML='<span class=hero-team-ini>${ini(m.home)}</span>'">`
+    : `<span class="hero-team-ini">${ini(m.home)}</span>`;
+  const awayPic = awayLogo
+    ? `<img src="${awayLogo}" loading="lazy" alt="${m.away}" onerror="this.outerHTML='<span class=hero-team-ini>${ini(m.away)}</span>'">`
+    : `<span class="hero-team-ini">${ini(m.away)}</span>`;
   return `
   <div class="hero-card">
-    <div class="hero-badge"><span>NÄSTA MATCH</span><span class="hero-comp">${m.competition}</span></div>
-    <div class="hero-inner">
-      <div class="hero-teams">
-        <div class="hero-team">
-          <div class="hero-team-logo">
-            ${(m.hl||teamLogo(m.home))
-              ? `<img src="${m.hl||teamLogo(m.home)}" loading="lazy" alt="${m.home}"
-                  onerror="this.outerHTML='<span class=hero-team-ini>${ini(m.home)}</span>'">`
-              : `<span class="hero-team-ini">${ini(m.home)}</span>`}
-          </div>
-          <span class="hero-team-name">${m.home}</span>
-        </div>
-        <span class="hero-vs">VS</span>
-        <div class="hero-team">
-          <div class="hero-team-logo">
-            ${(m.al||teamLogo(m.away))
-              ? `<img src="${m.al||teamLogo(m.away)}" loading="lazy" alt="${m.away}"
-                  onerror="this.outerHTML='<span class=hero-team-ini>${ini(m.away)}</span>'">`
-              : `<span class="hero-team-ini">${ini(m.away)}</span>`}
-          </div>
-          <span class="hero-team-name">${m.away}</span>
-        </div>
+    <div class="hero-split">
+      <div class="hero-home">
+        <span class="hero-label">Nästa match</span>
+        <div class="hero-team-logo">${homePic}</div>
+        <span class="hero-team-name">${m.home}</span>
       </div>
-      <div class="hero-info">
-        <span class="hero-chip">📅 ${ds}</span>
-        <span class="hero-chip">🕐 ${m.time||'TBD'}</span>
-        ${m.venue?`<span class="hero-chip">📍 ${m.venue}</span>`:''}
+      <div class="hero-away">
+        <span class="hero-comp-pill">${m.competition}</span>
+        <div class="hero-team-logo">${awayPic}</div>
+        <span class="hero-team-name">${m.away}</span>
       </div>
+      <div class="hero-center">VS</div>
+    </div>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        ${ds}
+      </div>
+      <div class="hero-meta-item">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        ${m.time||'TBD'}
+      </div>
+      ${m.venue?`<div class="hero-meta-item">
+        <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        ${m.venue.split(' ')[0]}
+      </div>`:''}
     </div>
   </div>`;
 }
@@ -691,29 +729,118 @@ function renderStandings(table, limit=999){
   </div>`;
 }
 
-// ── RENDER NEWS ───────────────────────────────────────────────
-function renderNewsFeat(n){
-  const fav = n.fav?`<img src="${n.fav}" onerror="this.style.display='none'" alt="">`:'';
-  return `<a class="news-feat" href="${n.link||'#'}" target="_blank" rel="noopener">
-    <div class="news-accent" style="background:${n.scolor||'#005B9A'}"></div>
-    <div class="news-feat-body">
-      <div class="news-src-row">${fav}<span class="news-src-name">${n.sname||''}</span><span class="news-src-ago">${timeAgo(n.date)}</span></div>
-      <h3>${stripHTML(n.title)}</h3>
-      ${n.summary?`<p>${n.summary.slice(0,120)}…</p>`:''}
-    </div>
-  </a>`;
+// ── RENDER NEWS TIMELINE ─────────────────────────────────────
+let _newsOpen = null;
+
+function parseDate(s){
+  if(!s) return null;
+  const d = new Date(s);
+  return isNaN(d.getTime()) ? null : d;
 }
-function renderNewsItem(n){
-  const fav = n.fav?`<img src="${n.fav}" onerror="this.style.display='none'" alt="" width="14" height="14" style="border-radius:2px;background:#fff;padding:1px;object-fit:contain;flex-shrink:0">`:'';
-  return `<a class="news-item" href="${n.link||'#'}" target="_blank" rel="noopener">
-    <div class="news-item-body">
-      <div class="news-src-row">${fav}<span class="news-src-name">${n.sname||''}</span><span class="news-src-ago">${timeAgo(n.date)}</span></div>
-      <h4>${stripHTML(n.title)}</h4>
-    </div>
-    <span class="news-chevron">›</span>
-  </a>`;
+function fmtNewsTime(s){
+  const d = parseDate(s);
+  if(!d) return '';
+  return d.toLocaleTimeString('sv-SE',{hour:'2-digit',minute:'2-digit'});
+}
+function fmtNewsDate(s){
+  const d = parseDate(s);
+  if(!d) return 'Idag';
+  const today = new Date();
+  const yest = new Date(today); yest.setDate(today.getDate()-1);
+  if(d.toDateString()===today.toDateString()) return 'Idag';
+  if(d.toDateString()===yest.toDateString()) return 'Igår';
+  return d.toLocaleDateString('sv-SE',{weekday:'long',day:'numeric',month:'long'});
 }
 
+const PAGE_SIZE = 5;
+
+function renderNewsList(items){
+  if(!items||!items.length) return '<div style="padding:1.5rem;text-align:center;color:var(--text3);font-size:13px">Inga nyheter just nu</div>';
+  const groups={}, todayKey=new Date().toDateString();
+  items.forEach((n,i)=>{
+    const d=parseDate(n.date);
+    const key=d?d.toDateString():todayKey;
+    if(!groups[key]) groups[key]={label:fmtNewsDate(n.date),items:[],ts:d?d.getTime():Date.now()};
+    groups[key].items.push({n,i});
+  });
+  return Object.values(groups).sort((a,b)=>b.ts-a.ts).map((g,gi)=>{
+    const gid='ng'+gi;
+    const visible=g.items.slice(0,PAGE_SIZE);
+    const hidden=g.items.slice(PAGE_SIZE);
+    const total=g.items.length;
+    return `
+    <div class="news-date-group">
+      <span class="news-date-label">${g.label}</span>
+      <span class="news-date-count">${total} ${total===1?'artikel':'artiklar'}</span>
+    </div>
+    ${visible.map(({n,i})=>renderNewsItem(n,i)).join('')}
+    ${hidden.length ? `
+      <div id="${gid}-hidden" class="news-hidden">
+        ${hidden.map(({n,i})=>renderNewsItem(n,i)).join('')}
+      </div>
+      <button class="news-show-more" id="${gid}-btn" onclick="showMoreNews('${gid}',${hidden.length},${total})">
+        <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        Visa ${hidden.length} till
+      </button>
+    ` : ''}
+  `;
+  }).join('');
+}
+
+function showMoreNews(gid, remaining, total){
+  const hidden=document.getElementById(gid+'-hidden');
+  const btn=document.getElementById(gid+'-btn');
+  if(!hidden||!btn) return;
+  hidden.classList.remove('news-hidden');
+  btn.remove();
+}
+
+function renderNewsFeat(n,idx){ return renderNewsItem(n,idx||0); }
+
+function renderNewsItem(n,idx){
+  if(!n||!n.title) return '';
+  const id='ni'+(idx||0);
+  const summary=stripHTML(n.summary||n.description||'').slice(0,300);
+  const hasDrawer=summary.length>20;
+  const ico=n.fav
+    ?`<div class="news-item-ico"><img src="${n.fav}" loading="lazy" onerror="this.style.display='none'" alt=""></div>`
+    :`<div class="news-item-ico" style="background:${n.scolor||'#005B9A'}"></div>`;
+  return `<div class="news-item" id="${id}" onclick="toggleNews('${id}','${(n.link||'').replace(/'/g,"\'").replace(/"/g,'&quot;')}',${hasDrawer})">
+    <div class="news-tl-left">
+      <div class="news-tl-dot"></div>
+      <div class="news-tl-time">${fmtNewsTime(n.date)}</div>
+    </div>
+    <div class="news-item-right">
+      <div class="news-item-src-row">${ico}<span class="news-src-name">${n.sname||''}</span></div>
+      <h4>${stripHTML(n.title)}</h4>
+    </div>
+    <span class="news-chevron">${hasDrawer?'›':''}</span>
+  </div>${hasDrawer?`<div class="news-drawer" id="${id}d">
+    <div class="news-drawer-inner">
+      <p>${summary}${summary.length>=300?'…':''}</p>
+      <a class="news-read-more" href="${n.link||'#'}" target="_blank" rel="noopener" onclick="event.stopPropagation()">
+        Läs hela artikeln ↗
+      </a>
+    </div>
+  </div>`:''}`;
+}
+
+function toggleNews(id,link,hasDrawer){
+  if(!hasDrawer){window.open(link,'_blank','noopener');return;}
+  const item=document.getElementById(id);
+  const drawer=document.getElementById(id+'d');
+  if(!item||!drawer) return;
+  const isOpen=drawer.classList.contains('open');
+  if(_newsOpen&&_newsOpen!==id){
+    const pi=document.getElementById(_newsOpen),pd=document.getElementById(_newsOpen+'d');
+    if(pi) pi.classList.remove('expanded');
+    if(pd) pd.classList.remove('open');
+  }
+  item.classList.toggle('expanded',!isOpen);
+  drawer.classList.toggle('open',!isOpen);
+  _newsOpen=!isOpen?id:null;
+  if(!isOpen) setTimeout(()=>item.scrollIntoView({behavior:'smooth',block:'nearest'}),50);
+}
 // ── RENDER PLAYER ─────────────────────────────────────────────
 const posColor = {Goalkeeper:'#f59e0b',Defender:'#3b82f6',Midfielder:'#8b5cf6',Forward:'#ef4444'};
 const posLabel = {Goalkeeper:'Målvakt',Defender:'Back',Midfielder:'Mittfältare',Forward:'Forward'};
@@ -769,9 +896,9 @@ async function loadHome(){
     S.news = news;
     set('home-news-feat', '');
     set('home-news-list', renderNewsList(news.slice(0,15)));
-  } catch(e){ 
-    console.warn('News:', e.message);
-    set('home-news-list','<div style="padding:1rem 16px;color:var(--text3);font-size:13px">Nyheter ej tillgängliga</div>');
+  } catch(e){
+    console.warn('News render error:', e.message);
+    set('home-news-list','<div style="padding:1.5rem;text-align:center;color:var(--text3);font-size:13px">Kunde inte ladda nyheter</div>');
   }
 
   try {
@@ -875,6 +1002,27 @@ const FALLBACK_NEXT = [
   { id:'n5', date:'2026-04-26', time:'12:00', home:'Djurgårdens IF', away:'Hammarby IF',      hl:'', al:'', hs:null, as:null, ds:null, os:null, isHome:true,  opponent:'Hammarby IF',oppLogo:'', competition:'Allsvenskan', venue:'3Arena', status:'NS', result:'upcoming' },
   { id:'n6', date:'2026-05-03', time:'15:00', home:'IK Sirius',      away:'Djurgårdens IF',   hl:'', al:'', hs:null, as:null, ds:null, os:null, isHome:false, opponent:'IK Sirius',  oppLogo:'', competition:'Allsvenskan', venue:'Studenternas IP', status:'NS', result:'upcoming' },
   { id:'n7', date:'2026-05-10', time:'15:00', home:'Djurgårdens IF', away:'AIK',              hl:'', al:'', hs:null, as:null, ds:null, os:null, isHome:true,  opponent:'AIK',        oppLogo:'', competition:'Allsvenskan', venue:'3Arena', status:'NS', result:'upcoming' },
+];
+
+
+// ── FALLBACK TABLE (Allsvenskan 2026 – uppdateras via API) ──────────────────
+const FALLBACK_TABLE = [
+  {intRank:'1', strTeam:'Hammarby IF',       intPlayed:'1',intWin:'1',intDraw:'0',intLoss:'0',intPoints:'3',strTeamBadge:''},
+  {intRank:'2', strTeam:'IK Sirius',          intPlayed:'1',intWin:'1',intDraw:'0',intLoss:'0',intPoints:'3',strTeamBadge:''},
+  {intRank:'3', strTeam:'AIK',                intPlayed:'1',intWin:'1',intDraw:'0',intLoss:'0',intPoints:'3',strTeamBadge:''},
+  {intRank:'4', strTeam:'Djurgårdens IF',      intPlayed:'0',intWin:'0',intDraw:'0',intLoss:'0',intPoints:'0',strTeamBadge:''},
+  {intRank:'5', strTeam:'GAIS',               intPlayed:'0',intWin:'0',intDraw:'0',intLoss:'0',intPoints:'0',strTeamBadge:''},
+  {intRank:'6', strTeam:'IF Elfsborg',        intPlayed:'1',intWin:'0',intDraw:'0',intLoss:'1',intPoints:'0',strTeamBadge:''},
+  {intRank:'7', strTeam:'BK Häcken',          intPlayed:'1',intWin:'0',intDraw:'0',intLoss:'1',intPoints:'0',strTeamBadge:''},
+  {intRank:'8', strTeam:'Kalmar FF',          intPlayed:'1',intWin:'0',intDraw:'0',intLoss:'0',intPoints:'0',strTeamBadge:''},
+  {intRank:'9', strTeam:'Malmö FF',           intPlayed:'1',intWin:'0',intDraw:'1',intLoss:'0',intPoints:'1',strTeamBadge:''},
+  {intRank:'10',strTeam:'IFK Göteborg',       intPlayed:'1',intWin:'0',intDraw:'0',intLoss:'1',intPoints:'0',strTeamBadge:''},
+  {intRank:'11',strTeam:'Halmstads BK',       intPlayed:'1',intWin:'0',intDraw:'0',intLoss:'1',intPoints:'0',strTeamBadge:''},
+  {intRank:'12',strTeam:'Örgryte IS',         intPlayed:'1',intWin:'0',intDraw:'1',intLoss:'0',intPoints:'1',strTeamBadge:''},
+  {intRank:'13',strTeam:'IF Brommapojkarna',  intPlayed:'1',intWin:'0',intDraw:'0',intLoss:'0',intPoints:'0',strTeamBadge:''},
+  {intRank:'14',strTeam:'Västerås SK',        intPlayed:'1',intWin:'0',intDraw:'0',intLoss:'0',intPoints:'0',strTeamBadge:''},
+  {intRank:'15',strTeam:'Mjällby AIF',        intPlayed:'1',intWin:'0',intDraw:'0',intLoss:'1',intPoints:'0',strTeamBadge:''},
+  {intRank:'16',strTeam:'Degerfors IF',       intPlayed:'1',intWin:'0',intDraw:'0',intLoss:'1',intPoints:'0',strTeamBadge:''},
 ];
 
 // ── FALLBACK SQUAD ────────────────────────────────────────────
