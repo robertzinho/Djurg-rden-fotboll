@@ -380,7 +380,7 @@ const TEAM_ID    = '134162';
 const TSDB       = 'https://www.thesportsdb.com/api/v1/json/3';
 const WORKER     = 'https://dif-proxy.r-robertjohansson.workers.dev';
 const CACHE_TTL  = 3 * 60 * 1000; // 3 min – matches update fast after a game
-const CACHE_VER  = 'v6'; // bump this to clear all caches
+const CACHE_VER  = 'v7'; // bump this to clear all caches
 
 // Clear stale cache on version mismatch
 if(localStorage.getItem('dif_cache_ver') !== CACHE_VER) {
@@ -1068,24 +1068,24 @@ const FALLBACK_NEXT = [
 
 // ── FALLBACK TABLE (Allsvenskan 2026 – uppdateras via API) ──────────────────
 const FALLBACK_TABLE = [
-  {intRank:'1', strTeam:'Hammarby IF',       intPlayed:'1',intWin:'1',intDraw:'0',intLoss:'0',intPoints:'3',strTeamBadge:''},
-  {intRank:'2', strTeam:'IK Sirius',          intPlayed:'1',intWin:'1',intDraw:'0',intLoss:'0',intPoints:'3',strTeamBadge:''},
-  {intRank:'3', strTeam:'AIK',                intPlayed:'1',intWin:'1',intDraw:'0',intLoss:'0',intPoints:'3',strTeamBadge:''},
-  {intRank:'4', strTeam:'Djurgårdens IF',      intPlayed:'0',intWin:'0',intDraw:'0',intLoss:'0',intPoints:'0',strTeamBadge:''},
-  {intRank:'5', strTeam:'GAIS',               intPlayed:'0',intWin:'0',intDraw:'0',intLoss:'0',intPoints:'0',strTeamBadge:''},
-  {intRank:'6', strTeam:'IF Elfsborg',        intPlayed:'1',intWin:'0',intDraw:'0',intLoss:'1',intPoints:'0',strTeamBadge:''},
-  {intRank:'7', strTeam:'BK Häcken',          intPlayed:'1',intWin:'0',intDraw:'0',intLoss:'1',intPoints:'0',strTeamBadge:''},
-  {intRank:'8', strTeam:'Kalmar FF',          intPlayed:'1',intWin:'0',intDraw:'0',intLoss:'0',intPoints:'0',strTeamBadge:''},
-  {intRank:'9', strTeam:'Malmö FF',           intPlayed:'1',intWin:'0',intDraw:'1',intLoss:'0',intPoints:'1',strTeamBadge:''},
-  {intRank:'10',strTeam:'IFK Göteborg',       intPlayed:'1',intWin:'0',intDraw:'0',intLoss:'1',intPoints:'0',strTeamBadge:''},
-  {intRank:'11',strTeam:'Halmstads BK',       intPlayed:'1',intWin:'0',intDraw:'0',intLoss:'1',intPoints:'0',strTeamBadge:''},
-  {intRank:'12',strTeam:'Örgryte IS',         intPlayed:'1',intWin:'0',intDraw:'1',intLoss:'0',intPoints:'1',strTeamBadge:''},
-  {intRank:'13',strTeam:'IF Brommapojkarna',  intPlayed:'1',intWin:'0',intDraw:'0',intLoss:'0',intPoints:'0',strTeamBadge:''},
-  {intRank:'14',strTeam:'Västerås SK',        intPlayed:'1',intWin:'0',intDraw:'0',intLoss:'0',intPoints:'0',strTeamBadge:''},
-  {intRank:'15',strTeam:'Mjällby AIF',        intPlayed:'1',intWin:'0',intDraw:'0',intLoss:'1',intPoints:'0',strTeamBadge:''},
-  {intRank:'16',strTeam:'Degerfors IF',       intPlayed:'1',intWin:'0',intDraw:'0',intLoss:'1',intPoints:'0',strTeamBadge:''},
+  // Omgång 1 – alla resultat spelade 4-6 april 2026
+  {intRank:'1', strTeam:'Hammarby IF',       intPlayed:'1',intWin:'1',intDraw:'0',intLoss:'0',intGoalsFor:'3',intGoalsAgainst:'0',intPoints:'3',strTeamBadge:''},
+  {intRank:'2', strTeam:'IK Sirius',          intPlayed:'1',intWin:'1',intDraw:'0',intLoss:'0',intGoalsFor:'3',intGoalsAgainst:'0',intPoints:'3',strTeamBadge:''},
+  {intRank:'3', strTeam:'AIK',                intPlayed:'1',intWin:'1',intDraw:'0',intLoss:'0',intGoalsFor:'1',intGoalsAgainst:'0',intPoints:'3',strTeamBadge:''},
+  {intRank:'4', strTeam:'Djurgårdens IF',      intPlayed:'1',intWin:'1',intDraw:'0',intLoss:'0',intGoalsFor:'1',intGoalsAgainst:'0',intPoints:'3',strTeamBadge:''},
+  {intRank:'5', strTeam:'IF Elfsborg',        intPlayed:'1',intWin:'1',intDraw:'0',intLoss:'0',intGoalsFor:'2',intGoalsAgainst:'0',intPoints:'3',strTeamBadge:''},
+  {intRank:'6', strTeam:'Västerås SK',        intPlayed:'1',intWin:'1',intDraw:'0',intLoss:'0',intGoalsFor:'1',intGoalsAgainst:'0',intPoints:'3',strTeamBadge:''},
+  {intRank:'7', strTeam:'Örgryte IS',         intPlayed:'1',intWin:'0',intDraw:'1',intLoss:'0',intGoalsFor:'0',intGoalsAgainst:'0',intPoints:'1',strTeamBadge:''},
+  {intRank:'8', strTeam:'Malmö FF',           intPlayed:'1',intWin:'0',intDraw:'1',intLoss:'0',intGoalsFor:'0',intGoalsAgainst:'0',intPoints:'1',strTeamBadge:''},
+  {intRank:'9', strTeam:'BK Häcken',          intPlayed:'1',intWin:'0',intDraw:'1',intLoss:'0',intGoalsFor:'2',intGoalsAgainst:'2',intPoints:'1',strTeamBadge:''},
+  {intRank:'10',strTeam:'IF Brommapojkarna',  intPlayed:'1',intWin:'0',intDraw:'1',intLoss:'0',intGoalsFor:'2',intGoalsAgainst:'2',intPoints:'1',strTeamBadge:''},
+  {intRank:'11',strTeam:'Halmstads BK',       intPlayed:'1',intWin:'0',intDraw:'0',intLoss:'1',intGoalsFor:'0',intGoalsAgainst:'1',intPoints:'0',strTeamBadge:''},
+  {intRank:'12',strTeam:'IFK Göteborg',       intPlayed:'1',intWin:'0',intDraw:'0',intLoss:'1',intGoalsFor:'0',intGoalsAgainst:'2',intPoints:'0',strTeamBadge:''},
+  {intRank:'13',strTeam:'GAIS',               intPlayed:'1',intWin:'0',intDraw:'0',intLoss:'1',intGoalsFor:'0',intGoalsAgainst:'1',intPoints:'0',strTeamBadge:''},
+  {intRank:'14',strTeam:'Kalmar FF',          intPlayed:'1',intWin:'0',intDraw:'0',intLoss:'1',intGoalsFor:'0',intGoalsAgainst:'1',intPoints:'0',strTeamBadge:''},
+  {intRank:'15',strTeam:'Mjällby AIF',        intPlayed:'1',intWin:'0',intDraw:'0',intLoss:'1',intGoalsFor:'0',intGoalsAgainst:'3',intPoints:'0',strTeamBadge:''},
+  {intRank:'16',strTeam:'Degerfors IF',       intPlayed:'1',intWin:'0',intDraw:'0',intLoss:'1',intGoalsFor:'0',intGoalsAgainst:'3',intPoints:'0',strTeamBadge:''},
 ];
-
 // ── FALLBACK SQUAD ────────────────────────────────────────────
 const FALLBACK_SQUAD = [
   {id:'f1',name:'Jacob Rinne',pos:'Goalkeeper',nat:'Sweden',num:'1',img:''},
