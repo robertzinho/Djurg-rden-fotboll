@@ -379,8 +379,8 @@ img{display:block;max-width:100%}
 const TEAM_ID    = '134162';
 const TSDB       = 'https://www.thesportsdb.com/api/v1/json/3';
 const WORKER     = 'https://dif-proxy.r-robertjohansson.workers.dev';
-const CACHE_TTL  = 8 * 60 * 1000;
-const CACHE_VER  = 'v5'; // bump this to clear all caches
+const CACHE_TTL  = 3 * 60 * 1000; // 3 min – matches update fast after a game
+const CACHE_VER  = 'v6'; // bump this to clear all caches
 
 // Clear stale cache on version mismatch
 if(localStorage.getItem('dif_cache_ver') !== CACHE_VER) {
@@ -461,13 +461,16 @@ async function apiFetch(url){
 }
 
 async function getLastMatches(){
-  const c = cGet('last'); if(c&&c.length) return c;
+  const c = cGet('last');
+  // Check if there's a pending match that should now be a result
+  const hasPending = c&&c.length&&c.some(m=>m.status==='NS'&&new Date(m.date)<new Date(Date.now()-3*60*60*1000));
+  if(c&&c.length&&!hasPending) return c;
+  if(hasPending){ cClear('last'); console.log('Cache cleared: match should have result now'); }
   let live = [];
   try {
     const j = await apiFetch(`${TSDB}/eventslast.php?id=${TEAM_ID}`);
     live = (j.results||[]).map(normalizeMatch).filter(Boolean);
   } catch(e){ console.warn('TheSportsDB last:', e.message); }
-  // Merge: use live results, fill gaps from fallback (avoid date duplicates)
   const liveDates = new Set(live.map(m=>m.date));
   const extra = FALLBACK_LAST.filter(m=>!liveDates.has(m.date));
   const merged = [...live, ...extra].sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,6);
@@ -475,33 +478,45 @@ async function getLastMatches(){
   return merged.length ? merged : FALLBACK_LAST;
 }
 async function getNextMatches(){
-  const c = cGet('next'); if(c&&c.length) return c;
+  // Invalidate cache if first match is in the past (game has been played)
+  const c = cGet('next');
+  if(c&&c.length){
+    const firstDate = new Date(c[0].date);
+    const isPast = firstDate < new Date(Date.now() - 2*60*60*1000); // 2h buffer after kickoff
+    if(!isPast) return c;
+    cClear('next'); // stale – refetch
+    console.log('Cache cleared: next match is in the past');
+  }
   let live = [];
   try {
     const j = await apiFetch(`${TSDB}/eventsnext.php?id=${TEAM_ID}`);
     live = (j.events||[]).map(normalizeMatch).filter(Boolean);
   } catch(e){ console.warn('TheSportsDB next:', e.message); }
-  // Merge: use live, fill from fallback for dates not covered
-  const liveDates = new Set(live.map(m=>m.date));
-  const extra = FALLBACK_NEXT.filter(m=>!liveDates.has(m.date));
-  const merged = [...live, ...extra].sort((a,b)=>new Date(a.date)-new Date(b.date)).slice(0,8);
+  // Only keep future matches
+  const now = new Date();
+  const future = live.filter(m=>new Date(m.date) > new Date(now - 2*60*60*1000));
+  // Merge with fallback
+  const liveDates = new Set(future.map(m=>m.date));
+  const extra = FALLBACK_NEXT.filter(m=>!liveDates.has(m.date) && new Date(m.date) > now);
+  const merged = [...future, ...extra].sort((a,b)=>new Date(a.date)-new Date(b.date)).slice(0,8);
   if(merged.length) cSet('next', merged);
-  return merged.length ? merged : FALLBACK_NEXT;
+  return merged.length ? merged : FALLBACK_NEXT.filter(m=>new Date(m.date)>now);
 }
 async function getStandings(){
-  const c = cGet('standings'); if(c && c.length >= 10) return c;
+  const c = cGet('standings');
+  if(c && c.length >= 10) return c;
   try {
+    // Try Worker first (has its own cache)
     const j = await apiFetch(`${WORKER}/standings`);
     const v = j.table||[];
     if(v.length >= 10){ cSet('standings',v); return v; }
-    // If API returns partial table, merge with fallback
-    if(v.length > 0 && v.length < 10){
-      const apiNames = new Set(v.map(t=>t.strTeam));
-      const extra = FALLBACK_TABLE.filter(t=>!apiNames.has(t.strTeam));
-      const merged = [...v, ...extra].sort((a,b)=>+a.intRank - +b.intRank);
-      cSet('standings', merged); return merged;
-    }
-  } catch(e){ console.warn('Standings fetch:', e.message); }
+  } catch(e){ console.warn('Worker standings:', e.message); }
+  try {
+    // Fallback: hit TheSportsDB directly
+    const j = await apiFetch(`${TSDB}/lookuptable.php?l=4347&s=2026`);
+    const v = j.table||[];
+    if(v.length >= 10){ cSet('standings',v); return v; }
+  } catch(e){ console.warn('Direct standings:', e.message); }
   return FALLBACK_TABLE;
 }
 async function getSquad(){
@@ -1032,7 +1047,8 @@ function set(id,html){ const el=document.getElementById(id); if(el) el.innerHTML
 // ── FALLBACK MATCH DATA (riktiga 2026-matcher) ───────────────────────────────
 // Används om TheSportsDB API inte svarar korrekt
 const FALLBACK_LAST = [
-  { id:'l1', date:'2026-03-27', time:'18:00', home:'Djurgårdens IF', away:'HJK Helsinki',    hl:'', al:'', hs:4, as:2, ds:4, os:2, isHome:true,  opponent:'HJK Helsinki',    oppLogo:'', competition:'Club Friendly', venue:'3Arena', status:'FT', result:'win'  },
+  { id:'l0', date:'2026-04-06', time:'16:30', home:'GAIS',           away:'Djurgårdens IF', hl:'', al:'', hs:0, as:1, ds:1, os:0, isHome:false, opponent:'GAIS',            oppLogo:'', competition:'Allsvenskan', venue:'Kristianstads Fotbollsarena', status:'FT', result:'win'  },
+  { id:'l1', date:'2026-03-27', time:'18:00', home:'Djurgårdens IF', away:'HJK Helsinki',   hl:'', al:'', hs:4, as:2, ds:4, os:2, isHome:true,  opponent:'HJK Helsinki',   oppLogo:'', competition:'Club Friendly', venue:'3Arena', status:'FT', result:'win'  },
   { id:'l2', date:'2026-03-15', time:'15:00', home:'Hammarby IF',    away:'Djurgårdens IF',  hl:'', al:'', hs:1, as:0, ds:0, os:1, isHome:false, opponent:'Hammarby IF',     oppLogo:'', competition:'Svenska Cupen', venue:'Stockholmsarenan', status:'FT', result:'loss' },
   { id:'l3', date:'2026-03-08', time:'14:00', home:'Djurgårdens IF', away:'IF Brommapojkarna',hl:'',al:'', hs:2, as:0, ds:2, os:0, isHome:true,  opponent:'IF Brommapojkarna',oppLogo:'', competition:'Svenska Cupen', venue:'3Arena', status:'FT', result:'win'  },
   { id:'l4', date:'2026-03-01', time:'14:00', home:'IFK Skövde',     away:'Djurgårdens IF',  hl:'', al:'', hs:0, as:8, ds:8, os:0, isHome:false, opponent:'IFK Skövde',      oppLogo:'', competition:'Svenska Cupen', venue:'Södermalms IP', status:'FT', result:'win'  },
@@ -1040,7 +1056,7 @@ const FALLBACK_LAST = [
 ];
 
 const FALLBACK_NEXT = [
-  { id:'n1', date:'2026-04-06', time:'16:30', home:'GAIS',           away:'Djurgårdens IF',  hl:'', al:'', hs:null, as:null, ds:null, os:null, isHome:false, opponent:'GAIS',       oppLogo:'', competition:'Allsvenskan', venue:'Kristianstads Fotbollsarena', status:'NS', result:'upcoming' },
+
   { id:'n2', date:'2026-04-12', time:'12:00', home:'Djurgårdens IF', away:'Kalmar FF',        hl:'', al:'', hs:null, as:null, ds:null, os:null, isHome:true,  opponent:'Kalmar FF',  oppLogo:'', competition:'Allsvenskan', venue:'3Arena', status:'NS', result:'upcoming' },
   { id:'n3', date:'2026-04-17', time:'17:00', home:'Djurgårdens IF', away:'Malmö FF',         hl:'', al:'', hs:null, as:null, ds:null, os:null, isHome:true,  opponent:'Malmö FF',   oppLogo:'', competition:'Allsvenskan', venue:'3Arena', status:'NS', result:'upcoming' },
   { id:'n4', date:'2026-04-22', time:'17:00', home:'IF Elfsborg',    away:'Djurgårdens IF',   hl:'', al:'', hs:null, as:null, ds:null, os:null, isHome:false, opponent:'IF Elfsborg',oppLogo:'', competition:'Allsvenskan', venue:'Borås Arena', status:'NS', result:'upcoming' },
