@@ -258,6 +258,35 @@ body::after{content:'';position:fixed;top:-100px;left:50%;transform:translateX(-
 .api-notice a{color:var(--gold)}
 .api-notice code{font-family:var(--mono);font-size:11px;background:rgba(255,255,255,.07);padding:1px 5px;border-radius:3px}
 
+/* ── Team search ── */
+.teams-search-wrap{position:relative;margin:12px 14px 6px;flex-shrink:0}
+.teams-search{width:100%;padding:10px 36px 10px 14px;background:rgba(255,255,255,.05);border:1px solid var(--border2);border-radius:10px;color:var(--text);font-family:var(--font);font-size:13px;outline:none;transition:border-color .18s}
+.teams-search::placeholder{color:var(--text3)}
+.teams-search:focus{border-color:var(--dif2);background:rgba(0,102,204,.07)}
+.ts-icon{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:14px;pointer-events:none;opacity:.5}
+
+/* ── Sort table ── */
+.sortable{cursor:pointer;user-select:none;white-space:nowrap}
+.sortable:hover{color:var(--text2)!important}
+.tbl-active{color:var(--gold)!important}
+.sort-icon{font-size:9px;opacity:.7;margin-left:1px}
+
+/* ── Rate limit badge ── */
+.rl-badge{font-family:var(--mono);font-size:10px;font-weight:600;padding:3px 7px;border-radius:10px;background:rgba(255,255,255,.07);color:var(--text3);letter-spacing:.3px;flex-shrink:0}
+.rl-badge.ok{color:var(--green)}
+.rl-badge.warn{color:var(--gold)}
+.rl-badge.danger{color:#f87171;background:rgba(239,68,68,.12)}
+
+/* ── Error state ── */
+.err-box{margin:12px;padding:16px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.22);border-radius:var(--r);font-size:13px;color:rgba(239,68,68,.85);line-height:1.6}
+.err-box strong{color:#f87171;display:block;margin-bottom:4px;font-size:14px}
+.err-box .err-retry{display:inline-block;margin-top:10px;padding:7px 16px;background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.25);border-radius:20px;color:#f87171;font-size:12px;font-weight:700;cursor:pointer;transition:background .15s}
+.err-box .err-retry:hover{background:rgba(239,68,68,.25)}
+
+/* ── Loading overlay for hero ── */
+@keyframes spin{to{transform:rotate(360deg)}}
+.spinner{width:28px;height:28px;border:3px solid var(--border);border-top-color:var(--dif2);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 8px}
+
 @media(min-width:500px){body,.bot-nav{max-width:500px}}
 </style>
 </head>
@@ -294,6 +323,11 @@ body::after{content:'';position:fixed;top:-100px;left:50%;transform:translateX(-
     <span class="phd-flag" id="teamFlag"></span>
     <span class="phd-title" id="teamLeagueName"></span>
   </div>
+  <div class="teams-search-wrap">
+    <input class="teams-search" id="teamsSearch" type="search" placeholder="Sök lag…" oninput="filterTeams(this.value)" autocomplete="off" autocorrect="off" spellcheck="false">
+    <span class="ts-icon">🔍</span>
+  </div>
+  <div id="teamsCount" style="padding:0 14px 4px;font-size:11px;color:var(--text3);font-weight:600;letter-spacing:.5px;display:none"></div>
   <div class="teams-grid" id="teamsGrid"></div>
 </div>
 
@@ -304,6 +338,7 @@ body::after{content:'';position:fixed;top:-100px;left:50%;transform:translateX(-
     <img id="detCrest" src="" style="display:none" onerror="this.style.display='none'" alt="">
     <span class="det-name" id="detName">–</span>
     <div class="live-pill" id="detLive" style="display:none"><div class="lpulse"></div>LIVE</div>
+    <div class="rl-badge" id="rlBadge" style="display:none" title="API-anrop kvar (återställs/min)"></div>
   </header>
 
   <!-- HOME -->
@@ -376,8 +411,11 @@ body::after{content:'';position:fixed;top:-100px;left:50%;transform:translateX(-
 // CONFIG – sätt din nyckel från football-data.org (gratis)
 // https://www.football-data.org/client/register
 // ══════════════════════════════════════════════════════════
-const FDO_KEY    = 'c0bdba1761c44f14ba2df5d30c6eb1bd';
-const FDO_BASE   = 'https://api.football-data.org/v4';
+// FDO calls go through our Worker proxy to avoid CORS
+// (browser → Worker → football-data.org server-to-server)
+// FDO_KEY is now kept server-side in the Worker (more secure)
+const FDO_KEY    = 'c0bdba1761c44f14ba2df5d30c6eb1bd'; // fallback for local dev
+const FDO_BASE   = 'https://api.football-data.org/v4'; // direct (local dev only)
 const WORKER     = 'https://dif-proxy.r-robertjohansson.workers.dev';
 const TSDB       = 'https://www.thesportsdb.com/api/v1/json/3';
 const TSDB_ID    = '134162';
@@ -431,75 +469,61 @@ function cClear(k){try{localStorage.removeItem('c_'+k);}catch{}}
 // FOOTBALL-DATA.ORG API
 // ══════════════════════════════════════════════════════════
 const FDO_OK=()=>!!FDO_KEY&&FDO_KEY.length>10;
+const GNEWS_KEY='89fcd023dbe26d21c81e88176c51f8af'; // GNews API for DIF news
 
 // ── RATE LIMITER (10 req/min free tier) ───────────────────
 // Reads X-RequestsAvailable + X-RequestCounter-Reset from response headers
 // Queues requests to avoid hard blocks
-const RL={queue:[],running:false,available:10,resetIn:60};
+// ── Rate limit state (still read from Worker response headers) ──
+const RL={available:10,resetIn:60};
 
-function rlSchedule(fn){
-  return new Promise((res,rej)=>{
-    RL.queue.push({fn,res,rej});
-    if(!RL.running)rlRun();
-  });
-}
-
-async function rlRun(){
-  RL.running=true;
-  while(RL.queue.length){
-    // If we're out of requests, wait until reset
-    if(RL.available<=1){
-      const wait=Math.max(RL.resetIn*1000,2000);
-      console.log('FDO rate limit: waiting',wait,'ms');
-      await new Promise(r=>setTimeout(r,wait));
-    }
-    const job=RL.queue.shift();
-    try{
-      const result=await job.fn();
-      job.res(result);
-    }catch(e){
-      job.rej(e);
-    }
-    // Small gap between requests (100ms) to be polite
-    await new Promise(r=>setTimeout(r,100));
-  }
-  RL.running=false;
-}
-
+// fdoFetch routes all calls through the Cloudflare Worker proxy:
+//   browser → WORKER/fdo/* → football-data.org (server-to-server, no CORS)
+// Fallback: direct FDO call (works in local dev / non-CORS environments)
 async function fdoFetch(path){
-  if(!FDO_OK())throw new Error('API-nyckel ej satt – sätt FDO_KEY');
-  return rlSchedule(async()=>{
-    const r=await fetch(FDO_BASE+path,{headers:{'X-Auth-Token':FDO_KEY}});
-    // Read rate limit headers
+  // Primary: Worker proxy (production – no CORS issues, API key server-side)
+  const proxyUrl=WORKER+'/fdo'+path;
+  try{
+    const r=await fetch(proxyUrl);
+    // Read throttle headers forwarded by Worker
     const avail=r.headers.get('X-RequestsAvailable');
     const reset=r.headers.get('X-RequestCounter-Reset');
-    if(avail!=null)RL.available=parseInt(avail)||10;
+    if(avail!=null){RL.available=parseInt(avail)||10;updateRlBadge();}
     if(reset!=null)RL.resetIn=parseInt(reset)||60;
     if(r.status===429){
-      // Hard rate limit hit – wait and retry once
-      const waitMs=(RL.resetIn||60)*1000;
-      console.warn('FDO 429 – waiting',waitMs,'ms before retry');
-      await new Promise(res=>setTimeout(res,waitMs));
-      const r2=await fetch(FDO_BASE+path,{headers:{'X-Auth-Token':FDO_KEY}});
-      if(!r2.ok)throw new Error('FDO '+r2.status+' (after retry)');
+      const wait=(RL.resetIn||60)*1000+500;
+      console.warn('FDO 429 via proxy – waiting',Math.round(wait/1000)+'s');
+      await new Promise(r=>setTimeout(r,wait));
+      const r2=await fetch(proxyUrl);
+      if(!r2.ok)throw new Error('FDO '+r2.status+' (retry)');
       return r2.json();
     }
-    if(!r.ok)throw new Error('FDO '+r.status);
+    if(!r.ok){
+      const body=await r.json().catch(()=>({error:'unknown'}));
+      throw new Error('FDO '+(body.error||r.status));
+    }
     return r.json();
-  });
+  }catch(proxyErr){
+    // Fallback: direct call (local development / Worker unavailable)
+    console.warn('[fdoFetch] proxy failed, trying direct:',proxyErr.message);
+    if(!FDO_OK())throw proxyErr; // no key, no fallback
+    const r=await fetch(FDO_BASE+path,{headers:{'X-Auth-Token':FDO_KEY}});
+    const avail=r.headers.get('X-RequestsAvailable');
+    if(avail!=null){RL.available=parseInt(avail)||10;updateRlBadge();}
+    if(!r.ok)throw new Error('FDO direct '+r.status);
+    return r.json();
+  }
 }
 
 async function fdoTeams(code){
   const k='fdo_t_'+code;const c=cGet(k,86400000);if(c)return c;
-  try{
-    const d=await fdoFetch('/competitions/'+code+'/teams');
-    const v=(d.teams||[]).map(t=>({
-      id:t.id,name:t.shortName||t.tla||t.name,
-      fullName:t.name,crest:t.crest||'',
-      leagueCode:code,source:'fdo',
-    })).sort((a,b)=>a.name.localeCompare(b.name));
-    cSet(k,v);return v;
-  }catch(e){console.warn(e.message);return[];}
+  const d=await fdoFetch('/competitions/'+code+'/teams'); // let error propagate
+  const v=(d.teams||[]).map(t=>({
+    id:t.id,name:t.shortName||t.tla||t.name,
+    fullName:t.name,crest:t.crest||'',
+    leagueCode:code,source:'fdo',
+  })).sort((a,b)=>a.name.localeCompare(b.name));
+  cSet(k,v);return v;
 }
 
 async function fdoNext(teamId){
@@ -672,10 +696,35 @@ async function getSquad(){
 
 async function getNews(){
   let arch=[];try{arch=JSON.parse(localStorage.getItem('dif_news_archive')||'[]');}catch{}
+
+  // Source 1: Cloudflare Worker proxy (Google News RSS / GNews)
   let fresh=[];
-  try{const j=await apiFetch(WORKER+'/news');fresh=(j.items||[]).filter(n=>n?.title);}catch(e){console.warn(e.message);}
+  try{
+    const j=await apiFetch(WORKER+'/news');
+    fresh=(j.items||[]).filter(n=>n?.title);
+  }catch(e){console.warn('[Worker news]',e.message);}
+
+  // Source 2: GNews API direct (if Worker failed or returned empty)
+  if(!fresh.length&&GNEWS_KEY){
+    try{
+      const url=`https://gnews.io/api/v4/search?q=Djurg%C3%A5rdens+IF&lang=sv&country=se&max=10&apikey=${GNEWS_KEY}`;
+      const j=await apiFetch(url);
+      fresh=(j.articles||[]).map(a=>({
+        title:a.title,
+        link:a.url,
+        date:a.publishedAt,
+        summary:a.description||'',
+        sname:a.source?.name||'',
+        fav:a.source?.url?`https://www.google.com/s2/favicons?domain=${new URL(a.source.url).hostname}&sz=32`:'',
+      })).filter(n=>n.title);
+    }catch(e){console.warn('[GNews direct]',e.message);}
+  }
+
+  // Use archive if all live sources failed
   if(!fresh.length&&arch.length)return arch;
   if(!fresh.length)return[];
+
+  // Merge fresh with archive (deduplicate on title prefix)
   const seen=new Set(fresh.map(n=>n.title.slice(0,50).toLowerCase()));
   const old=arch.filter(n=>!seen.has(n.title.slice(0,50).toLowerCase()));
   const merged=[...fresh,...old].sort((a,b)=>new Date(b.date||0)-new Date(a.date||0)).slice(0,100);
@@ -718,6 +767,9 @@ function showView(v){
 function showViewById(id){
   document.querySelectorAll('.view').forEach(e=>e.classList.remove('active'));
   $(id).classList.add('active');
+  // Track current view in state
+  const map={'vLanding':'landing','vTeams':'teams','vDetail':'detail'};
+  S.view=map[id]||id;
   window.scrollTo(0,0);
 }
 
@@ -732,17 +784,27 @@ function renderLanding(){
     </div>`).join(''));
 }
 
+// Store all teams for the current league (for search)
+let _allTeams=[];
+
 async function selectLeague(code){
   if(code==='DIF'){
     S.team={id:TSDB_ID,name:'Djurgårdens IF',crest:DIF_LOGO,source:'tsdb',leagueCode:'SWE'};
     S.league={code:'SWE',name:'Allsvenskan',flag:'🇸🇪'};
-    S.prevView='landing';openDetail();return;
+    S.prevView='landing';
+    history.pushState({view:'detail',code:'DIF'},'',location.href);
+    openDetail();return;
   }
   const lg=LEAGUES.find(l=>l.code===code);if(!lg)return;
   S.league=lg;S.prevView='landing';
+  history.pushState({view:'teams',code},'',location.href);
   showViewById('vTeams');
   set('teamLeagueName',lg.name);set('teamFlag',lg.flag);
+  // Reset search
+  const si=$('teamsSearch');if(si)si.value='';
+  set('teamsCount','');$('teamsCount').style.display='none';
   set('teamsGrid',skTeams());
+  _allTeams=[];
   if(!FDO_OK()){
     set('teamsGrid',`<div style="grid-column:1/-1;padding:8px">
       <div class="api-notice">
@@ -751,16 +813,60 @@ async function selectLeague(code){
         och sätt nyckeln i konstanten <code>FDO_KEY</code> längst upp i filen.
       </div></div>`);return;
   }
-  const teams=await fdoTeams(code);
-  set('teamsGrid',teams.length?renderTeamsGrid(teams):'<div style="grid-column:1/-1"><div class="empty">Inga lag hittades</div></div>');
+  try{
+    const teams=await fdoTeams(code);
+    _allTeams=teams;
+    if(teams.length){
+      set('teamsGrid',renderTeamsGrid(teams));
+    }else{
+      set('teamsGrid','<div style="grid-column:1/-1"><div class="empty">Inga lag hittades</div></div>');
+    }
+  }catch(e){
+    // Show specific error with retry button
+    const isAuth=e.message.includes('403')||e.message.includes('401');
+    const isLimit=e.message.includes('429');
+    const msg=isAuth?'Ogiltig API-nyckel (403). Kontrollera FDO_KEY i filen.':
+               isLimit?`Hastighetsgräns nådd (429). Vänta ${RL.resetIn||60}s och försök igen.`:
+               `Kunde inte ladda lag: ${e.message}`;
+    set('teamsGrid',`<div style="grid-column:1/-1;padding:4px">
+      <div class="err-box">
+        <strong>Fel vid laddning av ${lg.name}</strong>
+        ${msg}
+        <div class="err-retry" onclick="selectLeague('${code}')">↺ Försök igen</div>
+      </div></div>`);
+    console.error('fdoTeams error:', e.message);
+  }
+}
+
+function filterTeams(q){
+  if(!_allTeams.length)return;
+  const s=q.trim().toLowerCase();
+  const filtered=s?_allTeams.filter(t=>t.name.toLowerCase().includes(s)||t.fullName.toLowerCase().includes(s)):_allTeams;
+  set('teamsGrid',filtered.length?renderTeamsGrid(filtered):'<div style="grid-column:1/-1"><div class="empty">Inga lag matchar "'+q+'"</div></div>');
+  const cnt=$('teamsCount');
+  if(cnt){
+    if(s){cnt.textContent=filtered.length+' av '+_allTeams.length+' lag';cnt.style.display='block';}
+    else cnt.style.display='none';
+  }
 }
 
 function selectTeam(id,name,crest,leagueCode){
   S.team={id:parseInt(id),name:name,crest:crest,source:'fdo',leagueCode};
-  S.prevView='teams';openDetail();
+  S.prevView='teams';
+  history.pushState({view:'detail',teamId:id,teamName:name,crest,leagueCode},'',location.href);
+  openDetail();
 }
 
 function goBack(){
+  // Use browser history when possible; fallback to manual nav
+  if(window.history.length>1){
+    window.history.back();
+  }else{
+    _goBackManual();
+  }
+}
+
+function _goBackManual(){
   S.last=[];S.next=[];S.standings=[];S.squad=[];S.news=[];
   S.tab='home';S.matchTab='upcoming';S.sqFilter='all';
   if(S.view==='teams')showViewById('vLanding');
@@ -780,7 +886,7 @@ function openDetail(){
   }
   set('standingsTitle',(S.league?.name||'Tabell')+' '+new Date().getFullYear());
   $('detLive').style.display='none';
-  showViewById('vDetail');
+  showViewById('vDetail');  // S.view set by showViewById
   // activate home tab
   document.querySelectorAll('#pg-home,#pg-matches,#pg-squad,#pg-standings').forEach(p=>p.classList.remove('active'));
   $('pg-home').classList.add('active');
@@ -795,6 +901,8 @@ function nav(tab,el){
   $('pg-'+tab).classList.add('active');
   document.querySelectorAll('#bn-home,#bn-matches,#bn-squad,#bn-standings').forEach(b=>b.classList.remove('active'));
   const bn=$('bn-'+tab);if(bn)bn.classList.add('active');
+  // Push tab state so back-button works within detail
+  history.pushState({view:'detail',tab,teamId:S.team?.id},'',location.href);
   if(tab==='home'){if(S.team?.source==='fdo')loadFdoHome();else loadDifHome();}
   if(tab==='matches')loadMatches();
   if(tab==='squad')loadSquad();
@@ -806,22 +914,42 @@ function nav(tab,el){
 // ══════════════════════════════════════════════════════════
 async function loadFdoHome(){
   if(!S.team)return;
+  // Show skeletons immediately
   set('homeHero',skHero());
-  set('homeResults','<div class="empty" style="padding:1rem">Laddar...</div>');
-  set('homeTable','<div style="padding:1rem 14px"><div class="sk sk-t" style="width:50%"></div></div>');
+  set('homeResults','<div style="padding:10px 12px">'+Array(4).fill('<div class="sk sk-t" style="margin-bottom:12px"></div>').join('')+'</div>');
+  set('homeTable','<div style="padding:1rem 14px">'+Array(5).fill('<div class="sk sk-t" style="margin-bottom:10px"></div>').join('')+'</div>');
   set('homeNews','');
-  try{
-    // Sequential to respect 10 req/min limit (serialized via fdoFetch queue)
-    const next=await fdoNext(S.team.id);
-    const last=await fdoLast(S.team.id);
-    const stand=await fdoStandings(S.team.leagueCode);
-    S.next=next;S.last=last;S.standings=stand;
+
+  // Load each section independently & update as data arrives
+  // Sequential through queue (respects 10 req/min)
+  fdoNext(S.team.id).then(next=>{
+    S.next=next;
     set('homeHero',next.length?renderHero(next[0]):'<div class="empty">Inga kommande matcher</div>');
+  }).catch(e=>{
+    set('homeHero',fdoErrBox('Kommande matcher',e));
+  });
+
+  fdoLast(S.team.id).then(last=>{
+    S.last=last;
     set('homeResults',renderResultChips(last.slice(0,5)));
+  }).catch(e=>{
+    set('homeResults',fdoErrBox('Senaste resultat',e));
+  });
+
+  fdoStandings(S.team.leagueCode).then(stand=>{
+    S.standings=stand;
     set('homeTable',stand.length?renderStandings(stand):'<div class="empty">Tabell ej tillgänglig</div>');
-  }catch(e){
-    set('homeHero','<div class="empty">Kunde inte ladda data – kontrollera API-nyckel och hastighetsgräns</div>');
-  }
+  }).catch(e=>{
+    set('homeTable',fdoErrBox('Tabell',e));
+  });
+}
+
+// Generic error box for FDO section failures
+function fdoErrBox(section,e){
+  const isLimit=e.message.includes('429');
+  const isAuth=e.message.includes('403')||e.message.includes('401');
+  const msg=isAuth?'Ogiltig API-nyckel (403)':isLimit?`Hastighetsgräns (429) – väntar ${RL.resetIn||60}s`:'Nätverksfel: '+e.message;
+  return`<div class="err-box"><strong>${section} – fel</strong>${msg}</div>`;
 }
 
 async function loadDifHome(){
@@ -841,7 +969,12 @@ async function loadDifHome(){
 
 async function loadMatches(){
   if(!S.team)return;
-  renderMatchesView();
+  // Show skeleton while loading
+  if(!S.last.length&&!S.next.length){
+    set('matchesList','<div style="padding:12px">'+Array(4).fill('<div class="sk sk-t" style="margin-bottom:14px"></div>').join('')+'</div>');
+  }else{
+    renderMatchesView(); // show cached data instantly
+  }
   try{
     if(S.team.source==='fdo'){
       const l=await fdoLast(S.team.id);
@@ -852,7 +985,13 @@ async function loadMatches(){
       if(l.length)S.last=l;if(n.length)S.next=n;
     }
     renderMatchesView();
-  }catch(e){console.warn(e.message);}
+  }catch(e){
+    console.warn('[loadMatches]',e.message);
+    if(!S.last.length&&!S.next.length)
+      set('matchesList',fdoErrBox('Matcher',e));
+    else
+      renderMatchesView(); // show whatever we have
+  }
 }
 
 function renderMatchesView(){
@@ -868,11 +1007,15 @@ function switchTab(t,el){
 async function loadSquad(){
   if(!S.team)return;
   if(S.squad.length){renderSquadView(S.squad,S.sqFilter);return;}
-  set('squadGrid','<div class="pl-grid">'+Array(9).fill('<div class="sk sk-b" style="height:130px"></div>').join('')+'</div>');
+  set('squadGrid','<div class="pl-grid">'+Array(9).fill('<div class="sk sk-b" style="height:130px;border-radius:8px"></div>').join('')+'</div>');
   try{
     S.squad=S.team.source==='fdo'?await fdoSquad(S.team.id):await getSquad();
+    if(!S.squad.length)throw new Error('Truppen är tom (API returnerade inga spelare)');
     renderSquadView(S.squad,S.sqFilter);
-  }catch{set('squadGrid','<div class="empty">Kunde inte ladda truppen</div>');}
+  }catch(e){
+    console.warn('[loadSquad]',e.message);
+    set('squadGrid',fdoErrBox('Spelartrupp',e));
+  }
 }
 
 function renderSquadView(players,f){
@@ -892,11 +1035,16 @@ function filterSquad(f,el){renderSquadView(S.squad.length?S.squad:[],f);if(!S.sq
 async function loadStandings(){
   if(!S.team)return;
   if(S.standings.length){set('standingsFull',renderStandings(S.standings));return;}
-  set('standingsFull','<div style="padding:1.5rem;text-align:center"><div class="sk sk-t" style="width:50%;margin:auto"></div></div>');
+  set('standingsFull','<div style="padding:14px">'+Array(8).fill('<div class="sk sk-t" style="margin-bottom:10px"></div>').join('')+'</div>');
   try{
     const t=S.team.source==='fdo'?await fdoStandings(S.team.leagueCode):await getStandings();
+    if(!t.length)throw new Error('Tom tabell från API');
     S.standings=t;set('standingsFull',renderStandings(t));
-  }catch{set('standingsFull','<div class="empty">Tabell ej tillgänglig</div>');}
+  }catch(e){
+    console.warn('[loadStandings]',e.message);
+    if(S.standings.length)set('standingsFull',renderStandings(S.standings));
+    else set('standingsFull',fdoErrBox('Tabell',e));
+  }
 }
 
 function toggleFav(id,btn){
@@ -1022,8 +1170,16 @@ function renderStandings(table,limit=999){
       <td><strong>${t.intPoints||0}</strong></td>
     </tr>`;
   }).join('');
-  return`<table class="tbl">
-    <thead><tr><th>#</th><th>Lag</th><th>M</th><th>V</th><th>O</th><th>F</th><th>P</th></tr></thead>
+  return`<table class="tbl" id="standingsTbl">
+    <thead><tr>
+      <th>#</th>
+      <th onclick="sortTable('name')" class="sortable">Lag <span class="sort-icon">⇅</span></th>
+      <th onclick="sortTable('played')" class="sortable">M <span class="sort-icon">⇅</span></th>
+      <th onclick="sortTable('win')" class="sortable">V <span class="sort-icon">⇅</span></th>
+      <th onclick="sortTable('draw')" class="sortable">O <span class="sort-icon">⇅</span></th>
+      <th onclick="sortTable('loss')" class="sortable">F <span class="sort-icon">⇅</span></th>
+      <th onclick="sortTable('points')" class="sortable tbl-active">P <span class="sort-icon">↓</span></th>
+    </tr></thead>
     <tbody>${rows}</tbody>
   </table>
   <div class="tbl-legend"><span class="tl-item tl-eu">Europa</span><span class="tl-item tl-q">Kval</span><span class="tl-item tl-d">Nedfl.</span></div>`;
@@ -1157,9 +1313,104 @@ const FALLBACK_SQUAD = [
 ];
 
 // ══════════════════════════════════════════════════════════
+// SORT TABLE
+// ══════════════════════════════════════════════════════════
+const _sort={key:'points',asc:false};
+function sortTable(key){
+  if(_sort.key===key){_sort.asc=!_sort.asc;}else{_sort.key=key;_sort.asc=false;}
+  if(!S.standings.length)return;
+  const sorted=[...S.standings].sort((a,b)=>{
+    const map={name:'strTeam',played:'intPlayed',win:'intWin',draw:'intDraw',loss:'intLoss',points:'intPoints'};
+    const field=map[key]||'intPoints';
+    const av=field==='strTeam'?(a[field]||''):(+a[field]||0);
+    const bv=field==='strTeam'?(b[field]||''):(+b[field]||0);
+    if(field==='strTeam')return _sort.asc?av.localeCompare(bv):bv.localeCompare(av);
+    return _sort.asc?av-bv:bv-av;
+  });
+  // Re-render both standings containers
+  const html=renderStandings(sorted);
+  const sf=$('standingsFull'),ht=$('homeTable');
+  if(sf)sf.innerHTML=html;if(ht)ht.innerHTML=html;
+  // Update header highlight
+  document.querySelectorAll('.tbl th').forEach(th=>{
+    th.classList.remove('tbl-active');
+    const si=th.querySelector('.sort-icon');if(si)si.textContent='⇅';
+  });
+  document.querySelectorAll('.tbl th').forEach(th=>{
+    if(th.getAttribute('onclick')===`sortTable('${key}')`){
+      th.classList.add('tbl-active');
+      const si=th.querySelector('.sort-icon');if(si)si.textContent=_sort.asc?'↑':'↓';
+    }
+  });
+}
+
+// ══════════════════════════════════════════════════════════
+// RATE LIMIT BADGE
+// ══════════════════════════════════════════════════════════
+function updateRlBadge(){
+  const b=$('rlBadge');if(!b)return;
+  const n=RL.available;
+  b.style.display='block';
+  b.textContent=n+' req';
+  b.className='rl-badge'+(n<=2?' danger':n<=5?' warn':' ok');
+}
+
+// ══════════════════════════════════════════════════════════
+// ROUTING – history.pushState + popstate
+// ══════════════════════════════════════════════════════════
+function initRouting(){
+  // Set initial history state
+  history.replaceState({view:'landing'},'',location.href);
+
+  window.addEventListener('popstate',e=>{
+    const st=e.state;
+    if(!st){showViewById('vLanding');return;}
+    const v=st.view||'landing';
+    // Reset loaded data when going back to fresh state
+    if(v==='landing'){
+      S.last=[];S.next=[];S.standings=[];S.squad=[];S.news=[];
+      showViewById('vLanding');
+    } else if(v==='teams'){
+      // Restore teams view for the correct league
+      S.last=[];S.next=[];S.standings=[];S.squad=[];S.news=[];
+      showViewById('vTeams');
+      // Restore league data if possible
+      if(st.code&&S.league?.code!==st.code){
+        const lg=LEAGUES.find(l=>l.code===st.code);
+        if(lg){
+          S.league=lg;
+          set('teamLeagueName',lg.name);set('teamFlag',lg.flag);
+        }
+      }
+    } else if(v==='detail'){
+      // If same team still in state, just restore the tab
+      if(st.teamId&&S.team?.id===parseInt(st.teamId)){
+        const tab=st.tab||'home';
+        // Just switch tab without reloading
+        document.querySelectorAll('#pg-home,#pg-matches,#pg-squad,#pg-standings').forEach(p=>p.classList.remove('active'));
+        document.querySelectorAll('#bn-home,#bn-matches,#bn-squad,#bn-standings').forEach(b=>b.classList.remove('active'));
+        const pg=$('pg-'+tab),bn=$('bn-'+tab);
+        if(pg)pg.classList.add('active');if(bn)bn.classList.add('active');
+        S.tab=tab;
+        showViewById('vDetail');
+      } else {
+        // Different team in history – reload from state if possible
+        if(st.teamId&&st.teamName){
+          S.team={id:parseInt(st.teamId),name:st.teamName,crest:st.crest||'',source:'fdo',leagueCode:st.leagueCode||''};
+          S.last=[];S.next=[];S.standings=[];S.squad=[];S.news=[];
+          S.tab='home';S.matchTab='upcoming';S.sqFilter='all';
+          openDetail();
+        }
+      }
+    }
+  });
+}
+
+// ══════════════════════════════════════════════════════════
 // INIT
 // ══════════════════════════════════════════════════════════
 renderLanding();
+initRouting();
 setInterval(()=>{
   if(document.visibilityState==='visible'&&S.view==='detail'&&S.tab==='home'){
     if(S.team?.source==='fdo')loadFdoHome();else loadDifHome();
